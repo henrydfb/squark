@@ -36,6 +36,15 @@ public class PlayerController : MonoBehaviour
     private Collider2D leftCollider;
     private Collider2D rightCollider;
 
+    TGCConnectionController controller;
+    private int poorSignal1;
+    private int attention1;
+    private int meditation1;
+    private int blink;
+    private int indexSignalIcons = 1;
+    private float delta;
+    private GameController gameController;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -45,13 +54,90 @@ public class PlayerController : MonoBehaviour
         isCollidingLeft = false;
         isCollidingRight = false;
         horAxis = 0;
+
+        controller = GameObject.Find("NeuroSkyTGCController").GetComponent<TGCConnectionController>();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+
+        controller.UpdatePoorSignalEvent += OnUpdatePoorSignal;
+        controller.UpdateAttentionEvent += OnUpdateAttention;
+        controller.UpdateMeditationEvent += OnUpdateMeditation;
+        controller.UpdateBlinkEvent += OnUpdateBlink;
+
+        controller.UpdateDeltaEvent += OnUpdateDelta;
 	}
-	
+
+    void OnUpdatePoorSignal(int value)
+    {
+        poorSignal1 = value;
+        if (value < 25)
+        {
+            indexSignalIcons = 0;
+        }
+        else if (value >= 25 && value < 51)
+        {
+            indexSignalIcons = 4;
+        }
+        else if (value >= 51 && value < 78)
+        {
+            indexSignalIcons = 3;
+        }
+        else if (value >= 78 && value < 107)
+        {
+            indexSignalIcons = 2;
+        }
+        else if (value >= 107)
+        {
+            indexSignalIcons = 1;
+        }
+    }
+    void OnUpdateAttention(int value)
+    {
+        attention1 = value;
+    }
+    void OnUpdateMeditation(int value)
+    {
+        meditation1 = value;
+    }
+
+    void OnUpdateBlink(int value)
+    {
+        blink = value;
+        if(!isInAir)
+            Jump();
+        Debug.Log("blink!");
+    }
+    void OnUpdateDelta(float value)
+    {
+        delta = value;
+    }
+
 	// Update is called once per frame
 	void Update () 
     {
-        HandleInput();
+        if (gameController.IsGameOver())
+            rigidbody2D.velocity = Vector3.zero;
+        else
+        {
+            HandleInput();
+            //Clamp player's X position
+            if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+            {
+                if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit)
+                    transform.position = new Vector3(gameController.rightLimit - renderer.bounds.size.x / 2, transform.position.y);
+                if (transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                    transform.position = new Vector3(gameController.leftLimit + renderer.bounds.size.x / 2, transform.position.y);
+            }
+        }
 	}
+
+    void OnGUI()
+    {
+        GUILayout.Label("PoorSignal1:" + poorSignal1);
+        GUILayout.Label("Attention1:" + attention1);
+        GUILayout.Label("Meditation1:" + meditation1);
+        GUILayout.Label("Blink:" + blink);
+        GUILayout.Label("Delta:" + delta);
+    }
     
     /// <summary>
     /// Handles the input values and use them to move the player
@@ -93,10 +179,7 @@ public class PlayerController : MonoBehaviour
 
         //Jump button pressed
         if (Input.GetButtonDown(Names.JumpInput) && !isJumping && !isInAir)
-        {
-            rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
-            isJumping = true;
-        }
+            Jump();
 
         //Jump button button released
         if (Input.GetButtonUp(Names.JumpInput) && isJumping)
@@ -109,28 +192,44 @@ public class PlayerController : MonoBehaviour
         prevHorAxis = Input.GetAxis(Names.HorizontalInput);
     }
 
+    private void Jump()
+    {
+        rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
+        isJumping = true;
+        isInAir = true;
+    }
+
+    public void Die()
+    {
+        rigidbody2D.gravityScale = 0;
+        rigidbody2D.velocity = Vector3.zero;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        //Down collision
-        if (transform.position.y - collider2D.bounds.size.y / 2 > col.transform.position.y + col.collider.bounds.size.y / 2)
+        if (col.collider.tag == Names.Platform)
         {
-            downCollider = col.collider;
-            isCollidingDown = true;
-            isInAir = false;
-        }
+            //Down collision
+            if (transform.position.y - collider2D.bounds.size.y / 2 > col.transform.position.y + col.collider.bounds.size.y / 2)
+            {
+                downCollider = col.collider;
+                isCollidingDown = true;
+                isInAir = false;
+            }
 
-        //Right collision
-        if (transform.position.x - collider2D.bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
-        {
-            rightCollider = col.collider;
-            isCollidingRight = true;
-        }
+            //Right collision
+            if (transform.position.x - collider2D.bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
+            {
+                rightCollider = col.collider;
+                isCollidingRight = true;
+            }
 
-        //Left collision
-        if (transform.position.x + collider2D.bounds.size.x / 2 < col.transform.position.x - col.collider.bounds.size.x / 2)
-        {
-            leftCollider = col.collider;
-            isCollidingLeft = true;
+            //Left collision
+            if (transform.position.x + collider2D.bounds.size.x / 2 < col.transform.position.x - col.collider.bounds.size.x / 2)
+            {
+                leftCollider = col.collider;
+                isCollidingLeft = true;
+            }
         }
     }
 

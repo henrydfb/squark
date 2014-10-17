@@ -11,4 +11,10 @@
     public static string JumpInput = "Jump";
 
     public static string HorizontalInput = "Horizontal";
+
+    public static string TimeText = "TimeText";
+
+    public static string GameController = "GameController";
+
+    public static string Coin = "Coin";
 }

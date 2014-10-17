@@ -32,7 +32,14 @@ public class TGCConnectionController : MonoBehaviour {
 	
 
 	void Start () {
-		Connect();
+        try
+        {
+            Connect();
+        }
+        catch (SocketException e)
+        {
+            Debug.Log("Problem connecting: " + e.Message);
+        }
 	}
 	
 	public void Disconnect(){
@@ -51,9 +58,15 @@ public class TGCConnectionController : MonoBehaviour {
 		    byte[] myWriteBuffer = Encoding.ASCII.GetBytes(@"{""enableRawOutput"": true, ""format"": ""Json""}");
 		    stream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
 			
-			InvokeRepeating("ParseData",0.1f,0.02f);
+			//InvokeRepeating("ParseData",0.1f,0.02f); Initial values
+            InvokeRepeating("ParseData", 0.1f, 0.03f);
 		}
 	}
+
+    void Test()
+    {
+        Debug.Log("test");
+    }
 	
 	void ParseData(){
 	    if(stream.CanRead){
@@ -61,7 +74,8 @@ public class TGCConnectionController : MonoBehaviour {
 	        int bytesRead = stream.Read(buffer, 0, buffer.Length);
 	
 	        string[] packets = Encoding.ASCII.GetString(buffer, 0, bytesRead).Split('\r');
-	
+
+            //Debug.Log(bytesRead);
 	        foreach(string packet in packets){
 	          if(packet.Length == 0)
 	            continue;
@@ -121,8 +135,14 @@ public class TGCConnectionController : MonoBehaviour {
 	          }
 	        }
 	      }
-	      catch(IOException e){ Debug.Log("IOException " + e); }
-	      catch(System.Exception e){ Debug.Log("Exception " + e); }
+	      catch(IOException e)
+          { 
+              //Debug.Log("IOException " + e); 
+          }
+	      catch(System.Exception e)
+          { 
+              //Debug.Log("Exception " + e); 
+          }
 	    }		
 		
 	}// end ParseData
