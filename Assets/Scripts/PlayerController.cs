@@ -3,10 +3,10 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float MAX_AXIS_STEP = 1;
-    private const float MIN_AXIS_STEP = -1;
+    protected const float MAX_AXIS_STEP = 1;
+    protected const float MIN_AXIS_STEP = -1;
     //How fast will you start moving the player: from MIN_AXIS_STEP to MAX_AXIS_STEP
-    private const float HOR_AXIS_STEP = 0.05f;
+    protected const float HOR_AXIS_STEP = 0.05f;
 
     /// <summary>
     /// How fast the player will run
@@ -18,35 +18,28 @@ public class PlayerController : MonoBehaviour
     public float jumpImpulse;
 
     //Flag to know if the player is jumping, when he presses the button
-    private bool isJumping;
+    protected bool isJumping;
     //Flag to know if the player is in the air (different from jumping)
-    private bool isInAir;
+    protected bool isInAir;
     //A value to do the horizontal movement smooth
-    private float horAxis;
+    protected float horAxis;
     //Previous horizontal movement (to know if the player changed directions)
-    private float prevHorAxis;
+    protected float prevHorAxis;
 
     //Collision flags
-    private bool isCollidingDown;
-    private bool isCollidingLeft;
-    private bool isCollidingRight;
+    protected bool isCollidingDown;
+    protected bool isCollidingLeft;
+    protected bool isCollidingRight;
 
     //Colliders
-    private Collider2D downCollider;
-    private Collider2D leftCollider;
-    private Collider2D rightCollider;
+    protected Collider2D downCollider;
+    protected Collider2D leftCollider;
+    protected Collider2D rightCollider;
 
-    TGCConnectionController controller;
-    private int poorSignal1;
-    private int attention1;
-    private int meditation1;
-    private int blink;
-    private int indexSignalIcons = 1;
-    private float delta;
-    private GameController gameController;
+    protected GameController gameController;
 
 	// Use this for initialization
-	void Start () 
+	protected virtual void Start () 
     {
         isJumping = false;
         isInAir = false;
@@ -55,148 +48,45 @@ public class PlayerController : MonoBehaviour
         isCollidingRight = false;
         horAxis = 0;
 
-        controller = GameObject.Find("NeuroSkyTGCController").GetComponent<TGCConnectionController>();
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
-
-        controller.UpdatePoorSignalEvent += OnUpdatePoorSignal;
-        controller.UpdateAttentionEvent += OnUpdateAttention;
-        controller.UpdateMeditationEvent += OnUpdateMeditation;
-        controller.UpdateBlinkEvent += OnUpdateBlink;
-
-        controller.UpdateDeltaEvent += OnUpdateDelta;
+        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
 	}
 
-    void OnUpdatePoorSignal(int value)
-    {
-        poorSignal1 = value;
-        if (value < 25)
-        {
-            indexSignalIcons = 0;
-        }
-        else if (value >= 25 && value < 51)
-        {
-            indexSignalIcons = 4;
-        }
-        else if (value >= 51 && value < 78)
-        {
-            indexSignalIcons = 3;
-        }
-        else if (value >= 78 && value < 107)
-        {
-            indexSignalIcons = 2;
-        }
-        else if (value >= 107)
-        {
-            indexSignalIcons = 1;
-        }
-    }
-    void OnUpdateAttention(int value)
-    {
-        attention1 = value;
-    }
-    void OnUpdateMeditation(int value)
-    {
-        meditation1 = value;
-    }
-
-    void OnUpdateBlink(int value)
-    {
-        blink = value;
-        if(!isInAir)
-            Jump();
-        Debug.Log("blink!");
-    }
-    void OnUpdateDelta(float value)
-    {
-        delta = value;
-    }
-
 	// Update is called once per frame
-	void Update () 
+    protected virtual void Update() 
     {
-        if (gameController.IsGameOver())
-            rigidbody2D.velocity = Vector3.zero;
-        else
+        if (gameController.IsGameRunning())
         {
-            HandleInput();
-            //Clamp player's X position
-            if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+            if (gameController.IsGameOver())
+                rigidbody2D.velocity = Vector3.zero;
+            else
             {
-                if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit)
-                    transform.position = new Vector3(gameController.rightLimit - renderer.bounds.size.x / 2, transform.position.y);
-                if (transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
-                    transform.position = new Vector3(gameController.leftLimit + renderer.bounds.size.x / 2, transform.position.y);
+                HandleInput();
+                //Clamp player's X position
+                if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                {
+                    if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit)
+                        transform.position = new Vector3(gameController.rightLimit - renderer.bounds.size.x / 2, transform.position.y);
+                    if (transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                        transform.position = new Vector3(gameController.leftLimit + renderer.bounds.size.x / 2, transform.position.y);
+                }
             }
         }
 	}
 
-    void OnGUI()
-    {
-        GUILayout.Label("PoorSignal1:" + poorSignal1);
-        GUILayout.Label("Attention1:" + attention1);
-        GUILayout.Label("Meditation1:" + meditation1);
-        GUILayout.Label("Blink:" + blink);
-        GUILayout.Label("Delta:" + delta);
-    }
-    
     /// <summary>
     /// Handles the input values and use them to move the player
     /// </summary>
-    private void HandleInput()
+    protected virtual void HandleInput()
+    {}
+
+    public void Jump()
     {
-        //Moving Right
-        if (Input.GetAxis(Names.HorizontalInput) > 0)
+        if (!isInAir)
         {
-            if (isCollidingLeft)
-                horAxis = 0;
-            else
-            {
-                horAxis = horAxis < 1 ? horAxis + HOR_AXIS_STEP : MAX_AXIS_STEP;
-                if (Input.GetAxis(Names.HorizontalInput) < prevHorAxis)
-                    horAxis = horAxis / 2;
-            }
+            rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
+            isJumping = true;
+            isInAir = true;
         }
-
-        //Moving Left
-        if (Input.GetAxis(Names.HorizontalInput) < 0)
-        {
-            if (isCollidingRight)
-                horAxis = 0;
-            else
-            {
-                horAxis = horAxis > -1 ? horAxis - HOR_AXIS_STEP : MIN_AXIS_STEP;
-                if (Input.GetAxis(Names.HorizontalInput) > prevHorAxis)
-                    horAxis = horAxis / 2;
-            }
-        }
-
-        //Not moving
-        if (Input.GetAxis(Names.HorizontalInput) == 0)
-            horAxis = 0;
-
-        //Update horizontal movement
-        rigidbody2D.velocity = new Vector2(horAxis * speed, rigidbody2D.velocity.y);
-
-        //Jump button pressed
-        if (Input.GetButtonDown(Names.JumpInput) && !isJumping && !isInAir)
-            Jump();
-
-        //Jump button button released
-        if (Input.GetButtonUp(Names.JumpInput) && isJumping)
-        {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y/2);
-            isJumping = false;
-        }
-
-        //Previous horizontal axis value
-        prevHorAxis = Input.GetAxis(Names.HorizontalInput);
-    }
-
-    private void Jump()
-    {
-        rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
-        isJumping = true;
-        isInAir = true;
     }
 
     public void Die()
@@ -205,7 +95,7 @@ public class PlayerController : MonoBehaviour
         rigidbody2D.velocity = Vector3.zero;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    protected virtual void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.tag == Names.Platform)
         {
@@ -233,7 +123,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    protected virtual void OnCollisionExit2D(Collision2D col)
     {
         //Down collision
         if (downCollider != null)

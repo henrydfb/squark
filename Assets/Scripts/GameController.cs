@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
+    public bool IsGameNeurosky = true;
+
+    protected bool isGameRunning = false;
     /// <summary>
     /// Left limit
     /// </summary>
@@ -20,32 +23,128 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public float upLimit;
     //Max time in seconds
-    private const float MAX_TIME = 60;
-    private const float NUMBER_OF_BLOCKS = 200;
+    protected const float MAX_TIME = 60;
+    protected const float MIN_TIME = 0;
+    protected const float NUMBER_OF_BLOCKS = 200;
     //Current play time
-    private float time;
-    private GUIText timeText;
-    private GameObject plat;
-    private GameObject player;
-    private bool isGameOver;
+    protected float time;
+    protected GUIText timeText;
+    protected GUIText coinsText;
+    protected GUIText neuroskyStatsText;
+    protected MessageController feedbackMessage;
+    protected GameObject player;
+    protected bool isGameOver;
+    protected int numberOfCoins;
+    protected int pickedCoins;
+
+    //Neurosky values
+    protected TGCConnectionController controller;
+    protected int poorSignal1 = -1;
+    protected int attention1;
+    protected int meditation1;
+    protected int blink;
+    protected int indexSignalIcons = 1;
+    protected float delta;
 
 	// Use this for initialization
-	void Start () {
-        time = MAX_TIME;
+    protected virtual void Start() 
+    {
         timeText = GameObject.Find(Names.TimeText).GetComponent<GUIText>();
-        plat = GameObject.Find("Block");
+        coinsText = GameObject.Find(Names.CoinsText).GetComponent<GUIText>();
+        feedbackMessage = GameObject.Find(Names.FeedbackMessage).GetComponent<MessageController>();
+        neuroskyStatsText = GameObject.Find(Names.NeuroskyStatsText).GetComponent<GUIText>();
         player = GameObject.Find(Names.Player);
         isGameOver = false;
+        numberOfCoins = GameObject.FindGameObjectsWithTag(Names.Coin).Length;
+        pickedCoins = 0;
 
-        //plat.transform.localScale = new Vector3((NUMBER_OF_BLOCKS * player.renderer.bounds.size.x)/plat.renderer.bounds.size.x, 1, 0);
-        //plat.transform.position += new Vector3(plat.renderer.bounds.size.x / 2, 0, 0);
+        UpdateCoinsValues();
 
+        //Neurosky
+        controller = GameObject.Find("NeuroSkyTGCController").GetComponent<TGCConnectionController>();
+        controller.UpdatePoorSignalEvent += OnUpdatePoorSignal;
+        controller.UpdateAttentionEvent += OnUpdateAttention;
+        controller.UpdateMeditationEvent += OnUpdateMeditation;
+        controller.UpdateBlinkEvent += OnUpdateBlink;
+        controller.UpdateDeltaEvent += OnUpdateDelta;
+
+        if (IsGameNeurosky && controller.ConnectionWasSuccessful())
+        {
+            feedbackMessage.Show(Names.ConnectingMessage);
+        }
 	}
+
+    public bool IsGameRunning()
+    {
+        return isGameRunning;
+    }
+
+    private void UpdateCoinsValues()
+    {
+        coinsText.text = pickedCoins.ToString("00") + "/" + numberOfCoins.ToString();
+    }
+
+    protected void OnUpdatePoorSignal(int value)
+    {
+        poorSignal1 = value;
+        if (value < 25)
+        {
+            indexSignalIcons = 0;
+        }
+        else if (value >= 25 && value < 51)
+        {
+            indexSignalIcons = 4;
+        }
+        else if (value >= 51 && value < 78)
+        {
+            indexSignalIcons = 3;
+        }
+        else if (value >= 78 && value < 107)
+        {
+            indexSignalIcons = 2;
+        }
+        else if (value >= 107)
+        {
+            indexSignalIcons = 1;
+        }
+    }
+
+    protected void OnUpdateAttention(int value)
+    {
+        attention1 = value;
+    }
+
+    protected void OnUpdateMeditation(int value)
+    {
+        meditation1 = value;
+    }
+
+    protected void OnUpdateBlink(int value)
+    {
+        blink = value;
+        //Make the player jump
+        player.GetComponent<PlayerController>().Jump();
+    }
+
+    protected void OnUpdateDelta(float value)
+    {
+        delta = value;
+    }
 	
 	// Update is called once per frame
-	void Update () 
+    protected virtual void Update() 
     {
         int min, sec;
+
+        //Check if the game started
+        if (IsGameNeurosky)
+        {
+            isGameRunning = poorSignal1 == 0 && controller.ConnectionWasSuccessful();
+            if (isGameRunning)
+                feedbackMessage.Hide();
+        }
+        else
+            isGameRunning = true;
 
         min = (int)(time / 60);
         sec = (int)(time % 60);
@@ -59,30 +158,62 @@ public class GameController : MonoBehaviour {
         //Down Limit
         Debug.DrawLine(new Vector3(leftLimit, downLimit), new Vector3(rightLimit, downLimit), Color.red);
 
-        if (!isGameOver)
+        //If the game started
+        if (isGameRunning)
         {
-            //Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(0,Screen.height / 2,0)));
-            //Out of the screen
-            isGameOver = player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit;
+            //Check if it's game over
             if (isGameOver)
-                player.GetComponent<PlayerController>().Die();
-
-            if (time > 0)
-                time -= Time.deltaTime;
+                GameOver();
             else
             {
-                Debug.Log("Time is over!");
-                isGameOver = true;
+                //Out of the screen
+                isGameOver = player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit;
+                if (isGameOver)
+                    player.GetComponent<PlayerController>().Die();
             }
         }
 
-        timeText.text = min + ":" + sec;
-
-        //plat.transform.position = new Vector3(player.transform.position.x, plat.transform.position.y, plat.transform.position.z);
+        timeText.text = min.ToString("00") + ":" + sec.ToString("00");
+        UpdateCoinsValues();
 	}
+
+    protected virtual void GameOver()
+    {
+        CleanScene();
+    }
+
+    protected void CleanScene()
+    {
+        controller.UpdatePoorSignalEvent -= OnUpdatePoorSignal;
+        controller.UpdateAttentionEvent -= OnUpdateAttention;
+        controller.UpdateMeditationEvent -= OnUpdateMeditation;
+        controller.UpdateBlinkEvent -= OnUpdateBlink;
+        controller.UpdateDeltaEvent -= OnUpdateDelta;
+    }
 
     public bool IsGameOver()
     {
         return isGameOver;
     }
+
+    public void PickCoin()
+    {
+        pickedCoins++;
+    }
+
+    public bool WonGame()
+    {
+        return pickedCoins >= numberOfCoins;
+    }
+
+    protected virtual void OnGUI()
+    {
+        neuroskyStatsText.text = "STATS:\n\n";
+        neuroskyStatsText.text += "Poor Signal: " + poorSignal1 + "\n";
+        neuroskyStatsText.text += "Attention: " + attention1 + "\n";
+        neuroskyStatsText.text += "Meditation: " + meditation1 + "\n";
+        neuroskyStatsText.text += "Blink: " + blink + "\n";
+        neuroskyStatsText.text += "Delta: " + delta + "\n";
+    }
+
 }

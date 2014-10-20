@@ -4,4 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BlinkDemo.unity
+  - enabled: 1
+    path: Assets/Scenes/BlinkGameOver.unity
+  - enabled: 1
+    path: Assets/Scenes/BlinkWinGame.unity
+  - enabled: 1
+    path: Assets/Scenes/RunnerDemo.unity
+  - enabled: 1
+    path: Assets/Scenes/RunnerGameOver.unity

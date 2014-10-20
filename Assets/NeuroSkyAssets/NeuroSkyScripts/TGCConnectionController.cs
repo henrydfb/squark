@@ -29,16 +29,29 @@ public class TGCConnectionController : MonoBehaviour {
 	public event UpdateFloatValueDelegate UpdateHighBetaEvent;
 	public event UpdateFloatValueDelegate UpdateLowGammaEvent;
 	public event UpdateFloatValueDelegate UpdateHighGammaEvent;
+
+    private bool successfulConnection;
+
+    private MessageController feedbackMessage;
 	
 
-	void Start () {
+	void Start () 
+    {
+        GameController gameController;
+        successfulConnection = true;
+        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
+        feedbackMessage = GameObject.Find(Names.FeedbackMessage).GetComponent<MessageController>();
+        
         try
         {
-            Connect();
+            if(gameController.IsGameNeurosky)   
+                Connect();
         }
         catch (SocketException e)
         {
-            Debug.Log("Problem connecting: " + e.Message);
+            feedbackMessage.Show(Names.SocketConnectionMessage);
+            successfulConnection = false;
+            //Debug.Log("Problem connecting: " + e.Message);
         }
 	}
 	
@@ -63,12 +76,13 @@ public class TGCConnectionController : MonoBehaviour {
 		}
 	}
 
-    void Test()
+    public bool ConnectionWasSuccessful()
     {
-        Debug.Log("test");
+        return successfulConnection;
     }
-	
-	void ParseData(){
+
+	void ParseData()
+    {
 	    if(stream.CanRead){
 	      try { 
 	        int bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -150,6 +164,4 @@ public class TGCConnectionController : MonoBehaviour {
 	void OnApplicationQuit(){
 		Disconnect();
 	}
-
-	
 }

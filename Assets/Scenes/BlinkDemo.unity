@@ -85,7 +85,6 @@ GameObject:
   - 212: {fileID: 498711}
   - 114: {fileID: 498710}
   - 58: {fileID: 498709}
-  - 50: {fileID: 498713}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -102,7 +101,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 498708}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &498710
@@ -152,66 +151,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 26
---- !u!50 &498713
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 473110716}
-  m_GameObject: {fileID: 498708}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
---- !u!1001 &5619567
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.02999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-  m_RootGameObject: {fileID: 888135264}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &20234912
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +162,6 @@ GameObject:
   - 212: {fileID: 20234915}
   - 114: {fileID: 20234914}
   - 58: {fileID: 20234913}
-  - 50: {fileID: 20234917}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -240,7 +178,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 20234912}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &20234914
@@ -290,22 +228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 32
---- !u!50 &20234917
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 790944595}
-  m_GameObject: {fileID: 20234912}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &25494199
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +239,6 @@ GameObject:
   - 212: {fileID: 25494202}
   - 114: {fileID: 25494201}
   - 58: {fileID: 25494200}
-  - 50: {fileID: 25494204}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -334,7 +255,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 25494199}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &25494201
@@ -384,22 +305,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 24
---- !u!50 &25494204
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 652896447}
-  m_GameObject: {fileID: 25494199}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &32741571
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +316,6 @@ GameObject:
   - 212: {fileID: 32741574}
   - 114: {fileID: 32741573}
   - 58: {fileID: 32741572}
-  - 50: {fileID: 32741576}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -428,7 +332,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 32741571}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &32741573
@@ -478,22 +382,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 61
---- !u!50 &32741576
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 503627644}
-  m_GameObject: {fileID: 32741571}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &98179688
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +393,6 @@ GameObject:
   - 212: {fileID: 98179691}
   - 114: {fileID: 98179690}
   - 58: {fileID: 98179689}
-  - 50: {fileID: 98179693}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -522,7 +409,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 98179688}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &98179690
@@ -572,22 +459,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 30
---- !u!50 &98179693
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1300810754}
-  m_GameObject: {fileID: 98179688}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &98468514
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +470,6 @@ GameObject:
   - 212: {fileID: 98468517}
   - 114: {fileID: 98468516}
   - 58: {fileID: 98468515}
-  - 50: {fileID: 98468519}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -616,7 +486,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 98468514}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &98468516
@@ -666,22 +536,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 52
---- !u!50 &98468519
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 563806998}
-  m_GameObject: {fileID: 98468514}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &98587885
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +547,6 @@ GameObject:
   - 212: {fileID: 98587888}
   - 114: {fileID: 98587887}
   - 58: {fileID: 98587886}
-  - 50: {fileID: 98587890}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -710,7 +563,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 98587885}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &98587887
@@ -760,22 +613,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 34
---- !u!50 &98587890
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1980562233}
-  m_GameObject: {fileID: 98587885}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &105532832
 Prefab:
   m_ObjectHideFlags: 0
@@ -821,7 +658,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -873,55 +710,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
   m_RootGameObject: {fileID: 401052858}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
---- !u!1001 &159900853
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a8002727252092343bdfe376c532083e, type: 2}
-  m_RootGameObject: {fileID: 1867403405}
   m_IsPrefabParent: 0
   m_IsExploded: 1
 --- !u!1 &169501075
@@ -935,7 +728,6 @@ GameObject:
   - 212: {fileID: 169501078}
   - 114: {fileID: 169501077}
   - 58: {fileID: 169501076}
-  - 50: {fileID: 169501080}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -952,7 +744,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 169501075}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &169501077
@@ -1002,22 +794,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 59
---- !u!50 &169501080
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 486029506}
-  m_GameObject: {fileID: 169501075}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &173827422
 Prefab:
   m_ObjectHideFlags: 0
@@ -1063,7 +839,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -1081,7 +857,6 @@ GameObject:
   - 212: {fileID: 183026894}
   - 114: {fileID: 183026893}
   - 58: {fileID: 183026892}
-  - 50: {fileID: 183026896}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1098,7 +873,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 183026891}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &183026893
@@ -1148,22 +923,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 35
---- !u!50 &183026896
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 2079948068}
-  m_GameObject: {fileID: 183026891}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &201119816
 Prefab:
   m_ObjectHideFlags: 0
@@ -1209,7 +968,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -1289,7 +1048,6 @@ GameObject:
   - 212: {fileID: 222865359}
   - 114: {fileID: 222865358}
   - 58: {fileID: 222865357}
-  - 50: {fileID: 222865361}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1306,7 +1064,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 222865356}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &222865358
@@ -1356,22 +1114,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 51
---- !u!50 &222865361
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1419052017}
-  m_GameObject: {fileID: 222865356}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &223704859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1274,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -1550,7 +1292,6 @@ GameObject:
   - 212: {fileID: 276857365}
   - 114: {fileID: 276857364}
   - 58: {fileID: 276857363}
-  - 50: {fileID: 276857367}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1567,7 +1308,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 276857362}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &276857364
@@ -1617,22 +1358,187 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 63
---- !u!50 &276857367
-Rigidbody2D:
+--- !u!1001 &280331117
+Prefab:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 47.7897949
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .467152834
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_RootOrder
+      value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_Radius
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_RootGameObject: {fileID: 281037713}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1 &281037713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 280331117}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 281037717}
+  - 212: {fileID: 281037716}
+  - 114: {fileID: 281037715}
+  - 58: {fileID: 281037714}
+  m_Layer: 0
+  m_Name: coin
+  m_TagString: Coin
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!58 &281037714
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678,
     type: 2}
-  m_PrefabInternal: {fileID: 2094153731}
-  m_GameObject: {fileID: 276857362}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_PrefabInternal: {fileID: 280331117}
+  m_GameObject: {fileID: 281037713}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: .100000001
+  m_Center: {x: 0, y: 0}
+--- !u!114 &281037715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 280331117}
+  m_GameObject: {fileID: 281037713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47478a5c90e559a4c89a96d1d78f688e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &281037716
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 21200000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 280331117}
+  m_GameObject: {fileID: 281037713}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 76757217da7684e43928c177220955af, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &281037717
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 280331117}
+  m_GameObject: {fileID: 281037713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.7897949, y: .467152834, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 68
+--- !u!1001 &302801262
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 47.1897926
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .467152834
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_RootOrder
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_Radius
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_RootGameObject: {fileID: 1444859306}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &351458796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1550,6 @@ GameObject:
   - 212: {fileID: 351458799}
   - 114: {fileID: 351458798}
   - 58: {fileID: 351458797}
-  - 50: {fileID: 351458801}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1661,7 +1566,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 351458796}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &351458798
@@ -1711,22 +1616,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 29
---- !u!50 &351458801
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1016474762}
-  m_GameObject: {fileID: 351458796}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &360127229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,7 +1627,6 @@ GameObject:
   - 212: {fileID: 360127232}
   - 114: {fileID: 360127231}
   - 58: {fileID: 360127230}
-  - 50: {fileID: 360127234}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1755,7 +1643,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 360127229}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &360127231
@@ -1805,22 +1693,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 53
---- !u!50 &360127234
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1891120871}
-  m_GameObject: {fileID: 360127229}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &368470049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,7 +1766,6 @@ GameObject:
   - 212: {fileID: 401052861}
   - 114: {fileID: 401052860}
   - 58: {fileID: 401052859}
-  - 50: {fileID: 401052863}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -1911,7 +1782,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 401052858}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &401052860
@@ -1961,22 +1832,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 27
---- !u!50 &401052863
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 134190765}
-  m_GameObject: {fileID: 401052858}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &403685781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1843,6 @@ GameObject:
   - 212: {fileID: 403685784}
   - 114: {fileID: 403685783}
   - 58: {fileID: 403685782}
-  - 50: {fileID: 403685786}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -2005,7 +1859,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 403685781}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &403685783
@@ -2055,22 +1909,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 36
---- !u!50 &403685786
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 533633058}
-  m_GameObject: {fileID: 403685781}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &425788131
 Prefab:
   m_ObjectHideFlags: 0
@@ -2116,13 +1954,60 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
   m_RootGameObject: {fileID: 772255403}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &431752506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 431752508}
+  - 131: {fileID: 431752507}
+  m_Layer: 0
+  m_Name: CoinsHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!131 &431752507
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431752506}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: 84c37433bc7d72641a6419708d9e3a12, type: 3}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: -64
+    y: -29
+    width: 15
+    height: 15
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
+--- !u!4 &431752508
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431752506}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .150000006, y: 1.01999998, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 65
 --- !u!1 &434416367
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,7 +2115,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2248,7 +2133,6 @@ GameObject:
   - 212: {fileID: 469168670}
   - 114: {fileID: 469168669}
   - 58: {fileID: 469168668}
-  - 50: {fileID: 469168672}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -2265,7 +2149,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 469168667}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &469168669
@@ -2315,22 +2199,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 42
---- !u!50 &469168672
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 994265143}
-  m_GameObject: {fileID: 469168667}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &472821234
 Prefab:
   m_ObjectHideFlags: 0
@@ -2376,7 +2244,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2428,7 +2296,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2480,7 +2348,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2532,7 +2400,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2550,7 +2418,6 @@ GameObject:
   - 212: {fileID: 529729078}
   - 114: {fileID: 529729077}
   - 58: {fileID: 529729076}
-  - 50: {fileID: 529729080}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -2567,7 +2434,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 529729075}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &529729077
@@ -2617,22 +2484,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 37
---- !u!50 &529729080
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 201119816}
-  m_GameObject: {fileID: 529729075}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &533633058
 Prefab:
   m_ObjectHideFlags: 0
@@ -2678,7 +2529,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -2696,7 +2547,6 @@ GameObject:
   - 212: {fileID: 541450702}
   - 114: {fileID: 541450701}
   - 58: {fileID: 541450700}
-  - 50: {fileID: 541450704}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -2713,7 +2563,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 541450699}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &541450701
@@ -2763,22 +2613,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 58
---- !u!50 &541450704
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1697324733}
-  m_GameObject: {fileID: 541450699}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &563806998
 Prefab:
   m_ObjectHideFlags: 0
@@ -2824,13 +2658,64 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
   m_RootGameObject: {fileID: 98468514}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &605210673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 605210675}
+  - 132: {fileID: 605210674}
+  m_Layer: 0
+  m_Name: NeuroskyStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!132 &605210674
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605210673}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: STATS
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 12
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
+--- !u!4 &605210675
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605210673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .819999993, y: .99000001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 66
 --- !u!1 &611836400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2893,7 +2778,6 @@ GameObject:
   - 212: {fileID: 639798337}
   - 114: {fileID: 639798336}
   - 58: {fileID: 639798335}
-  - 50: {fileID: 639798339}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -2910,7 +2794,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 639798334}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &639798336
@@ -2960,22 +2844,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 50
---- !u!50 &639798339
-Rigidbody2D:
+--- !u!1 &644649246
+GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1515881640}
-  m_GameObject: {fileID: 639798334}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 644649248}
+  - 132: {fileID: 644649247}
+  m_Layer: 0
+  m_Name: CoinsText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!132 &644649247
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 644649246}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 00/40
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 15
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
+--- !u!4 &644649248
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 644649246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .0900000036, y: .99000001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 64
 --- !u!1001 &652896447
 Prefab:
   m_ObjectHideFlags: 0
@@ -3021,7 +2940,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3152,6 +3071,83 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 17
+--- !u!1 &743578639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 1583651421}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 743578643}
+  - 212: {fileID: 743578642}
+  - 114: {fileID: 743578641}
+  - 58: {fileID: 743578640}
+  m_Layer: 0
+  m_Name: coin
+  m_TagString: Coin
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!58 &743578640
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 1583651421}
+  m_GameObject: {fileID: 743578639}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: .100000001
+  m_Center: {x: 0, y: 0}
+--- !u!114 &743578641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 1583651421}
+  m_GameObject: {fileID: 743578639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47478a5c90e559a4c89a96d1d78f688e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &743578642
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 21200000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 1583651421}
+  m_GameObject: {fileID: 743578639}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 76757217da7684e43928c177220955af, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &743578643
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 1583651421}
+  m_GameObject: {fileID: 743578639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 46.5835571, y: .467152834, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 67
 --- !u!1 &750637070
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3255,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3311,7 +3307,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3329,7 +3325,6 @@ GameObject:
   - 212: {fileID: 772255406}
   - 114: {fileID: 772255405}
   - 58: {fileID: 772255404}
-  - 50: {fileID: 772255408}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -3346,7 +3341,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 772255403}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &772255405
@@ -3396,22 +3391,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 40
---- !u!50 &772255408
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 425788131}
-  m_GameObject: {fileID: 772255403}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &790944595
 Prefab:
   m_ObjectHideFlags: 0
@@ -3457,7 +3436,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3475,7 +3454,6 @@ GameObject:
   - 212: {fileID: 858019664}
   - 114: {fileID: 858019663}
   - 58: {fileID: 858019662}
-  - 50: {fileID: 858019666}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -3492,7 +3470,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 858019661}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &858019663
@@ -3542,22 +3520,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 31
---- !u!50 &858019666
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 911251445}
-  m_GameObject: {fileID: 858019661}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &881073534
 Prefab:
   m_ObjectHideFlags: 0
@@ -3603,7 +3565,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3655,7 +3617,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -3673,7 +3635,6 @@ GameObject:
   - 212: {fileID: 882487284}
   - 114: {fileID: 882487283}
   - 58: {fileID: 882487282}
-  - 50: {fileID: 882487286}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -3690,7 +3651,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 882487281}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &882487283
@@ -3740,22 +3701,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 62
---- !u!50 &882487286
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 881073534}
-  m_GameObject: {fileID: 882487281}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &884622201
 GameObject:
   m_ObjectHideFlags: 0
@@ -3822,7 +3767,7 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 888135267}
@@ -3842,7 +3787,7 @@ BoxCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 6100000, guid: 98fd71094f7f4c2448f5c5040df2df1d,
     type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888135264}
   m_Enabled: 1
   m_Material: {fileID: 0}
@@ -3854,7 +3799,7 @@ SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 21200000, guid: 98fd71094f7f4c2448f5c5040df2df1d,
     type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888135264}
   m_Enabled: 1
   m_CastShadows: 0
@@ -3876,10 +3821,10 @@ SpriteRenderer:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888135264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.02999997, z: 0}
+  m_LocalPosition: {x: 1.04030621, y: .44556129, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3889,7 +3834,7 @@ Rigidbody2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 5000000, guid: 98fd71094f7f4c2448f5c5040df2df1d,
     type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888135264}
   m_Mass: 1
   m_LinearDrag: 0
@@ -3905,11 +3850,11 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 98fd71094f7f4c2448f5c5040df2df1d,
     type: 2}
-  m_PrefabInternal: {fileID: 5619567}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888135264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c575af7668c3d4cba8f46dd2211fb7, type: 3}
+  m_Script: {fileID: 11500000, guid: d7f8a6402e112014c8de727c962c06be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
@@ -3925,7 +3870,6 @@ GameObject:
   - 212: {fileID: 901979870}
   - 114: {fileID: 901979869}
   - 58: {fileID: 901979868}
-  - 50: {fileID: 901979872}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -3942,7 +3886,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 901979867}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &901979869
@@ -3992,22 +3936,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 39
---- !u!50 &901979872
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1262346550}
-  m_GameObject: {fileID: 901979867}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &911251445
 Prefab:
   m_ObjectHideFlags: 0
@@ -4053,7 +3981,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4105,7 +4033,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4219,7 +4147,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4271,7 +4199,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4323,7 +4251,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4341,7 +4269,6 @@ GameObject:
   - 212: {fileID: 1038963512}
   - 114: {fileID: 1038963511}
   - 58: {fileID: 1038963510}
-  - 50: {fileID: 1038963514}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -4358,7 +4285,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1038963509}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1038963511
@@ -4408,22 +4335,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 55
---- !u!50 &1038963514
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1592763715}
-  m_GameObject: {fileID: 1038963509}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1049736404
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,7 +4346,6 @@ GameObject:
   - 212: {fileID: 1049736407}
   - 114: {fileID: 1049736406}
   - 58: {fileID: 1049736405}
-  - 50: {fileID: 1049736409}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -4452,7 +4362,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1049736404}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1049736406
@@ -4502,22 +4412,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 41
---- !u!50 &1049736409
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1972452233}
-  m_GameObject: {fileID: 1049736404}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1063664317
 GameObject:
   m_ObjectHideFlags: 0
@@ -4529,7 +4423,6 @@ GameObject:
   - 212: {fileID: 1063664320}
   - 114: {fileID: 1063664319}
   - 58: {fileID: 1063664318}
-  - 50: {fileID: 1063664322}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -4546,7 +4439,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1063664317}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1063664319
@@ -4596,22 +4489,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 49
---- !u!50 &1063664322
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 173827422}
-  m_GameObject: {fileID: 1063664317}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1067337679
 Prefab:
   m_ObjectHideFlags: 0
@@ -4657,7 +4534,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4675,7 +4552,6 @@ GameObject:
   - 212: {fileID: 1091916265}
   - 114: {fileID: 1091916264}
   - 58: {fileID: 1091916263}
-  - 50: {fileID: 1091916267}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -4692,7 +4568,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1091916262}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1091916264
@@ -4742,22 +4618,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 46
---- !u!50 &1091916267
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 881689237}
-  m_GameObject: {fileID: 1091916262}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1139961642
 Prefab:
   m_ObjectHideFlags: 0
@@ -4803,7 +4663,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -4821,7 +4681,6 @@ GameObject:
   - 212: {fileID: 1148361328}
   - 114: {fileID: 1148361327}
   - 58: {fileID: 1148361326}
-  - 50: {fileID: 1148361330}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -4838,7 +4697,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1148361325}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1148361327
@@ -4888,22 +4747,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 56
---- !u!50 &1148361330
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1251229314}
-  m_GameObject: {fileID: 1148361325}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1166745180
 GameObject:
   m_ObjectHideFlags: 0
@@ -4914,6 +4757,7 @@ GameObject:
   - 4: {fileID: 1166745182}
   - 212: {fileID: 1166745181}
   - 114: {fileID: 1166745183}
+  - 61: {fileID: 1166745184}
   m_Layer: 0
   m_Name: goal
   m_TagString: Untagged
@@ -4966,6 +4810,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580ef9903f4eed44cbfcb138d554589f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1166745184
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1166745180}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: .400000006, y: .600000024}
+  m_Center: {x: 0, y: 0}
 --- !u!1 &1237504657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5074,7 +4929,6 @@ GameObject:
   - 212: {fileID: 1248847232}
   - 114: {fileID: 1248847231}
   - 58: {fileID: 1248847230}
-  - 50: {fileID: 1248847234}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -5091,7 +4945,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1248847229}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1248847231
@@ -5141,22 +4995,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 48
---- !u!50 &1248847234
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1753825585}
-  m_GameObject: {fileID: 1248847229}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1251229314
 Prefab:
   m_ObjectHideFlags: 0
@@ -5202,7 +5040,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -5254,7 +5092,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -5306,7 +5144,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -5324,7 +5162,6 @@ GameObject:
   - 212: {fileID: 1306760939}
   - 114: {fileID: 1306760938}
   - 58: {fileID: 1306760937}
-  - 50: {fileID: 1306760941}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -5341,7 +5178,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1306760936}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1306760938
@@ -5391,22 +5228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 60
---- !u!50 &1306760941
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 915505378}
-  m_GameObject: {fileID: 1306760936}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1419052017
 Prefab:
   m_ObjectHideFlags: 0
@@ -5452,7 +5273,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -5470,7 +5291,6 @@ GameObject:
   - 212: {fileID: 1440761988}
   - 114: {fileID: 1440761987}
   - 58: {fileID: 1440761986}
-  - 50: {fileID: 1440761990}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -5487,7 +5307,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1440761985}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1440761987
@@ -5537,22 +5357,83 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 33
---- !u!50 &1440761990
-Rigidbody2D:
+--- !u!1 &1444859306
+GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+  m_PrefabParentObject: {fileID: 100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 302801262}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1444859310}
+  - 212: {fileID: 1444859309}
+  - 114: {fileID: 1444859308}
+  - 58: {fileID: 1444859307}
+  m_Layer: 0
+  m_Name: coin
+  m_TagString: Coin
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!58 &1444859307
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678,
     type: 2}
-  m_PrefabInternal: {fileID: 768644740}
-  m_GameObject: {fileID: 1440761985}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_PrefabInternal: {fileID: 302801262}
+  m_GameObject: {fileID: 1444859306}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: .100000001
+  m_Center: {x: 0, y: 0}
+--- !u!114 &1444859308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 302801262}
+  m_GameObject: {fileID: 1444859306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47478a5c90e559a4c89a96d1d78f688e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &1444859309
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 21200000, guid: fa2fbf5005995e846b7a11bfce3e5678,
+    type: 2}
+  m_PrefabInternal: {fileID: 302801262}
+  m_GameObject: {fileID: 1444859306}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 76757217da7684e43928c177220955af, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &1444859310
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_PrefabInternal: {fileID: 302801262}
+  m_GameObject: {fileID: 1444859306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.1897926, y: .467152834, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 69
 --- !u!1 &1451714421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5688,7 +5569,6 @@ GameObject:
   - 212: {fileID: 1499218323}
   - 114: {fileID: 1499218322}
   - 58: {fileID: 1499218321}
-  - 50: {fileID: 1499218325}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -5705,7 +5585,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1499218320}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1499218322
@@ -5755,22 +5635,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &1499218325
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 450273949}
-  m_GameObject: {fileID: 1499218320}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1515881640
 Prefab:
   m_ObjectHideFlags: 0
@@ -5816,7 +5680,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -5940,7 +5804,6 @@ GameObject:
   - 212: {fileID: 1529551421}
   - 114: {fileID: 1529551420}
   - 58: {fileID: 1529551419}
-  - 50: {fileID: 1529551423}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -5957,7 +5820,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1529551418}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1529551420
@@ -6007,22 +5870,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 45
---- !u!50 &1529551423
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1796863507}
-  m_GameObject: {fileID: 1529551418}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1544433138
 GameObject:
   m_ObjectHideFlags: 0
@@ -6034,7 +5881,6 @@ GameObject:
   - 212: {fileID: 1544433141}
   - 114: {fileID: 1544433140}
   - 58: {fileID: 1544433139}
-  - 50: {fileID: 1544433143}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6051,7 +5897,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1544433138}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1544433140
@@ -6101,22 +5947,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 47
---- !u!50 &1544433143
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 105532832}
-  m_GameObject: {fileID: 1544433138}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1564079610
 GameObject:
   m_ObjectHideFlags: 0
@@ -6128,7 +5958,6 @@ GameObject:
   - 212: {fileID: 1564079613}
   - 114: {fileID: 1564079612}
   - 58: {fileID: 1564079611}
-  - 50: {fileID: 1564079615}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6145,7 +5974,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1564079610}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1564079612
@@ -6195,22 +6024,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 54
---- !u!50 &1564079615
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1067337679}
-  m_GameObject: {fileID: 1564079610}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1574891164
 Prefab:
   m_ObjectHideFlags: 0
@@ -6256,7 +6069,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -6274,7 +6087,6 @@ GameObject:
   - 212: {fileID: 1575814754}
   - 114: {fileID: 1575814753}
   - 58: {fileID: 1575814752}
-  - 50: {fileID: 1575814756}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6291,7 +6103,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1575814751}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1575814753
@@ -6341,22 +6153,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 57
---- !u!50 &1575814756
-Rigidbody2D:
+--- !u!1001 &1583651421
+Prefab:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1574891164}
-  m_GameObject: {fileID: 1575814751}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 46.5835571
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .467152834
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_RootOrder
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_Radius
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
+  m_RootGameObject: {fileID: 743578639}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1001 &1592763715
 Prefab:
   m_ObjectHideFlags: 0
@@ -6402,7 +6250,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -6454,7 +6302,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -6472,7 +6320,6 @@ GameObject:
   - 212: {fileID: 1637750017}
   - 114: {fileID: 1637750016}
   - 58: {fileID: 1637750015}
-  - 50: {fileID: 1637750019}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6489,7 +6336,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1637750014}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1637750016
@@ -6539,22 +6386,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 28
---- !u!50 &1637750019
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 757827714}
-  m_GameObject: {fileID: 1637750014}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1671576379
 GameObject:
   m_ObjectHideFlags: 0
@@ -6566,7 +6397,6 @@ GameObject:
   - 212: {fileID: 1671576382}
   - 114: {fileID: 1671576381}
   - 58: {fileID: 1671576380}
-  - 50: {fileID: 1671576384}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6583,7 +6413,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1671576379}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1671576381
@@ -6633,22 +6463,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 43
---- !u!50 &1671576384
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1622139745}
-  m_GameObject: {fileID: 1671576379}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1697324733
 Prefab:
   m_ObjectHideFlags: 0
@@ -6694,7 +6508,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -6774,7 +6588,6 @@ GameObject:
   - 212: {fileID: 1728229228}
   - 114: {fileID: 1728229227}
   - 58: {fileID: 1728229226}
-  - 50: {fileID: 1728229230}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -6791,7 +6604,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1728229225}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1728229227
@@ -6841,22 +6654,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 25
---- !u!50 &1728229230
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 472821234}
-  m_GameObject: {fileID: 1728229225}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1733767142
 GameObject:
   m_ObjectHideFlags: 0
@@ -6919,6 +6716,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
+--- !u!1 &1745983859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1745983861}
+  - 132: {fileID: 1745983860}
+  - 114: {fileID: 1745983862}
+  m_Layer: 0
+  m_Name: Message
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!132 &1745983860
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745983859}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 17
+  m_FontStyle: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
+--- !u!4 &1745983861
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745983859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: .5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 70
+--- !u!114 &1745983862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745983859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e8d454f2b7987428f7cb3cf4c174bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1753825585
 Prefab:
   m_ObjectHideFlags: 0
@@ -6964,7 +6824,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -7016,7 +6876,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -7034,7 +6894,6 @@ GameObject:
   - 212: {fileID: 1821228909}
   - 114: {fileID: 1821228908}
   - 58: {fileID: 1821228907}
-  - 50: {fileID: 1821228911}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -7051,7 +6910,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1821228906}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1821228908
@@ -7101,27 +6960,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 44
---- !u!50 &1821228911
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 270394865}
-  m_GameObject: {fileID: 1821228906}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1867403405
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: a8002727252092343bdfe376c532083e, type: 2}
-  m_PrefabInternal: {fileID: 159900853}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1867403407}
@@ -7138,13 +6981,14 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: a8002727252092343bdfe376c532083e,
     type: 2}
-  m_PrefabInternal: {fileID: 159900853}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1867403405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0565bcd3bc5409b40a9ec56118c23f01, type: 3}
+  m_Script: {fileID: 11500000, guid: 8226d4aeeba984745b3ee1df482fb82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsGameNeurosky: 0
   leftLimit: 0
   rightLimit: 60
   downLimit: 0
@@ -7153,7 +6997,7 @@ MonoBehaviour:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: a8002727252092343bdfe376c532083e, type: 2}
-  m_PrefabInternal: {fileID: 159900853}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1867403405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -7206,6 +7050,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7224,7 +7072,6 @@ GameObject:
   - 212: {fileID: 1935959689}
   - 114: {fileID: 1935959688}
   - 58: {fileID: 1935959687}
-  - 50: {fileID: 1935959691}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -7241,7 +7088,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1935959686}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1935959688
@@ -7291,22 +7138,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 38
---- !u!50 &1935959691
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 981217128}
-  m_GameObject: {fileID: 1935959686}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1952396051
 GameObject:
   m_ObjectHideFlags: 0
@@ -7318,7 +7149,6 @@ GameObject:
   - 212: {fileID: 1952396054}
   - 114: {fileID: 1952396053}
   - 58: {fileID: 1952396052}
-  - 50: {fileID: 1952396056}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -7335,7 +7165,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1952396051}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
 --- !u!114 &1952396053
@@ -7385,22 +7215,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 23
---- !u!50 &1952396056
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: fa2fbf5005995e846b7a11bfce3e5678,
-    type: 2}
-  m_PrefabInternal: {fileID: 1139961642}
-  m_GameObject: {fileID: 1952396051}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1961220661
 GameObject:
   m_ObjectHideFlags: 0
@@ -7508,7 +7322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -7560,7 +7374,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -7674,7 +7488,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
@@ -7726,7 +7540,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5800000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
