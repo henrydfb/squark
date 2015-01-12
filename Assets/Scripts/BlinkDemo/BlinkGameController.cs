@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BlinkGameController : GameController 
 {
-
     protected override void Start()
     {
         time = MAX_TIME;
@@ -27,6 +26,10 @@ public class BlinkGameController : GameController
             }
         }
     }
+
+   
+
+   
 
     protected override void GameOver()
     {

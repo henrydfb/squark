@@ -15,3 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/RunnerDemo.unity
   - enabled: 1
     path: Assets/Scenes/RunnerGameOver.unity
+  - enabled: 1
+    path: Assets/Scenes/EEGPlatformWinGame.unity
+  - enabled: 1
+    path: Assets/Scenes/EEGPlatformGameOver.unity

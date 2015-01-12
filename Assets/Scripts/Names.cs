@@ -3,15 +3,21 @@
     //Scenes
     public static string BlinkDemoScene = "BlinkDemo";
     public static string BlinkGameOverScene = "BlinkGameOver";
-    public static string BlinkWinGameScene = "BlinkWinGame"
-        ;
+    public static string BlinkWinGameScene = "BlinkWinGame";
+
     public static string RunnerDemoScene = "RunnerDemo";
     public static string RunnerGameOverScene = "RunnerGameOver";
     public static string RunnerWinGameScene = "RunnerWinGame";
+
+    public static string EEGPlatformDemoScene = "EEGPlatformDemo";
+    public static string EEGPlatformGameOverScene = "EEGPlatformGameOver";
+    public static string EEGPlatformWinGameScene = "EEGPlatformWinGame";
     //
     public static string Player = "Player";
 
     public static string Platform = "Platform";
+
+    public static string Enemy = "Enemy";
 
     public static string LeftInput = "Left";
 

@@ -10,6 +10,17 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public float cameraLimit;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public Vector3 graphPosition;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float graphSize;
+
+    private const int NUMBER_OF_ATTENTION_POINT = 30;
     //Player's reference
     private PlayerController player;
     //Flag to determine if the camera is moving
@@ -21,15 +32,61 @@ public class CameraController : MonoBehaviour
 
     private GameController gameController;
 
+    private Vector3[] attentionLevels;
+
+    private bool hooked = false;
+
+
+    public Material mat;
+    private Vector3 startVertex;
+    private Vector3 mousePos;
+
+    private float averageAttention;
+
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag(Names.Player).GetComponent<PlayerController>();
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
         movingCamera = false;
+
+        Example();
+
+        attentionLevels = new Vector3[NUMBER_OF_ATTENTION_POINT];
+        for (int i = 0; i < attentionLevels.Length; i++)
+            attentionLevels[i] = new Vector3(i * (1.0f / attentionLevels.Length), 0, 0);
+        
+        if(!gameController.IsGameNeurosky)
+            InvokeRepeating("OnUpdateAttention", TGCConnectionController.NEUROSKY_INITIAL_TIME, TGCConnectionController.NEUROSKY_REPEAT_RATE);
+
+        averageAttention = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    protected void OnUpdateAttention()
+    {
+        for (int i = 0; i < attentionLevels.Length; i++)
+        {
+            if (i == attentionLevels.Length - 1)
+                attentionLevels[i].y = Random.Range(0.0f, 1.0f);
+            else
+                attentionLevels[i].y = attentionLevels[i + 1].y;
+        }
+    }
+
+    protected void OnUpdateAttention(int value)
+    {
+        
+        for (int i = 0; i < attentionLevels.Length; i++)
+        {
+            if (i == attentionLevels.Length - 1)
+                attentionLevels[i].y = (float)value/100;
+            else
+                attentionLevels[i].y = attentionLevels[i + 1].y;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         Vector3 playerPos, cameraPos, leftMinLimit,rightMinLimit, cameraTransform;
 
         playerPos = Camera.main.WorldToViewportPoint(player.transform.position);
@@ -50,9 +107,9 @@ public class CameraController : MonoBehaviour
             movingCamera = false;
 
         //Move the camera with the player
-        if (movingCamera)
+        /*if (movingCamera)
             cameraPos = new Vector3(cameraStartPosition.x + (player.transform.position.x - playerEnteredCamera.x), cameraStartPosition.y, cameraStartPosition.z);
-        else
+        else*/
             cameraPos = Camera.main.transform.position;
 
         //Check if the camera passes the limit (left and right) on the level
@@ -65,5 +122,88 @@ public class CameraController : MonoBehaviour
 
         //Updates position
         Camera.main.transform.position = cameraPos;
+
+
+        mousePos = Input.mousePosition;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            startVertex = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height, 0);
+        }
+        
+        //Hook event
+       if (gameController.IsGameNeurosky)
+        {
+            if (gameController.GetTGCConnectionController() != null && !hooked)
+            {
+                gameController.GetTGCConnectionController().UpdateAttentionEvent += OnUpdateAttention;
+                hooked = true;
+                Debug.Log("hooked!");
+            }
+        }
 	}
+
+    public float GetAverageAttention()
+    {
+        return averageAttention;
+    }
+
+    void Example()
+    {
+        startVertex = new Vector3(0, 0, 0);
+    }
+
+    void OnPostRender()
+    {
+        if (!mat)
+        {
+            Debug.LogError("Please Assign a material on the inspector");
+            return;
+        }
+        GL.PushMatrix();
+        mat.SetPass(0);
+        GL.LoadOrtho();
+        GL.Begin(GL.LINES);
+        //background grid
+        /*GL.Color(Color.white * 0.1f);
+        for (int i = 0; i < 10; i++)
+        {
+            GL.Vertex(new Vector3(i * (float)(1f / 10f), 0, 0));
+            GL.Vertex(new Vector3(i * (float)(1f / 10f), 1, 0));
+        }*/
+
+        GL.Color(Color.white);
+        //Horizontal
+        GL.Vertex(graphPosition + new Vector3(0,0,0) * graphSize);
+        GL.Vertex(graphPosition + new Vector3(1, 0, 0) * graphSize);
+        GL.Color(Color.white * 0.5f);
+        //Middle lines
+        for (int i = 1; i <= 10; i++)
+        {
+            GL.Vertex(graphPosition + new Vector3(0, 0.1f * i, 0) * graphSize);
+            GL.Vertex(graphPosition + new Vector3(1, 0.1f * i, 0) * graphSize);
+        }
+
+        GL.Color(Color.white);
+        //Vertical
+        GL.Vertex(graphPosition + new Vector3(0, 0, 0) * graphSize);
+        GL.Vertex(graphPosition + new Vector3(0, 1, 0) * graphSize);
+
+        averageAttention = attentionLevels[0].y;
+        GL.Color(Color.red);
+        //Attention curve
+        for (int i = 1; i < attentionLevels.Length;i++ )
+        {
+            GL.Vertex(graphPosition + attentionLevels[i - 1] * graphSize);
+            GL.Vertex(graphPosition + attentionLevels[i] * graphSize);
+
+            averageAttention += attentionLevels[i].y;
+        }
+        //Average
+        GL.Color(Color.green);
+        GL.Vertex(graphPosition + new Vector3(0, averageAttention / attentionLevels.Length, 0) * graphSize);
+        GL.Vertex(graphPosition + new Vector3(1, averageAttention / attentionLevels.Length, 0) * graphSize);
+
+        GL.End();
+        GL.PopMatrix();
+    }
 }

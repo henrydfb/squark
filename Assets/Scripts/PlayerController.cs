@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     protected GameController gameController;
 
+    private bool isDead;
+
 	// Use this for initialization
 	protected virtual void Start () 
     {
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
         isCollidingLeft = false;
         isCollidingRight = false;
         horAxis = 0;
+        isDead = false;
 
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
 	}
@@ -89,10 +92,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     public void Die()
     {
         rigidbody2D.gravityScale = 0;
         rigidbody2D.velocity = Vector3.zero;
+        isDead = true;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col)
@@ -120,6 +129,10 @@ public class PlayerController : MonoBehaviour
                 leftCollider = col.collider;
                 isCollidingLeft = true;
             }
+        }
+        else if (col.collider.tag == Names.Enemy)
+        {
+            Die();
         }
     }
 

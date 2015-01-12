@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WinGameController : MonoBehaviour {
+public class WinGameController : MonoBehaviour 
+{
 
     //Box width
     private const float boxWidth = 500;
@@ -12,6 +13,12 @@ public class WinGameController : MonoBehaviour {
     //Button height
     private const float buttonHeight = 40;
     //private StoredDataCtrl storedData;
+    private string onRetryName;
+
+    public WinGameController(string onRetryName)
+    {
+        this.onRetryName = onRetryName;
+    }
 
     protected virtual void Start()
     {
@@ -28,7 +35,7 @@ public class WinGameController : MonoBehaviour {
 
         //Retry
         if (GUI.Button(new Rect((Screen.width - buttonWidth) / 2, (Screen.height - buttonHeight) / 2, buttonWidth, buttonHeight), "Retry?"))
-            Application.LoadLevel(Names.BlinkDemoScene);
+            Application.LoadLevel(onRetryName);
 
         //Quit
         if (GUI.Button(new Rect((Screen.width - buttonWidth) / 2, ((Screen.height - buttonHeight) / 2) + buttonHeight + buttonHeight / 2, buttonWidth, buttonHeight), "Quit"))

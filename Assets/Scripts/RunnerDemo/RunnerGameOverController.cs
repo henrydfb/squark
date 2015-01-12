@@ -3,6 +3,10 @@ using System.Collections;
 
 public class RunnerGameOverController : GameOverController 
 {
+    public RunnerGameOverController()
+        : base(Names.RunnerDemoScene)
+    { }
+
     protected override void Start()
     {
         base.Start();

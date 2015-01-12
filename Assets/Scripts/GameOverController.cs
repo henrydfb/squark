@@ -12,6 +12,12 @@ public class GameOverController : MonoBehaviour {
     //Button height
     private const float buttonHeight = 40;
     //private StoredDataCtrl storedData;
+    private string onRetryName;
+
+    public GameOverController(string onRetryName)
+    {
+        this.onRetryName = onRetryName;
+    }
 
     protected virtual void Start()
     {
@@ -41,5 +47,7 @@ public class GameOverController : MonoBehaviour {
     }
 
     protected virtual void Retry()
-    {}
+    {
+        Application.LoadLevel(onRetryName);
+    }
 }

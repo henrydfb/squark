@@ -3,6 +3,11 @@ using System.Collections;
 
 public class BlinkGameOverController : GameOverController 
 {
+    public BlinkGameOverController()
+        :base(Names.BlinkDemoScene)
+    { 
+    }
+
     protected override void Start()
     {
         base.Start();

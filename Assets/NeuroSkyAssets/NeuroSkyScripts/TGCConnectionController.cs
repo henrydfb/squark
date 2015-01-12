@@ -30,6 +30,9 @@ public class TGCConnectionController : MonoBehaviour {
 	public event UpdateFloatValueDelegate UpdateLowGammaEvent;
 	public event UpdateFloatValueDelegate UpdateHighGammaEvent;
 
+    public const float NEUROSKY_REPEAT_RATE = 0.1f;
+    public const float NEUROSKY_INITIAL_TIME = 0f;
+
     private bool successfulConnection;
 
     private MessageController feedbackMessage;
@@ -71,8 +74,8 @@ public class TGCConnectionController : MonoBehaviour {
 		    byte[] myWriteBuffer = Encoding.ASCII.GetBytes(@"{""enableRawOutput"": true, ""format"": ""Json""}");
 		    stream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
 			
-			//InvokeRepeating("ParseData",0.1f,0.02f); Initial values
-            InvokeRepeating("ParseData", 0.1f, 0.03f);
+			//Repeating
+            InvokeRepeating("ParseData", NEUROSKY_INITIAL_TIME, NEUROSKY_REPEAT_RATE);
 		}
 	}
 

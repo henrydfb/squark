@@ -1,31 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RunnerPlayerController : PlayerController
+public class EEGPlatformPlayerController : PlayerController
 {
-    //protected RunnerGameController gameController;
-
-    public bool autoRunning = false;
-
     protected override void Start()
     {
         base.Start();
-        gameController = GameObject.Find(Names.GameController).GetComponent<RunnerGameController>();
     }
 
     protected override void Update()
     {
         base.Update();
-
-        if (((RunnerGameController)gameController).GameStarted())
-            transform.position += new Vector3(-Mathf.Abs(((RunnerGameController)gameController).WorldSpeed), 0);
-    }
-
-
-    public void Move()
-    {
-        //Update horizontal movement
-        rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
     }
 
     protected override void HandleInput()
@@ -45,19 +30,8 @@ public class RunnerPlayerController : PlayerController
             }
         }
 
-        //Test
-        if (autoRunning)
-        {
-            if (isCollidingLeft)
-                horAxis = 0;
-            else
-            {
-                horAxis = MAX_AXIS_STEP;
-            }
-        }
-
         //Moving Left
-        /*if (Input.GetAxis(Names.HorizontalInput) < 0)
+        if (Input.GetAxis(Names.HorizontalInput) < 0)
         {
             if (isCollidingRight)
                 horAxis = 0;
@@ -67,18 +41,18 @@ public class RunnerPlayerController : PlayerController
                 if (Input.GetAxis(Names.HorizontalInput) > prevHorAxis)
                     horAxis = horAxis / 2;
             }
-        }*/
+        }
 
         //Not moving
-        //if (Input.GetAxis(Names.HorizontalInput) == 0)
-          //  horAxis = 0;
+        if (Input.GetAxis(Names.HorizontalInput) == 0)
+            horAxis = 0;
 
         //Update horizontal movement
         rigidbody2D.velocity = new Vector2(horAxis * speed, rigidbody2D.velocity.y);
 
         //Check if the game is running witht the EEG device
-        //if (!gameController.IsGameNeurosky)
-        //{
+        if (!gameController.IsGameNeurosky)
+        {
             //Jump button pressed
             if (Input.GetButtonDown(Names.JumpInput) && !isJumping)
                 Jump();
@@ -89,14 +63,9 @@ public class RunnerPlayerController : PlayerController
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y / 2);
                 isJumping = false;
             }
-        //}
+        }
 
         //Previous horizontal axis value
         prevHorAxis = Input.GetAxis(Names.HorizontalInput);
-    }
-
-    public void Stop()
-    {
-        horAxis = 0;
     }
 }

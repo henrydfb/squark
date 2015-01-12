@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public float upLimit;
     //Max time in seconds
-    protected const float MAX_TIME = 60;
+    protected const float MAX_TIME = 60 * 10;
     protected const float MIN_TIME = 0;
     protected const float NUMBER_OF_BLOCKS = 200;
     //Current play time
@@ -74,6 +74,11 @@ public class GameController : MonoBehaviour {
         }
 	}
 
+    public TGCConnectionController GetTGCConnectionController()
+    {
+        return controller;
+    }
+
     public bool IsGameRunning()
     {
         return isGameRunning;
@@ -119,7 +124,7 @@ public class GameController : MonoBehaviour {
         meditation1 = value;
     }
 
-    protected void OnUpdateBlink(int value)
+    protected virtual void OnUpdateBlink(int value)
     {
         blink = value;
         //Make the player jump
@@ -167,7 +172,8 @@ public class GameController : MonoBehaviour {
             else
             {
                 //Out of the screen
-                isGameOver = player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit;
+                isGameOver = (player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit) || player.GetComponent<PlayerController>().IsDead();
+
                 if (isGameOver)
                     player.GetComponent<PlayerController>().Die();
             }
@@ -208,12 +214,18 @@ public class GameController : MonoBehaviour {
 
     protected virtual void OnGUI()
     {
-        neuroskyStatsText.text = "STATS:\n\n";
+        neuroskyStatsText.text = "STATS:\n\n\n\n\n\n\n\n\n\n\n\n";
         neuroskyStatsText.text += "Poor Signal: " + poorSignal1 + "\n";
         neuroskyStatsText.text += "Attention: " + attention1 + "\n";
-        neuroskyStatsText.text += "Meditation: " + meditation1 + "\n";
+        /*neuroskyStatsText.text += "Meditation: " + meditation1 + "\n";
         neuroskyStatsText.text += "Blink: " + blink + "\n";
-        neuroskyStatsText.text += "Delta: " + delta + "\n";
+        neuroskyStatsText.text += "Delta: " + delta + "\n";*/
+    }
+
+    public void OnDestroy()
+    {
+        //if(IsGameNeurosky)
+          //  controller.Disconnect();
     }
 
 }
