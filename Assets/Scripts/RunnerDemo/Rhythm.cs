@@ -41,6 +41,11 @@ public class Rhythm
     /// </summary>
     private Action[] actions;       //Beats in a rhythm
 
+    /// <summary>
+    /// This is used to assure that moving actions do not overlap
+    /// </summary>
+    private int maxMoveEndPos;
+
     public Rhythm(Type type, Density density, float length)
     {
         int numberOfActions;
@@ -66,6 +71,7 @@ public class Rhythm
         }
 
         actions = new Action[numberOfActions];
+        maxMoveEndPos = 0;
     }
 
     /// <summary>
@@ -73,27 +79,53 @@ public class Rhythm
     /// </summary>
     /// <param name="moveProb"></param>
     /// <param name="jumpProb"></param>
-    public void Build(float moveProb, float jumpProb,float minJump, float maxJump)
+    public void Build(float minJump, float maxJump)
     {
         float blockSize, beginTime, endTime;
-        Action.Type actionType;
+        int jumpType;
+        string actionType;
         Action action;
+        Move moveAction;
+        Jump.HeightType heightType;
 
         blockSize = CreateBlockSize();
 
         for (int i = 0; i < actions.Length; i++)
         {
-            actionType = CreateActionType(moveProb, jumpProb);
             beginTime = CreateBeginTime(i, blockSize);
+
+            actionType = CreateActionType(i);
+
             action = null;
             switch (actionType)
             { 
-                case Action.Type.Jump:
-                    endTime = Random.Range(minJump, maxJump);
-                    action = new Action(actionType, beginTime,endTime);
+                case Jump.TYPE:
+                    jumpType = Random.Range(0,100);
+                    
+                    //Short Jump
+                    if(jumpType >= 0 && jumpType < 100/3)
+                    {
+                        heightType = Jump.HeightType.Short;
+                        endTime = minJump;
+                    }
+                    //Medium
+                    else if(jumpType >= 100/3 && jumpType < 2 * (100/3))
+                    {
+                        heightType = Jump.HeightType.Medium;
+                        endTime = (maxJump - minJump)/2;
+                    }
+                    //Long
+                    else
+                    {
+                        heightType = Jump.HeightType.Long;
+                        endTime = maxJump;
+                    }
+
+                    action = new Jump(beginTime,endTime,heightType);
                     break;
-                case Action.Type.Move:
-                    action = new Action(actionType, beginTime);
+                case Move.TYPE:
+                    maxMoveEndPos = Random.Range(i + 1, actions.Length + 1);
+                    action = new Move(beginTime, maxMoveEndPos);
                     break;
             }
             
@@ -101,14 +133,23 @@ public class Rhythm
         }
 
         //Set end time for move beats
+        //We do this after the whole rythm is build because we need to look ahead in time to get the end time for the "move" action
         for(int i = 0; i < actions.Length;i++)
         {
-            if (actions[i].GetType() == Action.Type.Move)
+            if (actions[i].GetType() == Move.TYPE)
             {
+                moveAction = (Move)actions[i];
+
                 if (i == actions.Length - 1)
                     endTime = length;
                 else
-                    endTime = actions[Random.Range(i + 1, actions.Length - 1)].GetBeginTime();
+                {
+                    if(moveAction.GetEndTimePosition() == actions.Length)
+                        endTime = length;
+                    else
+                        endTime = actions[moveAction.GetEndTimePosition()].GetBeginTime();
+                }
+
                 actions[i].SetEndTime(endTime);
             }
         }
@@ -182,19 +223,20 @@ public class Rhythm
     /// <param name="moveProb"></param>
     /// <param name="jumpProb"></param>
     /// <returns></returns>
-    private Action.Type CreateActionType(float moveProb, float jumpProb)
+    private string CreateActionType(int currPos)
     {
-        int actionRand;
-        Action.Type actionType;
+        string actionType;
 
-        //This is for generalization (in case we want to add more actions)
-        actionRand = Random.Range(0, 100);
-        if (actionRand >= 0 && actionRand < 100 * moveProb)
-            actionType = Action.Type.Move;
-        else if (actionRand >= 100 * moveProb && actionRand < 100 * (moveProb + jumpProb))
-            actionType = Action.Type.Jump;
+        if (currPos == 0)
+            actionType = Move.TYPE;
         else
-            actionType = Action.Type.Move;
+        {
+            //Check for move action overlapping
+            if (currPos >= maxMoveEndPos)
+                actionType = Move.TYPE;
+            else
+                actionType = Jump.TYPE;
+        }
 
         return actionType;
     }
@@ -202,9 +244,27 @@ public class Rhythm
     /// <summary>
     /// 
     /// </summary>
-    public void Print()
+    public string GetPrint()
     {
+        string print;
+
+        print = "[";
         foreach (Action a in actions)
-            a.Print();
+            print += a.GetPrintAction();
+
+        print += "]";
+
+        return print;
+        //Debug.Log(print);
+            //a.Print();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Action[] GetActions()
+    {
+        return actions;
     }
 }

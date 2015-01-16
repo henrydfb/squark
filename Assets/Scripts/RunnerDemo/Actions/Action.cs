@@ -4,37 +4,31 @@ using System.Collections;
 /// <summary>
 /// 
 /// </summary>
-public class Action
+public abstract class Action
 {
-    public enum Type
-    { 
-        Move,    
-        Jump
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    protected string type;
 
     /// <summary>
     /// 
     /// </summary>
-    private Type type;
+    protected float beginTime;
 
     /// <summary>
     /// 
     /// </summary>
-    private float beginTime;
+    protected float endTime;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private float endTime;
-
-    public Action(Type type, float beginTime, float endTime)
+    public Action(string type, float beginTime, float endTime)
     {
         this.type = type;
         this.beginTime = beginTime;
         this.endTime = endTime;
     }
 
-    public Action(Type type, float beginTime)
+    public Action(string type, float beginTime)
     {
         this.type = type;
         this.beginTime = beginTime;
@@ -45,7 +39,12 @@ public class Action
         return beginTime;
     }
 
-    public Type GetType()
+    public float GetEndTime()
+    {
+        return endTime;
+    }
+
+    public string GetType()
     {
         return type;
     }
@@ -53,6 +52,11 @@ public class Action
     public void SetEndTime(float value)
     {
         endTime = value;
+    }
+
+    public virtual string GetPrintAction()
+    {
+        return "(" + type + ":" + beginTime.ToString("00.00") + "," + endTime.ToString("00.00") + ")";
     }
 
     public void Print()
