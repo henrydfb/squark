@@ -4,19 +4,19 @@ using System.Collections;
 /// <summary>
 /// 
 /// </summary>
-public class KillEnemy : GeometryInterpretation
+public class Platform : GeometryInterpretation
 {
     /// <summary>
     /// 
     /// </summary>
-    public const string TYPE = "KillEnemy";
+    public const string TYPE = "Platform";
 
     /// <summary>
     /// 
     /// </summary>
-    public const int TYPE_NUMBER = 3;
+    public const int TYPE_NUMBER = 6;
 
-    public KillEnemy()
+    public Platform()
         :base(TYPE,TYPE_NUMBER)
     {
     }

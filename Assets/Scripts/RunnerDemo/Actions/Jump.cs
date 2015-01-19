@@ -26,6 +26,11 @@ public class Jump : Action
         this.heightType = heightType;
     }
 
+    public HeightType GetHeightType()
+    {
+        return heightType;
+    }
+
     public override string GetPrintAction()
     {
         return "(" + type + ":" + beginTime.ToString("00.00") + "," + heightType + ")";

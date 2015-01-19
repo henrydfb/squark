@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// 
@@ -46,6 +47,11 @@ public class Rhythm
     /// </summary>
     private int maxMoveEndPos;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private List<Geometry> geometries;
+
     public Rhythm(Type type, Density density, float length)
     {
         int numberOfActions;
@@ -71,6 +77,7 @@ public class Rhythm
         }
 
         actions = new Action[numberOfActions];
+        geometries = new List<Geometry>();
         maxMoveEndPos = 0;
     }
 
@@ -262,9 +269,49 @@ public class Rhythm
     /// <summary>
     /// 
     /// </summary>
+    public void GetPrintGeometries()
+    {
+        //foreach (Geometry g in geometries)
+          //  print(g.GetPrint());
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <returns></returns>
     public Action[] GetActions()
     {
         return actions;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public List<Geometry> GetGeometries()
+    {
+        return geometries;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="geometry"></param>
+    public void AddGeometry(Geometry geometry)
+    {
+        geometries.Add(geometry);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ConstructLevel()
+    {
+        Geometry geometry;
+
+        //We have to decide how to handle this
+        geometry = geometries[0];
+
+
     }
 }

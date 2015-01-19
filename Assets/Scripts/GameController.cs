@@ -153,7 +153,8 @@ public class GameController : MonoBehaviour {
 
         min = (int)(time / 60);
         sec = (int)(time % 60);
-
+        
+        /*
         //Left Limit
         Debug.DrawLine(new Vector3(leftLimit, downLimit), new Vector3(leftLimit, upLimit), Color.red);
         //Right Limit
@@ -161,7 +162,7 @@ public class GameController : MonoBehaviour {
         //Up Limit
         Debug.DrawLine(new Vector3(leftLimit, upLimit), new Vector3(rightLimit, upLimit), Color.red);
         //Down Limit
-        Debug.DrawLine(new Vector3(leftLimit, downLimit), new Vector3(rightLimit, downLimit), Color.red);
+        Debug.DrawLine(new Vector3(leftLimit, downLimit), new Vector3(rightLimit, downLimit), Color.red);*/
 
         //If the game started
         if (isGameRunning)

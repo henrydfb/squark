@@ -30,13 +30,13 @@ public class RunnerGameController : GameController {
         cameraController = Camera.main.GetComponent<CameraController>();
         previousAttentionAverage = 0;
 
-        for (int i = 0; i < 150; i++)
+        /*for (int i = 0; i < 150; i++)
         {
             GameObject obj = (GameObject)Instantiate(platformPrefab, new Vector3(lastPlatform.transform.position.x - lastPlatform.transform.renderer.bounds.size.x/2 +  platformPrefab.renderer.bounds.size.x / 2 + platformPrefab.renderer.bounds.size.x * i, -0.1f, 0), Quaternion.identity);
             if (i % 2 == 0)
                 obj.renderer.material.color = new Color(1, 0, 0);
 
-        }
+        }*/
     }
 
     bool jidoStarted = false;
@@ -52,11 +52,11 @@ public class RunnerGameController : GameController {
             //Check if it's game over
             if (!isGameOver)
             {
-                if (gameStarted)
+                /*if (gameStarted)
                 {
                     time += Time.deltaTime;
 
-                    if (time >= 20)
+                    if (time >= 1)
                     {
                         (player.GetComponent<RunnerPlayerController>()).autoRunning = false;
                         (player.GetComponent<RunnerPlayerController>()).Stop();
@@ -84,7 +84,7 @@ public class RunnerGameController : GameController {
                     startTimer += Time.deltaTime;
                     waitTime = (int)(START_WAIT_SEC + 1 - (startTimer % 60));
                     feedbackMessage.Show(waitTime.ToString());
-                }
+                }*/
             }
         }
     }

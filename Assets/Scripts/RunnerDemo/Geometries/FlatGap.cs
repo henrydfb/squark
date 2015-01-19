@@ -4,15 +4,20 @@ using System.Collections;
 /// <summary>
 /// 
 /// </summary>
-public class FlatGap : Geometry
+public class FlatGap : GeometryInterpretation
 {
     /// <summary>
     /// 
     /// </summary>
     public const string TYPE = "FlatGap";
 
-    public FlatGap(float beginTime, float endTime)
-        :base(TYPE,beginTime,endTime)
+    /// <summary>
+    /// 
+    /// </summary>
+    public const int TYPE_NUMBER = 2;
+
+    public FlatGap()
+        :base(TYPE,TYPE_NUMBER)
     {
     }
 }

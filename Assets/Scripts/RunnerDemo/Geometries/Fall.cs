@@ -4,15 +4,20 @@ using System.Collections;
 /// <summary>
 /// 
 /// </summary>
-public class Fall : Geometry
+public class Fall : GeometryInterpretation
 {
     /// <summary>
     /// 
     /// </summary>
     public const string TYPE = "Fall";
 
-    public Fall(float beginTime, int endPos)
-        :base(TYPE,beginTime)
+    /// <summary>
+    /// 
+    /// </summary>
+    public const int TYPE_NUMBER = 1;
+
+    public Fall()
+        :base(TYPE,TYPE_NUMBER)
     {
     }
 }

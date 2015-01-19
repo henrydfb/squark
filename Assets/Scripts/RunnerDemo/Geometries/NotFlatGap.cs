@@ -4,15 +4,20 @@ using System.Collections;
 /// <summary>
 /// 
 /// </summary>
-public class NotFlatGap : Geometry
+public class NotFlatGap : GeometryInterpretation
 {
     /// <summary>
     /// 
     /// </summary>
     public const string TYPE = "NotFlatGap";
 
-    public NotFlatGap(float beginTime, int endPos)
-        :base(TYPE,beginTime)
+    /// <summary>
+    /// 
+    /// </summary>
+    public const int TYPE_NUMBER = 5;
+
+    public NotFlatGap()
+        :base(TYPE,TYPE_NUMBER)
     {
     }
 }

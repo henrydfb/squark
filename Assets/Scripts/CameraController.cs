@@ -87,9 +87,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Vector3 playerPos, cameraPos, leftMinLimit,rightMinLimit, cameraTransform;
 
-        playerPos = Camera.main.WorldToViewportPoint(player.transform.position);
+        /*playerPos = Camera.main.WorldToViewportPoint(player.transform.position);
         leftMinLimit = Camera.main.WorldToScreenPoint(new Vector3(gameController.leftLimit, gameController.downLimit));
         rightMinLimit = Camera.main.WorldToScreenPoint(new Vector3(gameController.rightLimit, gameController.downLimit));
 
@@ -104,13 +105,13 @@ public class CameraController : MonoBehaviour
             }
         }
         else
-            movingCamera = false;
+            movingCamera = false;*/
 
         //Move the camera with the player
         /*if (movingCamera)
             cameraPos = new Vector3(cameraStartPosition.x + (player.transform.position.x - playerEnteredCamera.x), cameraStartPosition.y, cameraStartPosition.z);
         else*/
-            cameraPos = Camera.main.transform.position;
+            /*cameraPos = Camera.main.transform.position;
 
         //Check if the camera passes the limit (left and right) on the level
         cameraTransform = Camera.main.WorldToScreenPoint(cameraPos);
@@ -139,7 +140,7 @@ public class CameraController : MonoBehaviour
                 hooked = true;
                 Debug.Log("hooked!");
             }
-        }
+        }*/
 	}
 
     public float GetAverageAttention()
