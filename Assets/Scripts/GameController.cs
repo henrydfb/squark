@@ -49,10 +49,14 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
     protected virtual void Start() 
     {
+        GameObject nkystsObj;
         timeText = GameObject.Find(Names.TimeText).GetComponent<GUIText>();
         coinsText = GameObject.Find(Names.CoinsText).GetComponent<GUIText>();
         feedbackMessage = GameObject.Find(Names.FeedbackMessage).GetComponent<MessageController>();
-        neuroskyStatsText = GameObject.Find(Names.NeuroskyStatsText).GetComponent<GUIText>();
+        
+        nkystsObj = GameObject.Find(Names.NeuroskyStatsText);
+        if(nkystsObj != null)
+            neuroskyStatsText = nkystsObj.GetComponent<GUIText>();
         player = GameObject.Find(Names.Player);
         isGameOver = false;
         numberOfCoins = GameObject.FindGameObjectsWithTag(Names.Coin).Length;
@@ -173,7 +177,7 @@ public class GameController : MonoBehaviour {
             else
             {
                 //Out of the screen
-                isGameOver = (player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit) || player.GetComponent<PlayerController>().IsDead();
+                isGameOver = (player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit);// || player.GetComponent<PlayerController>().IsDead();
 
                 if (isGameOver)
                     player.GetComponent<PlayerController>().Die();
@@ -215,12 +219,15 @@ public class GameController : MonoBehaviour {
 
     protected virtual void OnGUI()
     {
-        neuroskyStatsText.text = "STATS:\n\n\n\n\n\n\n\n\n\n\n\n";
-        neuroskyStatsText.text += "Poor Signal: " + poorSignal1 + "\n";
-        neuroskyStatsText.text += "Attention: " + attention1 + "\n";
-        /*neuroskyStatsText.text += "Meditation: " + meditation1 + "\n";
-        neuroskyStatsText.text += "Blink: " + blink + "\n";
-        neuroskyStatsText.text += "Delta: " + delta + "\n";*/
+        if (neuroskyStatsText != null)
+        {
+            neuroskyStatsText.text = "STATS:\n\n\n\n\n\n\n\n\n\n\n\n";
+            neuroskyStatsText.text += "Poor Signal: " + poorSignal1 + "\n";
+            neuroskyStatsText.text += "Attention: " + attention1 + "\n";
+            /*neuroskyStatsText.text += "Meditation: " + meditation1 + "\n";
+            neuroskyStatsText.text += "Blink: " + blink + "\n";
+            neuroskyStatsText.text += "Delta: " + delta + "\n";*/
+        }
     }
 
     public void OnDestroy()

@@ -66,13 +66,13 @@ public class Rhythm
         switch(density)
         {
             case Density.Low:
-                numberOfActions = 4;
+                numberOfActions = ((int)length/3);
                 break;
             case Density.Medium:
-                numberOfActions = 6;
+                numberOfActions = ((int)length * 2 / 3);
                 break;
             case Density.High:
-                numberOfActions = 11;
+                numberOfActions = (int)length;
                 break;
         }
 
@@ -96,6 +96,8 @@ public class Rhythm
         Jump.HeightType heightType;
 
         blockSize = CreateBlockSize();
+        Debug.Log(blockSize);
+        Debug.Log("actions" + actions.Length);
 
         for (int i = 0; i < actions.Length; i++)
         {

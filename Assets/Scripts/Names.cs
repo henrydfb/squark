@@ -15,9 +15,11 @@
     //
     public static string Player = "Player";
 
-    public static string Platform = "Platform";
+    public const string Platform = "Platform";
 
-    public static string Enemy = "Enemy";
+    public const string Enemy = "Enemy";
+
+    public const string EnemyBoundingHit = "EnemyBoundingHit";
 
     public static string LeftInput = "Left";
 
@@ -44,4 +46,6 @@
     public static string GameController = "GameController";
 
     public static string Coin = "Coin";
+
+    public static string RhythmFactory = "RhythmFactory";
 }

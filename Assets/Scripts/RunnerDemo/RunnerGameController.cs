@@ -7,15 +7,20 @@ public class RunnerGameController : GameController {
     public GameObject platformPrefab;
     public GameObject enemyPrefab;
     public GameObject coinPrefab;
+    public GameObject playerShadowPrefab;
 
-    private const int START_WAIT_SEC = 5;
+    private const int START_WAIT_SEC = 3;
 
     private bool gameStarted;
     private float startTimer;
     private PlatformController lastPlatform;
     private CameraController cameraController;
     private float previousAttentionAverage;
+    private int currentSec;
+    private RhythmFactory rhythmFactory;
 
+    private float iniX;
+    private int prevTime;
     protected override void Start()
     {
         time = MIN_TIME;
@@ -25,11 +30,16 @@ public class RunnerGameController : GameController {
         gameStarted = false;
         startTimer = 0;
 
-        
-        lastPlatform = GameObject.Find(Names.FirstPlatform).GetComponent<PlatformController>();
+        if(GameObject.Find(Names.FirstPlatform) != null)
+            lastPlatform = GameObject.Find(Names.FirstPlatform).GetComponent<PlatformController>();
         cameraController = Camera.main.GetComponent<CameraController>();
         previousAttentionAverage = 0;
+        currentSec = 0;
+        rhythmFactory = GameObject.Find(Names.RhythmFactory).GetComponent<RhythmFactory>();
 
+        
+
+        //Debug.Log("LIMIT" + downLimit);
         /*for (int i = 0; i < 150; i++)
         {
             GameObject obj = (GameObject)Instantiate(platformPrefab, new Vector3(lastPlatform.transform.position.x - lastPlatform.transform.renderer.bounds.size.x/2 +  platformPrefab.renderer.bounds.size.x / 2 + platformPrefab.renderer.bounds.size.x * i, -0.1f, 0), Quaternion.identity);
@@ -49,17 +59,41 @@ public class RunnerGameController : GameController {
 
         if (isGameRunning)
         {
+            downLimit = rhythmFactory.GetLowestPosY();
+
             //Check if it's game over
             if (!isGameOver)
             {
-                /*if (gameStarted)
+                if (gameStarted)
                 {
                     time += Time.deltaTime;
 
-                    if (time >= 1)
+                    if ((player.GetComponent<RunnerPlayerController>()).autoRunning && time >= (currentSec + 1))
                     {
-                        (player.GetComponent<RunnerPlayerController>()).autoRunning = false;
-                        (player.GetComponent<RunnerPlayerController>()).Stop();
+                        currentSec++;
+                        Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
+                        //print("weepa: " + currentSec);
+                        if(currentSec == 1)
+                            print("plat 1sec length: " + ((player.GetComponent<RunnerPlayerController>()).iniX - player.transform.position.x));
+                    }
+
+                    if (((int)time) % 35 == 0 && ((int)time) != 0 && ((int)time) != prevTime)
+                    {
+                        rhythmFactory.GenerateRhythm();
+                        prevTime = ((int)time);
+                    }
+
+                    //Debug.Log((int)time);
+                    if (time >= rhythmFactory.rhythmLength)
+                    {
+                        if ((player.GetComponent<RunnerPlayerController>()).autoRunning)
+                        {
+                            //Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
+                            print("All length: " + ((player.GetComponent<RunnerPlayerController>()).iniX - player.transform.position.x));
+                        }
+
+                        //(player.GetComponent<RunnerPlayerController>()).autoRunning = false;
+                        //(player.GetComponent<RunnerPlayerController>()).Stop();
                     }
                 }
 
@@ -67,9 +101,11 @@ public class RunnerGameController : GameController {
                 {
                     if (!jidoStarted)
                     {
-                        (player.GetComponent<RunnerPlayerController>()).autoRunning = true;
+                        //(player.GetComponent<RunnerPlayerController>()).autoRunning = true;
                         jidoStarted = true;
+                        Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
                     }
+
                     feedbackMessage.Hide();
                     gameStarted = true;
                     if (lastPlatform != null)
@@ -84,7 +120,7 @@ public class RunnerGameController : GameController {
                     startTimer += Time.deltaTime;
                     waitTime = (int)(START_WAIT_SEC + 1 - (startTimer % 60));
                     feedbackMessage.Show(waitTime.ToString());
-                }*/
+                }
             }
         }
     }

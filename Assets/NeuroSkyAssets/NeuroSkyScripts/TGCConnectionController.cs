@@ -30,7 +30,7 @@ public class TGCConnectionController : MonoBehaviour {
 	public event UpdateFloatValueDelegate UpdateLowGammaEvent;
 	public event UpdateFloatValueDelegate UpdateHighGammaEvent;
 
-    public const float NEUROSKY_REPEAT_RATE = 0.1f;
+    public const float NEUROSKY_REPEAT_RATE = 0.1f;     //This is expressed in seconds, it meas, it's 0.1 sec
     public const float NEUROSKY_INITIAL_TIME = 0f;
 
     private bool successfulConnection;

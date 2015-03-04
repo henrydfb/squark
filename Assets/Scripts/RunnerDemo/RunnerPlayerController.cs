@@ -19,6 +19,30 @@ public class RunnerPlayerController : PlayerController
 
         if (((RunnerGameController)gameController).GameStarted())
             transform.position += new Vector3(-Mathf.Abs(((RunnerGameController)gameController).WorldSpeed), 0);
+
+        if (isInAir)
+        {
+            jumpTime += Time.deltaTime;
+
+            if (prevVelY < 0 && rigidbody2D.velocity.y > 0 || prevVelY > 0 && rigidbody2D.velocity.y < 0)
+            {
+                jumpHeight = (float)gameObject.transform.position.y - (float)prevY;
+
+                //print("height: " + t);
+                //Debug.Log("wii ");
+                //print("curr: "+ transform.position.y);
+                //print("prev: "  + prevY);
+                //Debug.Log(rigidbody2D.position.y);
+                //print(transform.position.y);
+                //Debug.Log(rigidbody2D.position.y - prevY);
+                //Stop();
+
+            }
+
+            prevVelY = rigidbody2D.velocity.y;
+            //print(rigidbody2D.velocity.y);
+            //print("height: " + gameObject.transform.position.y);
+        }
     }
 
 
@@ -32,53 +56,59 @@ public class RunnerPlayerController : PlayerController
     {
         base.HandleInput();
 
-        //Moving Right
-        if (Input.GetAxis(Names.HorizontalInput) > 0)
+        if (IsDead())
         {
-            if (isCollidingLeft)
-                horAxis = 0;
-            else
-            {
-                horAxis = horAxis < 1 ? horAxis + HOR_AXIS_STEP : MAX_AXIS_STEP;
-                if (Input.GetAxis(Names.HorizontalInput) < prevHorAxis)
-                    horAxis = horAxis / 2;
-            }
+            rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
         }
-
-        //Test
-        if (autoRunning)
+        else
         {
-            if (isCollidingLeft)
-                horAxis = 0;
-            else
+            //Moving Right
+            if (Input.GetAxis(Names.HorizontalInput) > 0)
             {
-                horAxis = MAX_AXIS_STEP;
+                if (isCollidingLeft)
+                    horAxis = 0;
+                else
+                {
+                    horAxis = horAxis < 1 ? horAxis + HOR_AXIS_STEP : MAX_AXIS_STEP;
+                    if (Input.GetAxis(Names.HorizontalInput) < prevHorAxis)
+                        horAxis = horAxis / 2;
+                }
             }
-        }
 
-        //Moving Left
-        /*if (Input.GetAxis(Names.HorizontalInput) < 0)
-        {
-            if (isCollidingRight)
-                horAxis = 0;
-            else
+            //Test
+            if (autoRunning)
             {
-                horAxis = horAxis > -1 ? horAxis - HOR_AXIS_STEP : MIN_AXIS_STEP;
-                if (Input.GetAxis(Names.HorizontalInput) > prevHorAxis)
-                    horAxis = horAxis / 2;
+                if (isCollidingLeft)
+                    horAxis = 0;
+                else
+                {
+                    horAxis = MAX_AXIS_STEP;
+                }
             }
-        }*/
 
-        //Not moving
-        //if (Input.GetAxis(Names.HorizontalInput) == 0)
-          //  horAxis = 0;
+            //Moving Left
+            if (Input.GetAxis(Names.HorizontalInput) < 0)
+            {
+                if (isCollidingRight)
+                    horAxis = 0;
+                else
+                {
+                    horAxis = horAxis > -1 ? horAxis - HOR_AXIS_STEP : MIN_AXIS_STEP;
+                    if (Input.GetAxis(Names.HorizontalInput) > prevHorAxis)
+                        horAxis = horAxis / 2;
+                }
+            }
 
-        //Update horizontal movement
-        rigidbody2D.velocity = new Vector2(horAxis * speed, rigidbody2D.velocity.y);
+            //Not moving
+            if (Input.GetAxis(Names.HorizontalInput) == 0)
+                horAxis = 0;
 
-        //Check if the game is running witht the EEG device
-        //if (!gameController.IsGameNeurosky)
-        //{
+            //Update horizontal movement
+            rigidbody2D.velocity = new Vector2(horAxis * speed, rigidbody2D.velocity.y);
+
+            //Check if the game is running witht the EEG device
+            //if (!gameController.IsGameNeurosky)
+            //{
             //Jump button pressed
             if (Input.GetButtonDown(Names.JumpInput) && !isJumping)
                 Jump();
@@ -89,14 +119,16 @@ public class RunnerPlayerController : PlayerController
                 rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y / 2);
                 isJumping = false;
             }
-        //}
+            //}
 
-        //Previous horizontal axis value
-        prevHorAxis = Input.GetAxis(Names.HorizontalInput);
+            //Previous horizontal axis value
+            prevHorAxis = Input.GetAxis(Names.HorizontalInput);
+        }
     }
 
     public void Stop()
     {
         horAxis = 0;
+        
     }
 }

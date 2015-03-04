@@ -28,7 +28,7 @@ public class SimpleEnemyController : MonoBehaviour
         {
             
             
-            if (platform == null)
+            /*if (platform == null)
                 transform.position += new Vector3(-Mathf.Abs(gameController.WorldSpeed), 0);
             else
             {
@@ -39,11 +39,11 @@ public class SimpleEnemyController : MonoBehaviour
 
                 offset += new Vector3(speed, 0, 0);
                 //transform.position += new Vector3(speed, 0);
-            }
+            }*/
 
             //Destroy
-            if (transform.position.x + renderer.bounds.size.x / 2 <= Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.WorldToScreenPoint(Camera.main.transform.position).x - Screen.width / 2, 0)).x)
-                Destroy(gameObject);
+            /*if (transform.position.x + renderer.bounds.size.x / 2 <= Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.WorldToScreenPoint(Camera.main.transform.position).x - Screen.width / 2, 0)).x)
+                Destroy(gameObject);*/
         }	
 	}
 
@@ -64,5 +64,10 @@ public class SimpleEnemyController : MonoBehaviour
     protected virtual void OnCollisionExit2D(Collision2D col)
     {
        
+    }
+
+    public void Die()
+    {
+        GameObject.Destroy(gameObject);
     }
 }

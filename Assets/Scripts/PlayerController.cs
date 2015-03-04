@@ -40,6 +40,13 @@ public class PlayerController : MonoBehaviour
 
     private bool isDead;
 
+    protected float prevVelY;
+    protected float prevY;
+    public float iniX;
+
+    protected float jumpTime;
+    protected float jumpHeight;
+
 	// Use this for initialization
 	protected virtual void Start () 
     {
@@ -52,6 +59,8 @@ public class PlayerController : MonoBehaviour
         isDead = false;
 
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
+
+        jumpTime = 0.0f;
 	}
 
 	// Update is called once per frame
@@ -65,13 +74,16 @@ public class PlayerController : MonoBehaviour
             {
                 HandleInput();
                 //Clamp player's X position
-                if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                /*if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
                 {
                     if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit)
                         transform.position = new Vector3(gameController.rightLimit - renderer.bounds.size.x / 2, transform.position.y);
                     if (transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                    {
                         transform.position = new Vector3(gameController.leftLimit + renderer.bounds.size.x / 2, transform.position.y);
-                }
+                        iniX = transform.position.x;
+                    }
+                }*/
             }
         }
 	}
@@ -89,6 +101,10 @@ public class PlayerController : MonoBehaviour
             rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
             isJumping = true;
             isInAir = true;
+            prevVelY = rigidbody2D.velocity.y;
+            prevY = gameObject.transform.position.y;
+            //print("ini: " + prevY);
+            jumpTime = 0.0f;
         }
     }
 
@@ -99,9 +115,26 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        rigidbody2D.gravityScale = 0;
+        //rigidbody2D.gravityScale *= 2;
+        
         rigidbody2D.velocity = Vector3.zero;
+        rigidbody2D.AddForce(new Vector2(0, jumpImpulse/2));
         isDead = true;
+        collider2D.enabled = false;
+    }
+
+    public void KillEnemy()
+    {
+        rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
+    }
+
+    public void TouchPlatformDown()
+    {
+        isCollidingDown = true;
+        isInAir = false;
+
+        //print("height: " + jumpHeight + " time: " + jumpTime);
+        iniX = transform.position.x;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col)
@@ -109,15 +142,17 @@ public class PlayerController : MonoBehaviour
         if (col.collider.tag == Names.Platform)
         {
             //Down collision
-            if (transform.position.y - collider2D.bounds.size.y / 2 > col.transform.position.y + col.collider.bounds.size.y / 2)
+            /*if (transform.position.y - collider2D.bounds.size.y / 2 > col.transform.position.y + col.collider.bounds.size.y / 2)
             {
                 downCollider = col.collider;
                 isCollidingDown = true;
                 isInAir = false;
-            }
+
+                print("height: " + jumpHeight + " time: " + jumpTime);
+            }*/
 
             //Right collision
-            if (transform.position.x - collider2D.bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
+            /*if (transform.position.x - collider2D.bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
             {
                 rightCollider = col.collider;
                 isCollidingRight = true;
@@ -128,10 +163,11 @@ public class PlayerController : MonoBehaviour
             {
                 leftCollider = col.collider;
                 isCollidingLeft = true;
-            }
+            }*/
         }
         else if (col.collider.tag == Names.Enemy)
         {
+            Debug.Log("Died!");
             Die();
         }
     }
