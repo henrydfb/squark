@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Test
+
+Enemies: 5
+Mushrooms: 1
+Bonus: 2
+Dead: 1
+Broken: 2
+Time: 106

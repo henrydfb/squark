@@ -1,0 +1,55 @@
+sec,eeg,action
+0,0,
+1,30,jump
+2,37,jump
+3,60,
+4,48,jump
+5,38,jump
+6,44,hit koopa
+7,44,kill goomba
+8,80,right
+9,100,
+10,100,
+11,100,jump
+12,100,hit koopa
+13,100,right
+14,57,jump
+15,43,
+16,30,kill goomba
+17,53,kill goomba
+18,50,
+19,47,jump
+20,56,jump
+21,44,jump
+22,41,hit koopa
+23,27,kill koopa
+24,29,left
+25,37,left
+26,60,left
+27,63,jump
+28,63,jump
+29,51,
+30,48,jump
+31,43,jump
+32,51,hit koopa
+33,53,jump
+34,40,right
+35,14,
+36,26,right
+37,64,bonus
+38,88,
+39,66,jump
+40,56,
+41,34,
+42,41,
+43,64,jump
+44,78,right
+45,57,jump
+46,43,
+47,34,kill goomba
+48,41,
+49,60,
+50,56,
+51,63,
+52,64,jump
+53,83,

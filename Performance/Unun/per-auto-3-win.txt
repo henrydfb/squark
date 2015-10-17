@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Unun
+
+Enemies: 34
+Mushrooms: 1
+Bonus: 5
+Dead: 3
+Broken: 2
+Time: 69

@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Subject1
+
+Enemies: 4
+Mushrooms: 2
+Bonus: 3
+Dead: 2
+Broken: 3
+Time: 98

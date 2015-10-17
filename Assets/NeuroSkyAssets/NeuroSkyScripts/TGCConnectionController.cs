@@ -30,12 +30,14 @@ public class TGCConnectionController : MonoBehaviour {
 	public event UpdateFloatValueDelegate UpdateLowGammaEvent;
 	public event UpdateFloatValueDelegate UpdateHighGammaEvent;
 
-    public const float NEUROSKY_REPEAT_RATE = 0.1f;     //This is expressed in seconds, it meas, it's 0.1 sec
+    public const float NEUROSKY_REPEAT_RATE = 0.1f;     //This is expressed in seconds
     public const float NEUROSKY_INITIAL_TIME = 0f;
 
     private bool successfulConnection;
 
     private MessageController feedbackMessage;
+
+    private float currentTime;
 	
 
 	void Start () 
@@ -54,8 +56,10 @@ public class TGCConnectionController : MonoBehaviour {
         {
             feedbackMessage.Show(Names.SocketConnectionMessage);
             successfulConnection = false;
-            //Debug.Log("Problem connecting: " + e.Message);
+            Debug.Log("Problem connecting: " + e.Message);
         }
+
+        currentTime = 0;
 	}
 	
 	public void Disconnect(){
@@ -96,7 +100,8 @@ public class TGCConnectionController : MonoBehaviour {
 	        foreach(string packet in packets){
 	          if(packet.Length == 0)
 	            continue;
-	
+
+              //Debug.Log(packet);
 	          IDictionary primary = (IDictionary)JsonConvert.Import(typeof(IDictionary), packet);
 	
 	          if(primary.Contains("poorSignalLevel")){
@@ -160,9 +165,16 @@ public class TGCConnectionController : MonoBehaviour {
           { 
               //Debug.Log("Exception " + e); 
           }
-	    }		
+	    }
+
+        currentTime += NEUROSKY_REPEAT_RATE;
 		
 	}// end ParseData
+
+    public float GetCurrentTime()
+    {
+        return currentTime;
+    }
 	
 	void OnApplicationQuit(){
 		Disconnect();

@@ -57,7 +57,7 @@ public class EEGPlatformGameController : GameController
         float newY, newX, yDiff, xSep;
         int newWidth, newHeight, attentionLevel, meditationLevel;
 
-        newX = lastPlatform.transform.position.x + lastPlatform.renderer.bounds.size.x / 2;
+        newX = lastPlatform.transform.position.x + lastPlatform.GetComponent<Renderer>().bounds.size.x / 2;
         if (Random.Range(0, 100) >= 50)
             attentionLevel = attention1;// Random.Range(0, 100);
         else
@@ -111,7 +111,7 @@ public class EEGPlatformGameController : GameController
         newPlatObj = (GameObject)Instantiate(platformPrefab, new Vector3(newX, newY, 0), Quaternion.identity);
         newPlatform = newPlatObj.GetComponent<PlatformController>();
         newPlatform.Contruct(newWidth);
-        newPlatObj.transform.position += new Vector3((newPlatObj.renderer.bounds.size.x / 2) + xSep, 0, 0);
+        newPlatObj.transform.position += new Vector3((newPlatObj.GetComponent<Renderer>().bounds.size.x / 2) + xSep, 0, 0);
         lastPlatform = newPlatform;
     }
 }

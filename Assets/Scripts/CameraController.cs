@@ -85,7 +85,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    protected void OnUpdateAttention(int value)
+    public void OnUpdateAttention(int value)
     {
         
         for (int i = 0; i < attentionLevels.Length; i++)

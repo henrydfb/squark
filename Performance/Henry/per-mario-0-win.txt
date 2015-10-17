@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Henry
+
+Enemies: 13
+Mushrooms: 3
+Bonus: 12
+Dead: 0
+Broken: 14
+Time: 49

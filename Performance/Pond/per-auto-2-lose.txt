@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Pond
+
+Enemies: 7
+Mushrooms: 0
+Bonus: 1
+Dead: 2
+Broken: 0
+Time: 92

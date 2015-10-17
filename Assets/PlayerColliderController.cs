@@ -5,7 +5,6 @@ public class PlayerColliderController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -24,11 +23,53 @@ public class PlayerColliderController : MonoBehaviour {
                 player = gameObject.GetComponentInParent<PlayerController>();
                 player.TouchPlatformDown();
                 break;
+            case Names.Question:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.TouchPlatformDown();
+                break;
+            case Names.Pipe:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.TouchPlatformDown();
+                break;
+            case Names.Breakable:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.TouchPlatformDown();
+                break;
             case Names.EnemyBoundingHit:
                 player = gameObject.GetComponentInParent<PlayerController>();
-                player.KillEnemy();
-                enemy = ((GameObject)col.gameObject).GetComponentInParent<SimpleEnemyController>();
-                enemy.Die();
+                if (!player.IsDead())
+                {
+                    player.KillEnemy();
+                    enemy = ((GameObject)col.gameObject).GetComponentInParent<SimpleEnemyController>();
+                    enemy.GetComponent<BoxCollider2D>().enabled = false;
+                    //enemy.Die();
+                }
+                break;
+        }
+    }
+
+    protected virtual void OnTriggerExit2D(Collider2D col)
+    {
+        PlayerController player;
+        SimpleEnemyController enemy;
+
+        switch (col.tag)
+        {
+            case Names.Platform:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.UnTouchPlatformDown();
+                break;
+            case Names.Question:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.UnTouchPlatformDown();
+                break;
+            case Names.Pipe:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.UnTouchPlatformDown();
+                break;
+            case Names.Breakable:
+                player = gameObject.GetComponentInParent<PlayerController>();
+                player.UnTouchPlatformDown();
                 break;
         }
     }

@@ -11,7 +11,6 @@ public class RunnerGameController : GameController {
 
     private const int START_WAIT_SEC = 3;
 
-    private bool gameStarted;
     private float startTimer;
     private PlatformController lastPlatform;
     private CameraController cameraController;
@@ -21,8 +20,12 @@ public class RunnerGameController : GameController {
 
     private float iniX;
     private int prevTime;
+    private PersistentController persistentData;
+
     protected override void Start()
     {
+        GameObject perObj;
+
         time = MIN_TIME;
 
         base.Start();
@@ -37,6 +40,10 @@ public class RunnerGameController : GameController {
         currentSec = 0;
         rhythmFactory = GameObject.Find(Names.RhythmFactory).GetComponent<RhythmFactory>();
 
+        //Persistent data
+        perObj = GameObject.Find("PersistentObject");
+        persistentData = perObj.GetComponent<PersistentController>();
+        Object.DontDestroyOnLoad(perObj);
         
 
         //Debug.Log("LIMIT" + downLimit);
@@ -77,11 +84,11 @@ public class RunnerGameController : GameController {
                             print("plat 1sec length: " + ((player.GetComponent<RunnerPlayerController>()).iniX - player.transform.position.x));
                     }
 
-                    if (((int)time) % 35 == 0 && ((int)time) != 0 && ((int)time) != prevTime)
+                    /*if (((int)time) % 35 == 0 && ((int)time) != 0 && ((int)time) != prevTime)
                     {
                         rhythmFactory.GenerateRhythm();
                         prevTime = ((int)time);
-                    }
+                    }*/
 
                     //Debug.Log((int)time);
                     if (time >= rhythmFactory.rhythmLength)
@@ -97,8 +104,8 @@ public class RunnerGameController : GameController {
                     }
                 }
 
-                if (startTimer >= START_WAIT_SEC)
-                {
+                //if (startTimer >= START_WAIT_SEC)
+                //{
                     if (!jidoStarted)
                     {
                         //(player.GetComponent<RunnerPlayerController>()).autoRunning = true;
@@ -106,7 +113,7 @@ public class RunnerGameController : GameController {
                         Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
                     }
 
-                    feedbackMessage.Hide();
+                    //feedbackMessage.Hide();
                     gameStarted = true;
                     if (lastPlatform != null)
                     {
@@ -114,13 +121,13 @@ public class RunnerGameController : GameController {
                             CreateNewPlatforms();
                     }
                     //player.GetComponent<RunnerPlayerController>().Move();
-                }
+                /*}
                 else
                 {
                     startTimer += Time.deltaTime;
                     waitTime = (int)(START_WAIT_SEC + 1 - (startTimer % 60));
                     feedbackMessage.Show(waitTime.ToString());
-                }
+                }*/
             }
         }
     }
@@ -135,7 +142,7 @@ public class RunnerGameController : GameController {
         float newY, newX, yDiff, xSep, attentionLevel;
         int newWidth, newHeight, meditationLevel;
 
-        newX = lastPlatform.transform.position.x + lastPlatform.renderer.bounds.size.x/2;
+        newX = lastPlatform.transform.position.x + lastPlatform.GetComponent<Renderer>().bounds.size.x/2;
         //if (Random.Range(0, 100) >= 50)
             attentionLevel = cameraController.GetAverageAttention() * 100; //attention1;// Random.Range(0, 100);
             //Debug.Log("ATT: " + attentionLevel);
@@ -212,7 +219,7 @@ public class RunnerGameController : GameController {
         newPlatObj = (GameObject)Instantiate(platformPrefab, new Vector3(newX, newY, 0), Quaternion.identity);
         newPlatform = newPlatObj.GetComponent<PlatformController>();
         newPlatform.Contruct(newWidth);
-        newPlatObj.transform.position += new Vector3((newPlatObj.renderer.bounds.size.x / 2) + xSep, 0, 0);
+        newPlatObj.transform.position += new Vector3((newPlatObj.GetComponent<Renderer>().bounds.size.x / 2) + xSep, 0, 0);
         lastPlatform = newPlatform;
 
         //Enemy
@@ -221,7 +228,7 @@ public class RunnerGameController : GameController {
             if (attentionLevel > previousAttentionAverage)
             {
                 newEnemyObj = (GameObject)Instantiate(enemyPrefab, new Vector3(newPlatObj.transform.position.x, newPlatObj.transform.position.y, 0), Quaternion.identity);
-                newEnemyObj.transform.position += new Vector3(0, (newPlatObj.collider2D.bounds.size.y + newEnemyObj.collider2D.bounds.size.y) / 2);
+                newEnemyObj.transform.position += new Vector3(0, (newPlatObj.GetComponent<Collider2D>().bounds.size.y + newEnemyObj.GetComponent<Collider2D>().bounds.size.y) / 2);
             }
         }
 
@@ -233,7 +240,7 @@ public class RunnerGameController : GameController {
                 for (int i = 1; i <= 3; i++)
                 {
                     newCoinObj = (GameObject)Instantiate(coinPrefab, new Vector3(newPlatObj.transform.position.x, newPlatObj.transform.position.y, 0), Quaternion.identity);
-                    newCoinObj.transform.position += new Vector3(0, (newPlatObj.collider2D.bounds.size.y + newCoinObj.collider2D.bounds.size.y * i * 2) / 2);
+                    newCoinObj.transform.position += new Vector3(0, (newPlatObj.GetComponent<Collider2D>().bounds.size.y + newCoinObj.GetComponent<Collider2D>().bounds.size.y * i * 2) / 2);
                 }
             }
         }
@@ -246,15 +253,11 @@ public class RunnerGameController : GameController {
         //base.OnUpdateBlink(value);
     }
 
-    public bool GameStarted()
-    {
-        return gameStarted;
-    }
-
     protected override void GameOver()
     {
         base.GameOver();
 
+        persistentData.time = timeText.text;
         Application.LoadLevel(Names.RunnerGameOverScene);
     }
 }

@@ -1,0 +1,86 @@
+sec,eeg,action
+0,0,
+1,0,
+2,14,kill goomba
+3,1,
+4,29,
+5,29,
+6,29,
+7,57,
+8,77,
+9,60,bonus
+10,47,
+11,24,jump
+12,14,jump
+13,14,bonus
+14,17,
+15,16,
+16,11,
+17,8,bonus
+18,20,
+19,43,mushroom
+20,43,break
+21,43,
+22,41,
+23,38,
+24,41,break
+25,29,bonus
+26,37,
+27,30,jump
+28,34,
+29,27,
+30,34,jump
+31,30,
+32,16,kill goomba
+33,30,jump
+34,29,jump
+35,40,
+36,41,
+37,35,kill goomba
+38,43,
+39,37,
+40,40,jump
+41,37,kill goomba
+42,30,jump
+43,27,jump
+44,21,
+45,11,
+46,20,
+47,24,jump
+48,20,
+49,26,bonus
+50,27,jump
+51,40,jump
+52,27,break
+53,16,jump
+54,10,
+55,23,jump
+56,30,bonus
+57,29,jump
+58,44,bonus
+59,50,
+60,48,hit koopa
+61,48,hit koopa
+62,27,bonus
+63,27,bonus
+64,35,
+65,30,bonus
+66,29,bonus
+67,57,jump
+68,67,kill goomba
+69,78,jump
+70,83,bonus
+71,63,jump
+72,56,jump
+73,61,jump
+74,67,jump
+75,74,jump
+76,75,
+77,63,jump
+78,57,kill goomba
+79,61,bonus
+80,50,jump
+81,57,jump
+82,56,jump
+83,61,jump
+84,69,

@@ -1,0 +1,62 @@
+sec,eeg,action
+0,20,
+1,10,
+2,38,left
+3,94,
+4,83,jump
+5,8,
+6,14,jump
+7,7,jump
+8,48,jump
+9,79,jump
+10,8,jump
+11,18,jump
+12,62,jump
+13,62,left
+14,43,
+15,40,right
+16,57,left
+17,63,
+18,10,hit koopa
+19,84,
+20,65,right
+21,40,kill koopa
+22,3,
+23,22,
+24,30,
+25,57,
+26,52,
+27,99,
+28,90,
+29,73,
+30,98,hit koopa
+31,13,
+32,67,
+33,33,jump
+34,56,jump
+35,90,jump
+36,92,
+37,76,jump
+38,10,jump
+39,16,bonus
+40,75,left
+41,73,jump
+42,99,jump
+43,51,jump
+44,12,jump
+45,70,
+46,28,jump
+47,52,
+48,38,
+49,83,
+50,28,
+51,47,hit koopa
+52,4,
+53,64,jump
+54,78,jump
+55,15,right
+56,86,
+57,29,hit koopa
+58,14,bonus
+59,60,kill koopa
+60,28,jump

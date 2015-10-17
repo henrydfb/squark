@@ -3,26 +3,29 @@ using System.Collections;
 
 public class SimpleEnemyController : MonoBehaviour 
 {
+    protected PlayerController player;
 
-    protected RunnerGameController gameController;
+    protected GameController gameController;
 
-    private float speed;
+    protected float speed;
 
-    private PlatformController platform;
+    protected PlatformController platform;
 
-    private Vector3 offset;
+    protected Vector3 offset;
 
 	// Use this for initialization
-	void Start () 
+	protected virtual void Start () 
     {
-        gameController = GameObject.Find(Names.GameController).GetComponent<RunnerGameController>();
+        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
+        player = GameObject.Find(Names.Player).GetComponent<PlayerController>();
         //speed = 0.025f;
         speed = 0;
         offset = new Vector3();
+        //GetComponent<Rigidbody2D>().gravityScale = 0;
 	}
 	
 	// Update is called once per frame
-	void Update () 
+    protected virtual void Update() 
     {
         if (gameController.GameStarted())
         {
@@ -42,8 +45,8 @@ public class SimpleEnemyController : MonoBehaviour
             }*/
 
             //Destroy
-            /*if (transform.position.x + renderer.bounds.size.x / 2 <= Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.WorldToScreenPoint(Camera.main.transform.position).x - Screen.width / 2, 0)).x)
-                Destroy(gameObject);*/
+            if ((transform.position.y + GetComponent<Renderer>().bounds.size.y / 2 <= gameController.downLimit))
+                Destroy(gameObject);
         }	
 	}
 
@@ -66,7 +69,7 @@ public class SimpleEnemyController : MonoBehaviour
        
     }
 
-    public void Die()
+    public virtual void Die()
     {
         GameObject.Destroy(gameObject);
     }

@@ -17,13 +17,13 @@ public class BlinkGameController : GameController
         if (isGameRunning)
         {
             //Check if it's game over
-            if (!isGameOver)
+            /*if (!isGameOver)
             {
                 if (time > 0)
                     time -= Time.deltaTime;
                 else
                     isGameOver = true;
-            }
+            }*/
         }
     }
 

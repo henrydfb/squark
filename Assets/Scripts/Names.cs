@@ -5,15 +5,31 @@
     public static string BlinkGameOverScene = "BlinkGameOver";
     public static string BlinkWinGameScene = "BlinkWinGame";
 
-    public static string RunnerDemoScene = "RunnerDemo";
-    public static string RunnerGameOverScene = "RunnerGameOver";
+    public static string RunnerDemoScene = "Squark";
+    public static string RunnerGameOverScene = "GameOver";
     public static string RunnerWinGameScene = "RunnerWinGame";
 
-    public static string EEGPlatformDemoScene = "EEGPlatformDemo";
+    public static string GCGameOverScene = "GCGameOver";
+    public static string GCDemoScene = "GameContents";
+    public static string AutoGCDemoScene = "GameContentsAuto";
+
+    public static string EEGPlatformDemoScene = "Squark";
     public static string EEGPlatformGameOverScene = "EEGPlatformGameOver";
     public static string EEGPlatformWinGameScene = "EEGPlatformWinGame";
     //
     public static string Player = "Player";
+
+    public const string Question = "Question";
+
+    public const string Pipe = "Pipe";
+
+    public const string Koopa = "Koopa";
+
+    public const string Goomba = "Goomba";
+
+    public const string Mushroom = "Mushroom";
+
+    public const string Breakable = "Breakable";
 
     public const string Platform = "Platform";
 
@@ -26,6 +42,8 @@
     public static string RightInput = "Right";
 
     public static string JumpInput = "Jump";
+
+    public static string StartInput = "Start";
 
     public static string FirstPlatform = "FirstPlatform";
 
@@ -48,4 +66,8 @@
     public static string Coin = "Coin";
 
     public static string RhythmFactory = "RhythmFactory";
+
+
+    public const string PlayerLeftCollider = "PlayerLeftCollider";
+    public const string PlayerRightCollider = "PlayerRightCollider";
 }

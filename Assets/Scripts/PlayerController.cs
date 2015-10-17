@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float jumpImpulse;
 
+    public AudioClip killEnemySound;
+    public AudioClip dieSound;
+
     //Flag to know if the player is jumping, when he presses the button
     protected bool isJumping;
     //Flag to know if the player is in the air (different from jumping)
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     protected GameController gameController;
 
+
     private bool isDead;
 
     protected float prevVelY;
@@ -46,6 +50,10 @@ public class PlayerController : MonoBehaviour
 
     protected float jumpTime;
     protected float jumpHeight;
+
+    protected GameObject leftColObj;
+    protected GameObject rightColObj;
+    protected AudioSource audioSource;
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -61,6 +69,8 @@ public class PlayerController : MonoBehaviour
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
 
         jumpTime = 0.0f;
+
+        audioSource = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -69,7 +79,7 @@ public class PlayerController : MonoBehaviour
         if (gameController.IsGameRunning())
         {
             if (gameController.IsGameOver())
-                rigidbody2D.velocity = Vector3.zero;
+                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             else
             {
                 HandleInput();
@@ -98,10 +108,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!isInAir)
         {
-            rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse));
             isJumping = true;
             isInAir = true;
-            prevVelY = rigidbody2D.velocity.y;
+            prevVelY = GetComponent<Rigidbody2D>().velocity.y;
             prevY = gameObject.transform.position.y;
             //print("ini: " + prevY);
             jumpTime = 0.0f;
@@ -113,19 +123,22 @@ public class PlayerController : MonoBehaviour
         return isDead;
     }
 
-    public void Die()
+    public virtual void Die()
     {
         //rigidbody2D.gravityScale *= 2;
         
-        rigidbody2D.velocity = Vector3.zero;
-        rigidbody2D.AddForce(new Vector2(0, jumpImpulse/2));
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse/2));
         isDead = true;
-        collider2D.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        audioSource.PlayOneShot(dieSound);
     }
 
     public void KillEnemy()
     {
-        rigidbody2D.AddForce(new Vector2(0, jumpImpulse));
+        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,0);
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse/2));
+        audioSource.PlayOneShot(killEnemySound);
     }
 
     public void TouchPlatformDown()
@@ -137,10 +150,24 @@ public class PlayerController : MonoBehaviour
         iniX = transform.position.x;
     }
 
+    public void UnTouchPlatformDown()
+    {
+        isCollidingDown = false;
+        isInAir = true;
+    }
+
     protected virtual void OnCollisionEnter2D(Collision2D col)
     {
+        PlatformController platform;
+        RhythmFactory factory;
+
         if (col.collider.tag == Names.Platform)
         {
+            isInAir = false;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+            GetComponent<Animator>().Play("idle");
+            platform = col.collider.GetComponent<PlatformController>();
+
             //Down collision
             /*if (transform.position.y - collider2D.bounds.size.y / 2 > col.transform.position.y + col.collider.bounds.size.y / 2)
             {
@@ -164,6 +191,18 @@ public class PlayerController : MonoBehaviour
                 leftCollider = col.collider;
                 isCollidingLeft = true;
             }*/
+
+            //Create the new rhythm
+            if (platform.GetLast())
+            {
+                Debug.Log("Generatenew rhythm");
+                /*factory = GameObject.Find(Names.RhythmFactory).GetComponent<RhythmFactory>();
+                if (factory != null)
+                {
+                    factory.GenerateRhythm();
+                    platform.SetLast(false);
+                }*/
+            }
         }
         else if (col.collider.tag == Names.Enemy)
         {
@@ -207,5 +246,25 @@ public class PlayerController : MonoBehaviour
                 rightCollider = null;
             }
         }
+    }
+
+    public void SetCollidingLeft(bool collidingLeft, GameObject gameObj)
+    {
+        this.isCollidingLeft = collidingLeft;
+
+        if (collidingLeft)
+            leftColObj = gameObj;
+        else
+            leftColObj = null;
+    }
+
+    public void SetCollidingRight(bool collidingRight, GameObject gameObj)
+    {
+        this.isCollidingRight = collidingRight;
+
+        if (collidingRight)
+            rightColObj = gameObj;
+        else
+            rightColObj = null;
     }
 }

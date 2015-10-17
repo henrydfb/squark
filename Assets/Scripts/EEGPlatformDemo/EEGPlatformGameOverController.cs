@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EEGPlatformGameOverController : GameOverController 
+public class EEGPlatformGameOverController : MonoBehaviour 
 {
-    public EEGPlatformGameOverController()
-        :base(Names.EEGPlatformDemoScene)
-    { 
+    void Start()
+    {
+        PersistentController persistentData = GameObject.Find("PersistentObject").GetComponent<PersistentController>();
+
+        GameObject.Find("TimeText").GetComponent<GUIText>().text = persistentData.time;
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 
-    protected override void OnGUI()
+    void Update()
     {
-        base.OnGUI();
+        if (Input.GetButtonUp(Names.StartInput))
+        {
+            Application.LoadLevel("Squark");
+        }
     }
 }

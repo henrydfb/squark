@@ -1,0 +1,9 @@
+*****PERFORMANCE******
+Subject: Pada
+
+Enemies: 9
+Mushrooms: 1
+Bonus: 4
+Dead: 4
+Broken: 1
+Time: 41

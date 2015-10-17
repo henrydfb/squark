@@ -1,0 +1,33 @@
+sec,eeg,action
+0,18,
+1,71,
+2,74,
+3,68,right
+4,88,
+5,98,jump
+6,99,bonus
+7,54,bonus
+8,73,jump
+9,50,bonus
+10,45,break
+11,46,bonus
+12,15,right
+13,53,
+14,64,jump
+15,28,kill goomba
+16,27,jump
+17,28,kill goomba
+18,20,jump
+19,27,
+20,52,jump
+21,19,
+22,27,break
+23,95,jump
+24,39,break
+25,37,jump
+26,99,bonus
+27,24,bonus
+28,5,bonus
+29,68,right
+30,74,
+31,37,

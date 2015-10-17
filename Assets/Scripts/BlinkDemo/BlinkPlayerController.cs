@@ -48,7 +48,7 @@ public class BlinkPlayerController : PlayerController
             horAxis = 0;
 
         //Update horizontal movement
-        rigidbody2D.velocity = new Vector2(horAxis * speed, rigidbody2D.velocity.y);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(horAxis * speed, GetComponent<Rigidbody2D>().velocity.y);
 
         //Check if the game is running witht the EEG device
         if (!gameController.IsGameNeurosky)
@@ -60,7 +60,7 @@ public class BlinkPlayerController : PlayerController
             //Jump button button released
             if (Input.GetButtonUp(Names.JumpInput) && isJumping)
             {
-                rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y / 2);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, GetComponent<Rigidbody2D>().velocity.y / 2);
                 isJumping = false;
             }
         }

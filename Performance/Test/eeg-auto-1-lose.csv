@@ -1,0 +1,15 @@
+sec,eeg,action
+0,4,
+1,12,
+2,30,kill goomba
+3,88,hit koopa
+4,42,kill goomba
+5,31,hit koopa
+6,3,jump
+7,20,kill goomba
+8,87,
+9,39,
+10,33,bonus
+11,23,left
+12,30,jump
+13,84,mushroom

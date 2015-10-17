@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class GameController : MonoBehaviour {
 
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour {
     //Max time in seconds
     protected const float MAX_TIME = 60 * 10;
     protected const float MIN_TIME = 0;
-    protected const float NUMBER_OF_BLOCKS = 200;
+    protected const int NUMBER_OF_BLOCKS = 200;
     //Current play time
     protected float time;
     protected GUIText timeText;
@@ -37,6 +38,8 @@ public class GameController : MonoBehaviour {
     protected int numberOfCoins;
     protected int pickedCoins;
 
+    protected ArrayList attValues;
+
     //Neurosky values
     protected TGCConnectionController controller;
     protected int poorSignal1 = -1;
@@ -45,6 +48,26 @@ public class GameController : MonoBehaviour {
     protected int blink;
     protected int indexSignalIcons = 1;
     protected float delta;
+    protected bool gameStarted;
+    protected int currAttSec;
+    protected string currAct;
+    protected string currLevelType;
+
+    public GameObject performanceDataPref;
+    protected PerformanceData performanceData;
+
+    void Awake()
+    {
+        GameObject perObj;
+
+        perObj = GameObject.FindGameObjectWithTag("Performance");
+        if (perObj != null)
+        {
+            performanceData = perObj.GetComponent<PerformanceData>();
+            if (performanceData != null)
+                DontDestroyOnLoad(performanceData);
+        }
+    }
 
 	// Use this for initialization
     protected virtual void Start() 
@@ -65,18 +88,47 @@ public class GameController : MonoBehaviour {
         UpdateCoinsValues();
 
         //Neurosky
-        controller = GameObject.Find("NeuroSkyTGCController").GetComponent<TGCConnectionController>();
-        controller.UpdatePoorSignalEvent += OnUpdatePoorSignal;
-        controller.UpdateAttentionEvent += OnUpdateAttention;
-        controller.UpdateMeditationEvent += OnUpdateMeditation;
-        controller.UpdateBlinkEvent += OnUpdateBlink;
-        controller.UpdateDeltaEvent += OnUpdateDelta;
-
-        if (IsGameNeurosky && controller.ConnectionWasSuccessful())
+        if (IsGameNeurosky)
         {
-            feedbackMessage.Show(Names.ConnectingMessage);
+            controller = GameObject.Find("NeuroSkyTGCController").GetComponent<TGCConnectionController>();
+            controller.UpdatePoorSignalEvent += OnUpdatePoorSignal;
+            controller.UpdateAttentionEvent += OnUpdateAttention;
+            Debug.Log("neurosky si senor");
+            //controller.UpdateMeditationEvent += OnUpdateMeditation;
+            //controller.UpdateBlinkEvent += OnUpdateBlink;
+            //controller.UpdateDeltaEvent += OnUpdateDelta;
         }
+        else
+        {
+            //Repeating
+            InvokeRepeating("Test", TGCConnectionController.NEUROSKY_INITIAL_TIME, 1);
+        }
+
+        if (IsGameNeurosky)
+        {
+            if(controller.ConnectionWasSuccessful())
+                feedbackMessage.Show(Names.ConnectingMessage);
+        }
+
+        attValues = new ArrayList();
+        currAttSec = 0;
+        currAct = "";
 	}
+
+    public void Test()
+    {
+        OnUpdateAttention(Random.Range(0,100));
+    }
+
+    public void SetCurrentAction(string act)
+    {
+        currAct = act;
+    }
+
+    public PerformanceData GetPerformanceData()
+    {
+        return performanceData;
+    }
 
     public TGCConnectionController GetTGCConnectionController()
     {
@@ -88,9 +140,9 @@ public class GameController : MonoBehaviour {
         return isGameRunning;
     }
 
-    private void UpdateCoinsValues()
+    protected virtual void UpdateCoinsValues()
     {
-        coinsText.text = pickedCoins.ToString("00") + "/" + numberOfCoins.ToString();
+        coinsText.text = pickedCoins.ToString("00") + "/" + numberOfCoins.ToString("");
     }
 
     protected void OnUpdatePoorSignal(int value)
@@ -120,7 +172,21 @@ public class GameController : MonoBehaviour {
 
     protected void OnUpdateAttention(int value)
     {
+        ArrayList elements;
+        elements = new ArrayList(3);
         attention1 = value;
+
+        elements.Add(currAttSec);
+        elements.Add(value);
+        elements.Add(currAct);
+        attValues.Add(elements);
+
+        currAttSec++;
+
+        currAct = "";
+
+        Camera.main.GetComponent<CameraController>().OnUpdateAttention(value);
+        //Debug.Log(currAttSec + " " +  value);
     }
 
     protected void OnUpdateMeditation(int value)
@@ -132,7 +198,7 @@ public class GameController : MonoBehaviour {
     {
         blink = value;
         //Make the player jump
-        player.GetComponent<PlayerController>().Jump();
+        //player.GetComponent<PlayerController>().Jump();
     }
 
     protected void OnUpdateDelta(float value)
@@ -177,7 +243,7 @@ public class GameController : MonoBehaviour {
             else
             {
                 //Out of the screen
-                isGameOver = (player.transform.position.y + player.renderer.bounds.size.y / 2 <= downLimit);// || player.GetComponent<PlayerController>().IsDead();
+                isGameOver = (player.transform.position.y + player.GetComponent<Renderer>().bounds.size.y / 2 <= downLimit);// || player.GetComponent<PlayerController>().IsDead();
 
                 if (isGameOver)
                     player.GetComponent<PlayerController>().Die();
@@ -193,13 +259,30 @@ public class GameController : MonoBehaviour {
         CleanScene();
     }
 
+    public bool GameStarted()
+    {
+        return gameStarted;
+    }
+
     protected void CleanScene()
     {
+        if (IsGameNeurosky)
+        {
+            controller.UpdatePoorSignalEvent -= OnUpdatePoorSignal;
+            controller.UpdateAttentionEvent -= OnUpdateAttention;
+            controller.UpdateMeditationEvent -= OnUpdateMeditation;
+            controller.UpdateBlinkEvent -= OnUpdateBlink;
+            controller.UpdateDeltaEvent -= OnUpdateDelta;
+        }
+    }
+
+    public void DisattachNeurosky()
+    {
+        if(IsGameNeurosky)
+        {
         controller.UpdatePoorSignalEvent -= OnUpdatePoorSignal;
         controller.UpdateAttentionEvent -= OnUpdateAttention;
-        controller.UpdateMeditationEvent -= OnUpdateMeditation;
-        controller.UpdateBlinkEvent -= OnUpdateBlink;
-        controller.UpdateDeltaEvent -= OnUpdateDelta;
+            }
     }
 
     public bool IsGameOver()
@@ -236,4 +319,118 @@ public class GameController : MonoBehaviour {
           //  controller.Disconnect();
     }
 
+    public void BeatEnemy()
+    {
+        if (performanceData != null)
+            performanceData.killedEnemies++;
+    }
+
+    public void PickBonus()
+    {
+        if (performanceData != null)
+            performanceData.pickedBonus++;
+    }
+
+    public void PickMushroom()
+    {
+        if (performanceData != null)
+            performanceData.pickedMushrooms++;
+    }
+
+    public void BreakBlock()
+    {
+        if (performanceData != null)
+            performanceData.brokenBlocks++;
+    }
+
+    public void SaveTime()
+    {
+        if (performanceData != null)
+            performanceData.completedTime = Mathf.RoundToInt(time);
+    }
+
+    public void IncreaseDeaths()
+    {
+        if (performanceData != null)
+            performanceData.deadTimes++;
+    }
+
+    public void SavePerformance(string saveType)
+    {
+        StreamWriter perFile, eegFile;
+
+        string path;
+        string perFileName = "per-" + currLevelType + "-" + performanceData.deadTimes + "-" + saveType + ".txt";
+        string eegFileName = "eeg-" + currLevelType + "-" + performanceData.deadTimes + "-" + saveType + ".csv";
+
+        //Performance File
+        path = Globals.ROOT_FOLDER + "\\" + Globals.SUBJECT_NAME + "\\" + perFileName;
+
+        if (File.Exists(path))
+        {
+            Debug.Log(perFileName + " already exists.");
+            return;
+        }
+
+        perFile = File.CreateText(path);
+        perFile.WriteLine("*****PERFORMANCE******");
+        perFile.WriteLine("Subject: " + Globals.SUBJECT_NAME);
+        perFile.WriteLine("");
+        perFile.WriteLine("Enemies: " + performanceData.killedEnemies);
+        perFile.WriteLine("Mushrooms: " + performanceData.pickedMushrooms);
+        perFile.WriteLine("Bonus: " + performanceData.pickedBonus);
+        perFile.WriteLine("Dead: " + performanceData.deadTimes);
+        perFile.WriteLine("Broken: " + performanceData.brokenBlocks);
+        perFile.WriteLine("Time: " + performanceData.completedTime);
+
+        perFile.Close();
+
+        //EEG File
+        path = Globals.ROOT_FOLDER + "\\" + Globals.SUBJECT_NAME + "\\" + eegFileName;
+
+        if (File.Exists(path))
+        {
+            Debug.Log(eegFileName + " already exists.");
+            return;
+        }
+
+        eegFile = File.CreateText(path);
+        eegFile.WriteLine("sec,eeg,action");
+        foreach(ArrayList a in attValues)
+        {
+            eegFile.WriteLine("{0},{1},{2}", a[0], a[1], a[2]);
+        }
+        
+        eegFile.Close();
+
+        //Save aux
+        if (saveType == "win" && currLevelType == "mario")
+            SaveWinAux();
+    }
+
+    public void SaveWinAux()
+    {
+        StreamWriter perFile;
+
+        string path;
+        string perFileName = Globals.AUX_FILE_NAME;
+
+        path = Globals.ROOT_FOLDER + "\\" + Globals.SUBJECT_NAME + "\\" + perFileName;
+
+        if (File.Exists(path))
+        {
+            Debug.Log(perFileName + " already exists.");
+            return;
+        }
+
+        perFile = File.CreateText(path);
+        perFile.WriteLine(performanceData.killedEnemies);
+        perFile.WriteLine(performanceData.pickedMushrooms);
+        perFile.WriteLine(performanceData.pickedBonus);
+        perFile.WriteLine(performanceData.deadTimes);
+        perFile.WriteLine(performanceData.brokenBlocks);
+        perFile.WriteLine(performanceData.completedTime);
+
+        perFile.Close();
+    }
 }
