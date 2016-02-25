@@ -16,8 +16,8 @@ public class Fall : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 1;
 
-    public Fall()
-        :base(TYPE,TYPE_NUMBER)
+    public Fall(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }

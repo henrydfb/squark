@@ -8,6 +8,8 @@ public class RunnerPlayerController : PlayerController
     public AudioClip jumpSound;
     public bool autoRunning = false;
     private bool stoppedMov;
+    private bool isFacingRight;
+    private bool startMoving;
 
     private GameObject colObj;
 
@@ -16,6 +18,8 @@ public class RunnerPlayerController : PlayerController
         base.Start();
         gameController = GameObject.Find(Names.GameController).GetComponent<RunnerGameController>();
         stoppedMov =false;
+        isFacingRight = true;
+        startMoving = false;
     }
 
     protected override void Update()
@@ -55,6 +59,10 @@ public class RunnerPlayerController : PlayerController
         }
     }
 
+    public bool IsFacingRight()
+    {
+        return isFacingRight;
+    }
 
     public void Move()
     {
@@ -104,6 +112,8 @@ public class RunnerPlayerController : PlayerController
                             GetComponent<Animator>().Play("walk");
                     }
                 }
+
+                isFacingRight = true;
             }
             else
             //Moving Left
@@ -135,6 +145,30 @@ public class RunnerPlayerController : PlayerController
                             GetComponent<Animator>().Play("walk");
                     }
                 }
+
+                isFacingRight = false;
+            }
+            //Test
+            else if (autoRunning)
+            {
+                if (isCollidingRight)
+                    horAxis = 0;
+                else
+                {
+                    //The higher the more relaxed
+                    if (gameController.GetMeditation() > 50)
+                    {
+                        horAxis = MAX_AXIS_STEP;
+                        if (!isInAir)
+                            GetComponent<Animator>().Play("walk");
+                    }
+                    else
+                    {
+                        horAxis = 0;
+                        if (!isInAir)
+                            GetComponent<Animator>().Play("idle");
+                    }
+                }
             }
             else
             //Not moving
@@ -144,17 +178,6 @@ public class RunnerPlayerController : PlayerController
                 if (!isInAir)
                     GetComponent<Animator>().Play("idle");
                 stoppedMov = false;
-            }
-
-            //Test
-            if (autoRunning)
-            {
-                if (isCollidingLeft)
-                    horAxis = 0;
-                else
-                {
-                    horAxis = MAX_AXIS_STEP;
-                }
             }
 
             //Update horizontal movement

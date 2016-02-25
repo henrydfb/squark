@@ -16,16 +16,11 @@ public class RunnerGameController : GameController {
     private CameraController cameraController;
     private float previousAttentionAverage;
     private int currentSec;
-    private RhythmFactory rhythmFactory;
-
     private float iniX;
     private int prevTime;
-    private PersistentController persistentData;
 
     protected override void Start()
     {
-        GameObject perObj;
-
         time = MIN_TIME;
 
         base.Start();
@@ -39,21 +34,6 @@ public class RunnerGameController : GameController {
         previousAttentionAverage = 0;
         currentSec = 0;
         rhythmFactory = GameObject.Find(Names.RhythmFactory).GetComponent<RhythmFactory>();
-
-        //Persistent data
-        perObj = GameObject.Find("PersistentObject");
-        persistentData = perObj.GetComponent<PersistentController>();
-        Object.DontDestroyOnLoad(perObj);
-        
-
-        //Debug.Log("LIMIT" + downLimit);
-        /*for (int i = 0; i < 150; i++)
-        {
-            GameObject obj = (GameObject)Instantiate(platformPrefab, new Vector3(lastPlatform.transform.position.x - lastPlatform.transform.renderer.bounds.size.x/2 +  platformPrefab.renderer.bounds.size.x / 2 + platformPrefab.renderer.bounds.size.x * i, -0.1f, 0), Quaternion.identity);
-            if (i % 2 == 0)
-                obj.renderer.material.color = new Color(1, 0, 0);
-
-        }*/
     }
 
     bool jidoStarted = false;
@@ -62,8 +42,6 @@ public class RunnerGameController : GameController {
     {
         base.Update();
 
-        int waitTime;
-
         if (isGameRunning)
         {
             downLimit = rhythmFactory.GetLowestPosY();
@@ -71,193 +49,16 @@ public class RunnerGameController : GameController {
             //Check if it's game over
             if (!isGameOver)
             {
-                if (gameStarted)
-                {
-                    time += Time.deltaTime;
-
-                    if ((player.GetComponent<RunnerPlayerController>()).autoRunning && time >= (currentSec + 1))
-                    {
-                        currentSec++;
-                        Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
-                        //print("weepa: " + currentSec);
-                        if(currentSec == 1)
-                            print("plat 1sec length: " + ((player.GetComponent<RunnerPlayerController>()).iniX - player.transform.position.x));
-                    }
-
-                    /*if (((int)time) % 35 == 0 && ((int)time) != 0 && ((int)time) != prevTime)
-                    {
-                        rhythmFactory.GenerateRhythm();
-                        prevTime = ((int)time);
-                    }*/
-
-                    //Debug.Log((int)time);
-                    if (time >= rhythmFactory.rhythmLength)
-                    {
-                        if ((player.GetComponent<RunnerPlayerController>()).autoRunning)
-                        {
-                            //Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
-                            print("All length: " + ((player.GetComponent<RunnerPlayerController>()).iniX - player.transform.position.x));
-                        }
-
-                        //(player.GetComponent<RunnerPlayerController>()).autoRunning = false;
-                        //(player.GetComponent<RunnerPlayerController>()).Stop();
-                    }
-                }
-
-                //if (startTimer >= START_WAIT_SEC)
-                //{
-                    if (!jidoStarted)
-                    {
-                        //(player.GetComponent<RunnerPlayerController>()).autoRunning = true;
-                        jidoStarted = true;
-                        Instantiate(playerShadowPrefab, player.transform.position, Quaternion.identity);
-                    }
-
-                    //feedbackMessage.Hide();
-                    gameStarted = true;
-                    if (lastPlatform != null)
-                    {
-                        if (lastPlatform.CompletelyEnteredCamera())
-                            CreateNewPlatforms();
-                    }
-                    //player.GetComponent<RunnerPlayerController>().Move();
-                /*}
-                else
-                {
-                    startTimer += Time.deltaTime;
-                    waitTime = (int)(START_WAIT_SEC + 1 - (startTimer % 60));
-                    feedbackMessage.Show(waitTime.ToString());
-                }*/
+                time += Time.deltaTime;
             }
         }
-    }
-
-    public void CreateNewPlatforms()
-    {
-        PlatformController newPlatform;
-        CoinController newCoin;
-        SimpleEnemyController enemy;
-        GameObject newPlatObj, newEnemyObj, newCoinObj;
-
-        float newY, newX, yDiff, xSep, attentionLevel;
-        int newWidth, newHeight, meditationLevel;
-
-        newX = lastPlatform.transform.position.x + lastPlatform.GetComponent<Renderer>().bounds.size.x/2;
-        //if (Random.Range(0, 100) >= 50)
-            attentionLevel = cameraController.GetAverageAttention() * 100; //attention1;// Random.Range(0, 100);
-            //Debug.Log("ATT: " + attentionLevel);
-        //else
-            //attentionLevel = Random.Range(0, 100);
-        //Low
-        //if (attentionLevel >= 0 && attentionLevel < 100 / 3)
-        if (attentionLevel < previousAttentionAverage)
-        {
-            if (lastPlatform.transform.position.y - 1 > downLimit)
-                yDiff = -1;
-            else
-            {
-                if (attentionLevel > (100 / 3) / 2)
-                    yDiff = 0;
-                else
-                    yDiff = 1;
-            }
-            /*if (lastPlatform.transform.position.y - 1 > downLimit)
-                yDiff = -1;
-            else
-            {
-                if (attentionLevel > (100 / 3) / 2)
-                    yDiff = 0;
-                else
-                    yDiff = 1;
-            }*/
-        }
-        //Medium
-        //else if (attentionLevel >= 100 / 3 && attentionLevel < 2 * (100 / 3))
-        else if (attentionLevel > previousAttentionAverage)
-        {
-            yDiff = 1;
-            if (lastPlatform.transform.position.y + 1 < upLimit - 1)
-                yDiff = 1;
-            else
-            {
-                if (attentionLevel > ((2 * (100 / 3)) - 100 / 2) / 2)
-                    yDiff = 0;
-                else
-                    yDiff = -1;
-            }
-        }
-        //High
-        else
-        {
-            yDiff = 0;
-            /*if (lastPlatform.transform.position.y + 1 < upLimit - 1)
-                yDiff = 1;
-            else
-            {
-                if (attentionLevel > ((2 * (100 / 3)) - 100 / 2) / 2)
-                    yDiff = 0;
-                else
-                    yDiff = -1;
-            }*/
-        }
-
-        //Width
-        if (Random.Range(0, 100) >= 50)
-            newWidth = 3 + attention1 * 20 / 100;
-        else
-            newWidth = Random.Range(3, 20);
-
-        //Width
-        if (Random.Range(0, 100) >= 50)
-            xSep = 0.5f + meditation1 * 2 / 100;
-        else
-            xSep = Random.Range(0.5f, 2f);
-        
-        
-        newY = lastPlatform.transform.position.y + yDiff;
-        
-        newPlatObj = (GameObject)Instantiate(platformPrefab, new Vector3(newX, newY, 0), Quaternion.identity);
-        newPlatform = newPlatObj.GetComponent<PlatformController>();
-        newPlatform.Contruct(newWidth);
-        newPlatObj.transform.position += new Vector3((newPlatObj.GetComponent<Renderer>().bounds.size.x / 2) + xSep, 0, 0);
-        lastPlatform = newPlatform;
-
-        //Enemy
-        if (newWidth >= 10)
-        {
-            if (attentionLevel > previousAttentionAverage)
-            {
-                newEnemyObj = (GameObject)Instantiate(enemyPrefab, new Vector3(newPlatObj.transform.position.x, newPlatObj.transform.position.y, 0), Quaternion.identity);
-                newEnemyObj.transform.position += new Vector3(0, (newPlatObj.GetComponent<Collider2D>().bounds.size.y + newEnemyObj.GetComponent<Collider2D>().bounds.size.y) / 2);
-            }
-        }
-
-        //Coins
-        if (newWidth >= 5)
-        {
-            if (attentionLevel < previousAttentionAverage)
-            {
-                for (int i = 1; i <= 3; i++)
-                {
-                    newCoinObj = (GameObject)Instantiate(coinPrefab, new Vector3(newPlatObj.transform.position.x, newPlatObj.transform.position.y, 0), Quaternion.identity);
-                    newCoinObj.transform.position += new Vector3(0, (newPlatObj.GetComponent<Collider2D>().bounds.size.y + newCoinObj.GetComponent<Collider2D>().bounds.size.y * i * 2) / 2);
-                }
-            }
-        }
-
-        previousAttentionAverage = attentionLevel;
-    }
-
-    protected override void OnUpdateBlink(int value)
-    {
-        //base.OnUpdateBlink(value);
     }
 
     protected override void GameOver()
     {
         base.GameOver();
 
-        persistentData.time = timeText.text;
+        SavePersistentData();
         Application.LoadLevel(Names.RunnerGameOverScene);
     }
 }

@@ -16,8 +16,8 @@ public class KillEnemy : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 3;
 
-    public KillEnemy()
-        :base(TYPE,TYPE_NUMBER)
+    public KillEnemy(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }

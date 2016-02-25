@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour
 
     public bool showGraph = false;
 
-    private const int NUMBER_OF_ATTENTION_POINT = 30;
     //Player's reference
     private PlayerController player;
     //Flag to determine if the camera is moving
@@ -37,7 +36,6 @@ public class CameraController : MonoBehaviour
     private Vector3[] attentionLevels;
 
     private bool hooked = false;
-
 
     public Material mat;
     private Vector3 startVertex;
@@ -54,14 +52,15 @@ public class CameraController : MonoBehaviour
     Vector3 targetPos;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
         player = GameObject.FindGameObjectWithTag(Names.Player).GetComponent<PlayerController>();
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
         movingCamera = false;
 
         Example();
 
-        attentionLevels = new Vector3[NUMBER_OF_ATTENTION_POINT];
+        attentionLevels = new Vector3[GameController.NUMBER_OF_ATTENTION_POINT];
         for (int i = 0; i < attentionLevels.Length; i++)
             attentionLevels[i] = new Vector3(i * (1.0f / attentionLevels.Length), 0, 0);
         
@@ -118,7 +117,14 @@ public class CameraController : MonoBehaviour
 
                 targetPos = transform.position + (targetDirection.normalized * interpVelocity * Time.deltaTime);
 
-                transform.position = Vector3.Lerp(transform.position, targetPos + offset, 0.25f);
+                
+                if(((RunnerPlayerController)player).IsFacingRight())
+                    transform.position = Vector3.Lerp(transform.position, targetPos + offset, 0.25f);
+                else
+                    transform.position = Vector3.Lerp(transform.position, targetPos - offset, 0.25f);
+                
+
+                 //   Debug.Log("CAMERA DIR: " + (targetPos.x - transform.position.x));
             }
         }
     }
@@ -233,7 +239,7 @@ public class CameraController : MonoBehaviour
             GL.Vertex(graphPosition + new Vector3(0, 1, 0) * graphSize);
 
             averageAttention = attentionLevels[0].y;
-            GL.Color(Color.red);
+            GL.Color(Color.blue);
             //Attention curve
             for (int i = 1; i < attentionLevels.Length; i++)
             {

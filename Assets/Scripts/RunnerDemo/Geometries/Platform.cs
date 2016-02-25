@@ -16,8 +16,8 @@ public class Platform : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 6;
 
-    public Platform()
-        :base(TYPE,TYPE_NUMBER)
+    public Platform(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }

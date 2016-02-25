@@ -21,7 +21,28 @@ public class LevelCompleteController : MonoBehaviour
 
     protected virtual void Start()
     {
-        //storedData = GameObject.FindWithTag("STOREDDATA").GetComponent<StoredDataCtrl>();
+        GameObject perObj, rhythmObj;
+
+        //Persistent data
+        perObj = GameObject.Find("PersistentObject");
+        rhythmObj = GameObject.Find("PersistentRhythm");
+
+        if (perObj != null)
+            GameObject.Destroy(perObj);
+
+        if (rhythmObj != null)
+            DontDestroyOnLoad(rhythmObj);
+    }
+
+    protected virtual void Update()
+    {
+        HandleInput();
+    }
+
+    protected virtual void HandleInput()
+    {
+        if (Input.GetButtonUp(Names.JumpInput))
+            Application.LoadLevel("Squark");
     }
 
     protected virtual void OnGUI()
@@ -33,6 +54,7 @@ public class LevelCompleteController : MonoBehaviour
 
         //Retry
         if (GUI.Button(new Rect((Screen.width - buttonWidth) / 2, (Screen.height - buttonHeight) / 2, buttonWidth, buttonHeight), "Next"))
-            Application.LoadLevel("GameContentsAuto");
+            Application.LoadLevel("Squark");
+            //Application.LoadLevel("GameContentsAuto");
     }
 }

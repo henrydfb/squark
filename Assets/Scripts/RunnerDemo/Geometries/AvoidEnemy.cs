@@ -16,8 +16,8 @@ public class AvoidEnemy : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 0;
 
-    public AvoidEnemy()
-        :base(TYPE,TYPE_NUMBER)
+    public AvoidEnemy(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }

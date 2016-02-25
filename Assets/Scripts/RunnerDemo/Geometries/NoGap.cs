@@ -16,8 +16,8 @@ public class NoGap : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 4;
 
-    public NoGap()
-        :base(TYPE,TYPE_NUMBER)
+    public NoGap(Action action)
+        :base(TYPE,TYPE_NUMBER, action)
     {
     }
 }

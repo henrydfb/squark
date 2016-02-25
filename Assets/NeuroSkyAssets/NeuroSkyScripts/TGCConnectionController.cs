@@ -88,6 +88,11 @@ public class TGCConnectionController : MonoBehaviour {
         return successfulConnection;
     }
 
+    protected void TEST(int value)
+    {
+        Debug.Log("weeeeepa");
+    }
+
 	void ParseData()
     {
 	    if(stream.CanRead){

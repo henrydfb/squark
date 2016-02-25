@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SimpleSpikeController : MonoBehaviour {
+public class SimpleSpikeController : MonoBehaviour 
+{
+
+    public Jump.HeightType jumpType;
 
     protected GameController gameController;
 

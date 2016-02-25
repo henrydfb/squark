@@ -35,6 +35,8 @@
 
     public const string Enemy = "Enemy";
 
+    public const string Spike = "Spike";
+
     public const string EnemyBoundingHit = "EnemyBoundingHit";
 
     public static string LeftInput = "Left";
@@ -50,6 +52,8 @@
     public static string HorizontalInput = "Horizontal";
 
     public static string TimeText = "TimeText";
+
+    public static string LevelText = "LevelText";
 
     public static string CoinsText = "CoinsText";
 

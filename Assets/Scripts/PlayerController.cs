@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +55,13 @@ public class PlayerController : MonoBehaviour
     protected GameObject leftColObj;
     protected GameObject rightColObj;
     protected AudioSource audioSource;
+    private float lastSpikePosX;
+    SimpleSpikeController closestSpike;
+
+    protected bool isHit;
+    protected float hitTimer;
+
+    protected int hits;
 
 	// Use this for initialization
 	protected virtual void Start () 
@@ -63,12 +71,14 @@ public class PlayerController : MonoBehaviour
         isCollidingDown = false;
         isCollidingLeft = false;
         isCollidingRight = false;
+        isHit = false;
         horAxis = 0;
         isDead = false;
-
+        hits = 0;
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
 
         jumpTime = 0.0f;
+        hitTimer = 0.0f;
 
         audioSource = GetComponent<AudioSource>();
 	}
@@ -76,6 +86,11 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
     protected virtual void Update() 
     {
+        SimpleSpikeController tempSpike;
+        GameObject[] enemies;
+        GameObject[] spikes;
+        GameObject downCol;
+
         if (gameController.IsGameRunning())
         {
             if (gameController.IsGameOver())
@@ -83,20 +98,97 @@ public class PlayerController : MonoBehaviour
             else
             {
                 HandleInput();
-                //Clamp player's X position
-                /*if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit || transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                
+                //Spike Enemies
+                tempSpike = FindClosestSpike();
+
+                if (tempSpike != null)
                 {
-                    if (transform.position.x + renderer.bounds.size.x / 2 >= gameController.rightLimit)
-                        transform.position = new Vector3(gameController.rightLimit - renderer.bounds.size.x / 2, transform.position.y);
-                    if (transform.position.x - renderer.bounds.size.x / 2 <= gameController.leftLimit)
+                    if (closestSpike == tempSpike)
                     {
-                        transform.position = new Vector3(gameController.leftLimit + renderer.bounds.size.x / 2, transform.position.y);
-                        iniX = transform.position.x;
+                        if (transform.position.x - tempSpike.transform.position.x > 0 && lastSpikePosX < 0 || transform.position.x - tempSpike.transform.position.x < 0 && lastSpikePosX > 0)
+                        {
+                            //Update attention
+                            switch (tempSpike.jumpType)
+                            {
+                                case global::Jump.HeightType.Long:
+                                    gameController.AddAttentionValue(GameController.AttentionType.Hig);
+                                    break;
+                                case global::Jump.HeightType.Medium:
+                                    gameController.AddAttentionValue(GameController.AttentionType.Med);
+                                    break;
+                                case global::Jump.HeightType.Short:
+                                    gameController.AddAttentionValue(GameController.AttentionType.Low);
+                                    break;
+                            }
+
+                            gameController.AddAttentionValue(GameController.AttentionType.Spk);
+                        }
                     }
-                }*/
+                    
+                    lastSpikePosX = transform.position.x - tempSpike.transform.position.x;
+                }
+
+                closestSpike = tempSpike;
+
+                if (isHit)
+                {
+                    if (hitTimer > 3)
+                    {
+                        enemies = GameObject.FindGameObjectsWithTag(Names.Enemy);
+                        spikes = GameObject.FindGameObjectsWithTag(Names.Spike);
+                        downCol = (GameObject)GameObject.Find("downCollider");
+
+                        foreach (GameObject e in enemies)
+                        {
+                            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>(),false);
+                            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>(),false);
+                        }
+
+                        foreach (GameObject s in spikes)
+                        {
+                            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>(),false);
+                            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>(),false);
+                        }
+
+                        isHit = false;
+                        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                        hitTimer = 0.0f;
+                    }
+                    else
+                        hitTimer += Time.deltaTime;
+                }
             }
         }
 	}
+
+    private SimpleSpikeController FindClosestSpike()
+    {
+        PlayerController player;
+        GameObject[] spikeObjects;
+        SimpleSpikeController spike;
+        float distance;
+
+        player = gameObject.GetComponentInParent<PlayerController>();
+        spike = null;
+        distance = Mathf.Infinity;
+
+        spikeObjects = GameObject.FindGameObjectsWithTag(Names.Spike);
+
+        if (spikeObjects.Length > 0)
+        {
+            foreach (GameObject s in spikeObjects)
+            {
+                if (Vector2.Distance(player.transform.position, s.transform.position) < distance)
+                {
+                    spike = s.GetComponent<SimpleSpikeController>();
+                    distance = Vector2.Distance(player.transform.position, s.transform.position);
+                }
+            }
+        }
+
+        return spike;
+    }
 
     /// <summary>
     /// Handles the input values and use them to move the player
@@ -134,6 +226,41 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(dieSound);
     }
 
+    public virtual void Hit()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Names.Enemy);
+        GameObject[] spikes = GameObject.FindGameObjectsWithTag(Names.Spike);
+        GameObject downCol = (GameObject)GameObject.Find("downCollider");
+
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        //GetComponent<Rigidbody2D>().AddForce(new Vector2(-jumpImpulse * 3, jumpImpulse/2));
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse / 2));
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.4f);
+        isHit = true;
+
+        foreach (GameObject e in enemies)
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
+        }
+
+        foreach (GameObject s in spikes)
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
+        }
+
+        hits++;
+        if (hits == 1)
+            GameObject.Find("life2").GetComponent<Image>().color = new Color(1,1,1,0);
+
+        if (hits >= 2)
+        {
+            GameObject.Find("life1").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            Die();
+        }
+    }
+
     public void KillEnemy()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,0);
@@ -156,10 +283,17 @@ public class PlayerController : MonoBehaviour
         isInAir = true;
     }
 
+    public bool IsHit()
+    {
+        return isHit;
+    }
+
     protected virtual void OnCollisionEnter2D(Collision2D col)
     {
         PlatformController platform;
         RhythmFactory factory;
+        SimpleSpikeController spike;
+        SimpleEnemyController enemy;
 
         if (col.collider.tag == Names.Platform)
         {
@@ -206,8 +340,49 @@ public class PlayerController : MonoBehaviour
         }
         else if (col.collider.tag == Names.Enemy)
         {
+            enemy = ((GameObject)col.gameObject).GetComponentInParent<SimpleEnemyController>();
+            //Update attention
+            switch (enemy.jumpType)
+            {
+                case global::Jump.HeightType.Long:
+                    gameController.AddDeath(GameController.DeathType.Hig);
+                    break;
+                case global::Jump.HeightType.Medium:
+                    gameController.AddDeath(GameController.DeathType.Med);
+                    break;
+                case global::Jump.HeightType.Short:
+                    gameController.AddDeath(GameController.DeathType.Low);
+                    break;
+            }
+
+            gameController.AddDeath(GameController.DeathType.Ene);
+            
             Debug.Log("Died!");
-            Die();
+            //Die();
+            Hit();
+        }
+        else if (col.collider.tag == Names.Spike)
+        {
+            spike = ((GameObject)col.gameObject).GetComponentInParent<SimpleSpikeController>();
+            //Update attention
+            switch (spike.jumpType)
+            {
+                case global::Jump.HeightType.Long:
+                    gameController.AddDeath(GameController.DeathType.Hig);
+                    break;
+                case global::Jump.HeightType.Medium:
+                    gameController.AddDeath(GameController.DeathType.Med);
+                    break;
+                case global::Jump.HeightType.Short:
+                    gameController.AddDeath(GameController.DeathType.Low);
+                    break;
+            }
+
+            gameController.AddDeath(GameController.DeathType.Spk);
+            
+            Debug.Log("Died!");
+            //Die();
+            Hit();
         }
     }
 

@@ -16,8 +16,8 @@ public class FlatGap : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 2;
 
-    public FlatGap()
-        :base(TYPE,TYPE_NUMBER)
+    public FlatGap(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }

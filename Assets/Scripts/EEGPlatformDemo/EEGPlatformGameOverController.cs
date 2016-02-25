@@ -5,9 +5,14 @@ public class EEGPlatformGameOverController : MonoBehaviour
 {
     void Start()
     {
-        PersistentController persistentData = GameObject.Find("PersistentObject").GetComponent<PersistentController>();
+        GameObject perObj;
+        PersistentController persistentData;
+        perObj = GameObject.Find("PersistentObject");
+        persistentData = perObj.GetComponent<PersistentController>();
 
-        GameObject.Find("TimeText").GetComponent<GUIText>().text = persistentData.time;
+        DontDestroyOnLoad(perObj);
+
+        GameObject.Find("TimeText").GetComponent<GUIText>().text = persistentData.stringTime;
     }
 
 

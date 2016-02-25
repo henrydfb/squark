@@ -35,12 +35,12 @@ public class PlatformController : MonoBehaviour
         {
             //transform.position += new Vector3(-Mathf.Abs(gameController.WorldSpeed), 0);
             //Destroy
-            if (transform.position.x + GetComponent<Renderer>().bounds.size.x / 2 <= Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.WorldToScreenPoint(Camera.main.transform.position).x - Screen.width / 2, 0)).x)
+            /*if (transform.position.x + GetComponent<Renderer>().bounds.size.x / 2 <= Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.WorldToScreenPoint(Camera.main.transform.position).x - Screen.width / 2, 0)).x)
             {
                 foreach(GameObject p in pieces)
                     Destroy(p);
                 Destroy(gameObject);
-            }
+            }*/
         }
 	}
 

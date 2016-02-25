@@ -16,11 +16,17 @@ public abstract class GeometryInterpretation
     /// </summary>
     protected int typeNumber;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    protected Action action;
 
-    public GeometryInterpretation(string type, int typeNumber)
+
+    public GeometryInterpretation(string type, int typeNumber,Action action)
     {
         this.type = type;
         this.typeNumber = typeNumber;
+        this.action = action;
     }
 
     public string GetType()
@@ -36,5 +42,10 @@ public abstract class GeometryInterpretation
     public void Print()
     {
         Debug.Log(type);
+    }
+
+    public Action GetAction()
+    {
+        return action;
     }
 }

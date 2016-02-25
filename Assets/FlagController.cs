@@ -15,9 +15,14 @@ public class FlagController : MonoBehaviour
         if (col.collider.tag == Names.Player)
         {
             Debug.Log("Level Complete!");
+            gameController.SavePersistentData();
+            gameController.SaveRhythmPersistentData();
+
+            /*
             gameController.SaveTime();
             gameController.SavePerformance("win");
             gameController.DisattachNeurosky();
+             * */
             Application.LoadLevel("LevelComplete");
         }
     }

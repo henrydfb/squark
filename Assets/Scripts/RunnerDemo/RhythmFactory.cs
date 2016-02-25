@@ -20,12 +20,6 @@ struct EnemyDescriptor
 /// </summary>
 public class RhythmFactory : MonoBehaviour
 {
-    public Rhythm.Type rhythmType;
-
-    public Rhythm.Density rhythmDensity;
-
-    public float rhythmLength;
-
     public float minJump;
 
     public float maxJump;
@@ -36,13 +30,42 @@ public class RhythmFactory : MonoBehaviour
     public const float PLAT_H = 0.3f;
 
     public const float JUMP_FALL_DIFF = 1;
+    
+    /// <summary>
+    /// Number of blocks per second
+    /// </summary>
+    public const int BLOCKS_PER_SECOND = 16;
 
-    public const int MAX_LEVEL_SECONDS = 15;
-    public const int MAX_LEVEL_PLATFORM_BLOCKS = 200;
-    public const int MIN_LEVEL_SECONDS = 10;
-    public const int MIN_LEVEL_PLATFORM_BLOCKS = 133;
+    /// <summary>
+    /// Minimum number of seconds in a rhythm
+    /// </summary>
+    public const int MIN_SECOND = 5;
 
-    //public Dictionary<string,GameObject> prefabs;
+    /// <summary>
+    /// Maximum number of seconds in a rhythm
+    /// </summary>
+    public const int MAX_SECOND = 30;
+
+    /// <summary>
+    /// Minimum number of blocks in a rhythm
+    /// </summary>
+    public const int MIN_LEVEL_PLATFORM_BLOCKS = BLOCKS_PER_SECOND * MIN_SECOND;
+
+    /// <summary>
+    /// Maximum number of blocks in a rhythm
+    /// </summary>
+    public const int MAX_LEVEL_PLATFORM_BLOCKS = BLOCKS_PER_SECOND * MAX_SECOND;
+
+    /// <summary>
+    /// Minimum number of actions in a rhythm (to calculate density)
+    /// </summary>
+    public const int MIN_NUMBER_OF_ACTIONS = 5;
+
+    /// <summary>
+    /// Maximum number of actions in a rhythm (to calculate density)
+    /// </summary>
+    public const int MAX_NUMBER_OF_ACTIONS = 50;
+
     public GameObject platformPrefab;
     public GameObject lowEnemyPrefab;
     public GameObject medEnemyPrefab;
@@ -53,6 +76,7 @@ public class RhythmFactory : MonoBehaviour
     public GameObject lowJumpTxtPrefab;
     public GameObject medJumpTxtPrefab;
     public GameObject higJumpTxtPrefab;
+    public GameObject flagPrefab;
     public GameObject coin;
     public GameObject platformSpritePrefab;
     public Vector3 currentPosition = new Vector3();
@@ -75,12 +99,23 @@ public class RhythmFactory : MonoBehaviour
 
     private PlatformController platformCont;
 
+    private GameController gameController;
+
+    private Geometry mainGeometry;
+
+    private Rhythm mainRhythm;
+
+    private RhythmPersistentController rhythmPersistent;
+
     /// <summary>
     /// 
     /// </summary>
     public void Start()
     {
         float firstPlatW,firstPlatH;
+        GameObject rhythmObj;
+
+        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
         player = GameObject.Find(Names.Player).GetComponent<PlayerController>();
         currentPosition = new Vector3();//player.transform.position;
         initialPosition = currentPosition;
@@ -90,7 +125,13 @@ public class RhythmFactory : MonoBehaviour
         elements = new List<GameObject>();
         elements.Add(GameObject.Find(Names.Player));
 
-        GenerateRhythm();
+        rhythmObj = GameObject.Find("PersistentRhythm");
+        if (rhythmObj != null)
+        {
+            rhythmPersistent = rhythmObj.GetComponent<RhythmPersistentController>();
+        }
+
+        //GenerateRhythm();
 
         //Fix Z value for all elements
         foreach (GameObject e in elements)
@@ -110,13 +151,222 @@ public class RhythmFactory : MonoBehaviour
 
         int[] gaps = { 5, 2, 2, 5, 2, 2, 2 }; //Contains width (number of blocks) of each gap
 
-        ConstructGaps(20,gaps);
+        Rhythm rhythm1, rhythm2;
+        Geometry geometry1, geometry2;
+        Vector2 path1Pos, path2Pos;
+        GameObject bridgePlat1, bridgePlat2;
+        PlatformController bridge1Cont, bridge2Cont;
+        GameObject perObj;
+        PersistentController persistentData;
 
-        gaps[1] = 3;
+        perObj = GameObject.Find("PersistentObject");
+        persistentData = perObj.GetComponent<PersistentController>();
+
+        path1Pos = new Vector2(0, 10);
+
+        if (persistentData == null)
+        {
+            rhythm1 = new Rhythm();
+            rhythm1.Initialize(rhythmPersistent.rhythm, rhythmPersistent.globalPerformance, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix, rhythmPersistent.level);
+            rhythm1.Build(minJump, maxJump);
+            geometry1 = InterpretRhythm(rhythm1, rhythmPersistent.geometry, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix);
+            rhythm1.AddGeometry(geometry1);
+        }
+        else
+        {
+            if (persistentData.geometry == null)
+            {
+                rhythm1 = new Rhythm();
+                rhythm1.Initialize(rhythmPersistent.rhythm, rhythmPersistent.globalPerformance, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix, rhythmPersistent.level);
+                rhythm1.Build(minJump, maxJump);
+                geometry1 = InterpretRhythm(rhythm1, rhythmPersistent.geometry, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix);
+                rhythm1.AddGeometry(geometry1);
+
+                gameController.SavePerformance(rhythmPersistent.level - 1,rhythmPersistent.gameTime,rhythmPersistent.avgAttention, rhythm1, geometry1, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix);
+
+                gameController.SetLevel(rhythmPersistent.level);
+                if (rhythmPersistent.level >= 6)
+                {
+                    Application.LoadLevel("GameComplete");
+                }
+            }
+            else
+            {
+                geometry1 = persistentData.geometry;
+                rhythm1 = persistentData.rhythm;
+            }
+        }
+
+        mainGeometry = geometry1;
+        mainRhythm = rhythm1;
+
+        /*
+        path2Pos = new Vector2(Random.Range(path1Pos.x, (MAX_LEVEL_PLATFORM_BLOCKS - (MAX_LEVEL_PLATFORM_BLOCKS / 3))) * PLAT_W,path1Pos.y + 4.5f);
+        rhythm2 = new Rhythm(rhythmType, rhythmDensity, rhythmLength/2);
+        rhythm2.Build(minJump, maxJump);
+        geometry2 = InterpretRhythm(rhythm2);
+        rhythm2.AddGeometry(geometry2);*/
+
+        ConstructLevel(path1Pos, rhythm1.GetLength(), geometry1);
+
+        SetFlag(new Vector3((rhythm1.GetLength() - 2) * PLAT_W, path1Pos.y + 2));
+        /*gaps[1] = 3;
         gaps[2] = 3;
-        gaps[6] = 15;
+        gaps[6] = 15;*/
 
-        ConstructGaps(25, gaps);
+
+        //Secondary path
+        /*
+        ConstrucLevel(path2Pos, MAX_LEVEL_PLATFORM_BLOCKS / 3, geometry2);
+
+        //Bridges
+        bridgePlat1 = (GameObject)Instantiate(platformPrefab, new Vector3(path2Pos.x - PLAT_W * 2,path1Pos.y + Mathf.Abs(path1Pos.y - path2Pos.y)/2), Quaternion.identity);
+        bridge1Cont = bridgePlat1.GetComponent<PlatformController>();
+        bridge1Cont.Contruct(3);
+
+        bridgePlat2 = (GameObject)Instantiate(platformPrefab, new Vector3(path2Pos.x + PLAT_W * (MAX_LEVEL_PLATFORM_BLOCKS / 3) + PLAT_W * 2, path1Pos.y + Mathf.Abs(path1Pos.y - path2Pos.y) / 2), Quaternion.identity);
+        bridge2Cont = bridgePlat2.GetComponent<PlatformController>();
+        bridge2Cont.Contruct(3);
+         * */
+        
+    }
+
+    public Geometry GetMainGeometry()
+    {
+        return mainGeometry;
+    }
+
+    public Rhythm GetMainRhythm()
+    {
+        return mainRhythm;
+    }
+
+    public void SetFlag(Vector3 pos)
+    {
+        Instantiate(flagPrefab, pos, Quaternion.identity);
+    }
+
+    /*TODO: 
+    * Modificar la dificultad de creacion de ritmos aumentando y disminuyendo cantidad de: enemigo y gaps (por ahora)
+    * Agregar enemigos moviles
+    * Agregar enemigo que dispare o algun elemento de nivel
+    * Revisar la altura exacta para construir un path mas arriba y uno mas abajo del path principal (con ritmos) y conectarlos a traves de una plataforma
+    * DDA Involucrar el EEG de manera muy sencilla por ahora: alto -> dificil (mas enemigos, mas largo nivel), bajo -> facil (menos enemigos, mas corto nivel)
+    * Implementar agarrar la bandera al final *
+    * Corregir la camara para poder echar para atras *
+    * * Hay que corregir la posicion del enemigo, se coloca donde no es (un poco mas a la derecha, poner en la plat. anterior)
+    * */
+    public void ConstructLevel(Vector2 iniPos,int geometrySize, Geometry geometry)
+    {
+        GameObject platform, enemy,enemyPrefab;
+        Vector3 enePos;
+        int numberOfgaps, currBlock, platBlocks, gapBlocks, totalBlocks;
+        GeometryInterpretation[] interpretations;
+        GeometryInterpretation geoInt;
+        //int [] gaps = {5,2,2,5,2,2,2}; //Contains width (number of blocks) of each gap
+        float platX;
+        bool prevEne;
+
+        interpretations = geometry.GetInterpretations();
+        numberOfgaps = interpretations.Length;
+        currBlock = 0;
+        platX = iniPos.x;
+        totalBlocks = 0;
+        prevEne = false;
+        platBlocks = 0;
+
+        for (int i = 0; i < numberOfgaps; i++)
+        {
+            geoInt = interpretations[i];
+            if (geoInt.GetType() == AvoidEnemy.TYPE || geoInt.GetType() == KillEnemy.TYPE)
+            {
+                platBlocks += (geometrySize / (numberOfgaps + 1));
+
+                enemyPrefab = null;
+                switch (geoInt.GetType())
+                { 
+                    case AvoidEnemy.TYPE:
+                        switch (((Jump)geoInt.GetAction()).GetHeightType())
+                        {
+                            case Jump.HeightType.Short:
+                                enemyPrefab = lowSpikePrefab;
+                                break;
+                            case Jump.HeightType.Medium:
+                                enemyPrefab = medSpikePrefab;
+                                break;
+                            case Jump.HeightType.Long:
+                                enemyPrefab = higSpikePrefab;
+                                break;
+                        }
+                        break;
+                    case KillEnemy.TYPE:
+                        switch (((Jump)geoInt.GetAction()).GetHeightType())
+                        {
+                            case Jump.HeightType.Short:
+                                enemyPrefab = lowEnemyPrefab;
+                                break;
+                            case Jump.HeightType.Medium:
+                                enemyPrefab = medEnemyPrefab;
+                                break;
+                            case Jump.HeightType.Long:
+                                enemyPrefab = higEnemyPrefab;
+                                break;
+                        }
+                        break;
+                }
+
+                if (enemyPrefab != null)
+                {
+                    enePos = new Vector3(platX + (PLAT_W * (platBlocks)), iniPos.y + 0.5f,-0.5f);
+                    enemy = (GameObject)Instantiate(enemyPrefab, enePos, Quaternion.identity);
+                    elements.Add(enemy);
+                    //Instantiate(medJumpTxtPrefab, enePos, Quaternion.identity);
+
+                    //Debug.Log("ENEMY!");
+                    prevEne = true;
+                }
+            }
+            else if(geoInt.GetType() == FlatGap.TYPE)
+            {
+                gapBlocks = 0;
+                switch(((Jump)geoInt.GetAction()).GetHeightType())
+                {
+                    case Jump.HeightType.Short:
+                        gapBlocks = 3;
+                        break;
+                    case Jump.HeightType.Medium:
+                        gapBlocks = 5;
+                        break;
+                    case Jump.HeightType.Long:
+                        gapBlocks = 7;
+                        break;
+                }
+
+                if (prevEne)
+                    platBlocks += numberOfgaps == 0 ? geometrySize : (geometrySize / (numberOfgaps + 1)) - gapBlocks;
+                else
+                    platBlocks = numberOfgaps == 0 ? geometrySize : (geometrySize / (numberOfgaps + 1)) - gapBlocks;
+
+                totalBlocks += (platBlocks + gapBlocks);
+                platform = (GameObject)Instantiate(platformPrefab, new Vector3(platX + (PLAT_W * platBlocks / 2), iniPos.y), Quaternion.identity);
+                platformCont = platform.GetComponent<PlatformController>();
+                platformCont.Contruct(platBlocks);
+                currBlock += platBlocks;
+                platX += (PLAT_W * (platBlocks + gapBlocks));
+                platBlocks = 0;
+                prevEne = false;
+
+                if (platformCont.transform.position.y < lowestPosY)
+                    lowestPosY = platformCont.transform.position.y;
+            }
+        }
+
+
+        platBlocks = geometrySize - totalBlocks;
+        platform = (GameObject)Instantiate(platformPrefab, new Vector3(platX + (PLAT_W * platBlocks / 2), iniPos.y), Quaternion.identity);
+
+        platformCont = platform.GetComponent<PlatformController>();
+        platformCont.Contruct(platBlocks);
     }
 
     public void GenerateRhythm()
@@ -127,13 +377,14 @@ public class RhythmFactory : MonoBehaviour
         //Debug.Log("**ATTENTION**: " + Camera.main.GetComponent<CameraController>().GetAverageAttention());
         for (int i = 0; i < 1; i++)
         {
-            rhythm = new Rhythm(rhythmType, rhythmDensity, rhythmLength);
+            rhythm = new Rhythm();
+            rhythm.Initialize(rhythmPersistent.rhythm, rhythmPersistent.globalPerformance, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix,rhythmPersistent.level);
             rhythm.Build(minJump, maxJump);
             //print("Actions");
             //print(rhythm.GetPrint());
             for (int j = 0; j < 1; j++)
             {
-                geometry = InterpretRhythm(rhythm);
+                geometry = InterpretRhythm(rhythm, rhythmPersistent.geometry, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix);
                 rhythm.AddGeometry(geometry);
             }
             print("\nGeometries");
@@ -144,7 +395,7 @@ public class RhythmFactory : MonoBehaviour
             //print(geometry.GetPrint());
             Debug.Log("***********");
 
-            ConstructLevel(rhythm);
+            //ConstructLevel(rhythm);
         }
     }
 
@@ -657,120 +908,128 @@ public class RhythmFactory : MonoBehaviour
             return MIN_PLATFORM_WIDTH;
     }
 
-
-
-    public void ConstructGaps(float startY,int[] gaps)
+    public void Shuffle(this System.Random rng, int[] array)
     {
-        GameObject platform, enemy;
-        Vector3 enePos;
-        int numberOfgaps, currBlock,platBlocks, gapBlocks, totalBlocks;
-        //int [] gaps = {5,2,2,5,2,2,2}; //Contains width (number of blocks) of each gap
-        float platX;
-        bool prevEne;
-        numberOfgaps = gaps.Length;
-        currBlock = 0;
-        platX = 0.0f;
-        totalBlocks = 0;
-        prevEne = false;
-        platBlocks = 0;
-        for (int i = 0; i < numberOfgaps; i++)
+        int n = array.Length;
+        while (n > 1)
         {
-            gapBlocks = gaps[i];
-            if (gapBlocks == 2)
-            {
-                platBlocks += (MAX_LEVEL_PLATFORM_BLOCKS / (numberOfgaps + 1));
-
-                /*TODO: 
-                 * Hay que corregir la posicion del enemigo, se coloca donde no es (un poco mas a la derecha, poner en la plat. anterior)
-                 * Modificar la dificultad de creacion de ritmos aumentando y disminuyendo cantidad de: enemigo y gaps (por ahora)
-                 * Agregar enemigos moviles
-                 * Agregar enemigo que dispare o algun elemento de nivel
-                 * Revisar la altura exacta para construir un path mas arriba y uno mas abajo del path principal (con ritmos) y conectarlos a traves de una plataforma
-                 * DDA Involucrar el EEG de manera muy sencilla por ahora: alto -> dificil (mas enemigos, mas largo nivel), bajo -> facil (menos enemigos, mas corto nivel)
-                 * Implementar agarrar la bandera al final
-                 * */
-                enePos = new Vector3(platX + (PLAT_W * (platBlocks)), startY +  0.5f);
-                enemy = (GameObject)Instantiate(medSpikePrefab, enePos, Quaternion.identity);
-                elements.Add(enemy);
-                Instantiate(medJumpTxtPrefab, enePos, Quaternion.identity);
-
-                Debug.Log("ENEMY!");
-                prevEne = true;
-            }
-            else
-            {
-                if (prevEne)
-                    platBlocks += numberOfgaps == 0 ? MAX_LEVEL_PLATFORM_BLOCKS : (MAX_LEVEL_PLATFORM_BLOCKS / (numberOfgaps + 1)) - gapBlocks;
-                else
-                    platBlocks = numberOfgaps == 0 ? MAX_LEVEL_PLATFORM_BLOCKS : (MAX_LEVEL_PLATFORM_BLOCKS / (numberOfgaps + 1)) - gapBlocks;
-
-                totalBlocks += (platBlocks + gapBlocks);
-                platform = (GameObject)Instantiate(platformPrefab, new Vector3(platX + (PLAT_W * platBlocks / 2), startY), Quaternion.identity);
-                platformCont = platform.GetComponent<PlatformController>();
-                platformCont.Contruct(platBlocks);
-                currBlock += platBlocks;
-                platX += (PLAT_W * (platBlocks + gapBlocks));
-                platBlocks = 0;
-                prevEne = false;
-            }
+            int k = rng.Next(n--);
+            int temp = array[n];
+            array[n] = array[k];
+            array[k] = temp;
         }
-        
+    }
 
-        platBlocks = MAX_LEVEL_PLATFORM_BLOCKS - totalBlocks;
-        platform = (GameObject)Instantiate(platformPrefab, new Vector3(platX + (PLAT_W * platBlocks / 2), startY), Quaternion.identity);
+    private float GetAttentionAvg(List<float>[] attentionMatrix, GameController.AttentionType type)
+    {
+        float sum = 0.0f;
+        float res;
 
-        platformCont = platform.GetComponent<PlatformController>();
-        platformCont.Contruct(platBlocks);
+        foreach (float a in attentionMatrix[(int)type])
+            sum += a;
+
+        if (attentionMatrix[(int)type].Count > 0)
+            res = sum / attentionMatrix[(int)type].Count;
+        else
+            res = 0;
+
+        return res;
     }
 
     /// <summary>/
     /// 
     /// </summary>
-    public Geometry InterpretRhythm(Rhythm rhythm)
+    public Geometry InterpretRhythm(Rhythm rhythm,Geometry prevGeometry,List<float>[] attentionMatrix,int[] deathMatrix)
     {
+        const float W1 = 0.5f;
+        const float W2 = 0.5f;
         Action[] actions;
         Geometry geometry;
         GeometryInterpretation[] geometries;
         GeometryInterpretation geometryInt;
+        int[] geometriesInts;
         int nGeometries = 6, maxProbVal = 100, avoidProb , killProb , fallProb , flatGProb , noGProb , noFlatGProb,p;
         float geoProbability, intProb;
         float attention;
+        int geoIdx, gapsNumber, enemiesNumber, spikesNumber,numberOfActions,ran;
+        float perVar, gapAvg, eneAvg, spkAvg, gapDeath, eneDeath, spkDeath, gap, ene, spk, attSum, gapActRate,eneActRate,spkActRate;
+        int[] probs;
 
         attention = Camera.main.GetComponent<CameraController>().GetAverageAttention();
         actions = rhythm.GetActions();
         geometries = new GeometryInterpretation[actions.Length];
         intProb = ((float)maxProbVal / (float)nGeometries);
-        int[] probs;
 
-        if (attention <= 100 / 3)
+        numberOfActions = actions.Length;
+        //
+        if (prevGeometry == null)
         {
-            avoidProb = 10;
-            killProb = 10;
-            fallProb = 10;
-            flatGProb = 10;
-            noGProb = 10;
-            noFlatGProb = 10;
-        }
-        else if (attention > 100 / 3 && attention <= 2 * (100 / 3))
-        {
-            avoidProb = 15;
-            killProb = 20;
-            fallProb = 10;
-            flatGProb = 10;
-            noGProb = 10;
-            noFlatGProb = 10;
+            gapActRate = 1.0f / 3.0f;
+            eneActRate = 1.0f / 3.0f;
+            spkActRate = 1.0f / 3.0f;
         }
         else
         {
-            avoidProb = 20;
-            killProb = 35;
-            fallProb = 10;
-            flatGProb = 10;
-            noGProb = 10;
-            noFlatGProb = 10;
+            gapDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Gap]);
+            eneDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Ene]);
+            spkDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Spk]);
+            gapAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Gap);
+            eneAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Ene);
+            spkAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Spk);
+
+            gap = (gapAvg * W1 + gapDeath * W2) / 3;
+            ene = (eneAvg * W1 + eneDeath * W2) / 3;
+            spk = (spkAvg * W1 + spkDeath * W2) / 3;
+
+            attSum = (100 - (gap + ene + spk)) / 3;
+
+            gap += attSum;
+            ene += attSum;
+            spk += attSum;
+            //Action types
+            gapActRate = prevGeometry.GetGapActRate() + (gap / 100 - prevGeometry.GetGapActRate());
+            eneActRate = prevGeometry.GetEneActRate() + (ene / 100 - prevGeometry.GetEneActRate());
+            spkActRate = prevGeometry.GetSpkActRate() + (spk / 100 - prevGeometry.GetSpkActRate());
         }
-        
-        probs = CreateActionsProbabilityArray(avoidProb, killProb, fallProb,flatGProb,noGProb,noFlatGProb);
+        //
+
+        //Debug.Log(" gap: " + gapActRate + " ene: " + eneActRate + " spk: " + spkActRate);
+
+        gapsNumber = (int)(numberOfActions * gapActRate);
+        enemiesNumber = (int)(numberOfActions * eneActRate);
+        spikesNumber = (int)(numberOfActions * spkActRate);
+
+        if (numberOfActions > (gapsNumber + enemiesNumber + spikesNumber))
+        {
+            ran = Random.Range(0, 100);
+            if (ran >= 0 && ran < 100 / 33)
+                gapsNumber += numberOfActions - (gapsNumber + enemiesNumber + spikesNumber);
+            else if (ran >= 100 / 33 && ran < 2 * (100 / 33))
+                enemiesNumber += numberOfActions - (gapsNumber + enemiesNumber + spikesNumber);
+            else
+                spikesNumber += numberOfActions - (gapsNumber + enemiesNumber + spikesNumber);
+        }
+
+        geometriesInts = new int[actions.Length];
+        geoIdx = 0;
+        for (int i = 0; i < gapsNumber; i++)
+        {
+            geometriesInts[geoIdx] = FlatGap.TYPE_NUMBER;
+            geoIdx++;
+        }
+        for (int i = 0; i < enemiesNumber; i++)
+        {
+            geometriesInts[geoIdx] = KillEnemy.TYPE_NUMBER;
+            geoIdx++;
+        }
+        for (int i = 0; i < spikesNumber; i++)
+        {
+            geometriesInts[geoIdx] = AvoidEnemy.TYPE_NUMBER;
+            geoIdx++;
+        }
+
+        //Shuffle
+        Shuffle(new System.Random(), geometriesInts);
 
         for(int i = 0; i < actions.Length; i++)
         {
@@ -782,38 +1041,39 @@ public class RhythmFactory : MonoBehaviour
                 switch (actions[i].GetType())
                 { 
                     case Move.TYPE:
-                        geometryInt = new Platform();
+                        geometryInt = new Platform(actions[i]);
                         break;
                     case Jump.TYPE:
                         //if (geoProbability >= j * intProb && geoProbability <= (j + 1) * intProb)
                         //{
-                            p = Random.Range(0,probs.Length - 1);
-                            switch (probs[p])
+                            //p = Random.Range(0,probs.Length - 1);
+                            switch (geometriesInts[i])
                             {
-                                /*case AvoidEnemy.TYPE_NUMBER:
-                                    geometryInt = new AvoidEnemy();
+                                case AvoidEnemy.TYPE_NUMBER:
+                                    geometryInt = new AvoidEnemy(actions[i]);
                                     break;
                                 case KillEnemy.TYPE_NUMBER:
-                                    geometryInt = new KillEnemy();
+                                    geometryInt = new KillEnemy(actions[i]);
                                     break;
-                                case Fall.TYPE_NUMBER:
+                                /*case Fall.TYPE_NUMBER:
                                     geometryInt = new Fall();
-                                    break;
+                                    break;*/
                                 case FlatGap.TYPE_NUMBER:
-                                    geometryInt = new FlatGap();
+                                    geometryInt = new FlatGap(actions[i]);
                                     break;
-                                case NoGap.TYPE_NUMBER:
+                                /*case NoGap.TYPE_NUMBER:
                                     geometryInt = new NoGap();
                                     break;
                                 case NotFlatGap.TYPE_NUMBER:
                                     geometryInt = new NotFlatGap();
                                     break;*/
                                 default:
-                                    /*if(attention <= 50)
-                                        geometryInt = new AvoidEnemy();
-                                    else
-                                        geometryInt = new KillEnemy();*/
-                                    geometryInt = new FlatGap();
+                                    /*if(attention <= 33)
+                                        geometryInt = new AvoidEnemy(actions[i]);
+                                    else if (attention > 33 && attention <= 66)
+                                        geometryInt = new KillEnemy(actions[i]);
+                                    else*/
+                                        geometryInt = new FlatGap(actions[i]);
                                     break;
                             }
                         //}
@@ -827,7 +1087,7 @@ public class RhythmFactory : MonoBehaviour
                 geometries[i] = geometryInt;
         }
 
-        geometry = new Geometry(geometries);
+        geometry = new Geometry(geometries, gapActRate, eneActRate, spkActRate);
 
         return geometry;
     }

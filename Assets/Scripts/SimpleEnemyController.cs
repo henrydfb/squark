@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SimpleEnemyController : MonoBehaviour 
 {
+    public Jump.HeightType jumpType;
+
     protected PlayerController player;
 
     protected GameController gameController;

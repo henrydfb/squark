@@ -281,7 +281,7 @@ public class GCGameController : GameController
             SaveTime();
             IncreaseDeaths();
 
-            SavePerformance("lose");
+            //SavePerformance("lose");
 
             Debug.Log("enemies: " + performanceData.killedEnemies);
             Debug.Log("mushrooms: " + performanceData.pickedMushrooms);

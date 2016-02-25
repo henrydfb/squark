@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rhythmType: 0
-  rhythmDensity: 2
-  rhythmLength: 10
+  rhythmDensity: 0
+  rhythmLength: 15
   minJump: .899999976
   maxJump: 2.4000001
   platformPrefab: {fileID: 100000, guid: 86892ab880e1cd248a13017f00d7fd94, type: 2}
@@ -259,6 +259,7 @@ MonoBehaviour:
   lowJumpTxtPrefab: {fileID: 177684, guid: 118fb8ac275dc4b43a5b5f229481e21e, type: 2}
   medJumpTxtPrefab: {fileID: 136226, guid: 94b5f8f11f023ee48983e78ed0032080, type: 2}
   higJumpTxtPrefab: {fileID: 121150, guid: 15164ddd438ab96448bd7d5e677ded44, type: 2}
+  flagPrefab: {fileID: 142360, guid: 1d36118e6dca7aa4197701019bcf278d, type: 2}
   coin: {fileID: 100000, guid: fa2fbf5005995e846b7a11bfce3e5678, type: 2}
   platformSpritePrefab: {fileID: 179274, guid: 51251373d6338f34390dc58e55ec779b, type: 2}
   currentPosition: {x: 4, y: 8, z: 0}
@@ -371,7 +372,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
 --- !u!1 &611836400
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +395,7 @@ GUIText:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 611836400}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Text: 0:00
   m_Anchor: 0
@@ -724,6 +725,10 @@ Prefab:
       propertyPath: autoRunning
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
+      propertyPath: jumpImpulse
+      value: 850
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98fd71094f7f4c2448f5c5040df2df1d, type: 2}
   m_IsPrefabParent: 0
@@ -886,7 +891,7 @@ MonoBehaviour:
   minDistance: 0
   followDistance: 0
   target: {fileID: 888135264}
-  offset: {x: .5, y: 0, z: 0}
+  offset: {x: .200000003, y: 0, z: 0}
 --- !u!82 &1237504664
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1215,7 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1272526d3a781884ba11559b7d94c8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsGameNeurosky: 0
+  IsGameNeurosky: 1
   leftLimit: 0
   rightLimit: 20
   downLimit: 0

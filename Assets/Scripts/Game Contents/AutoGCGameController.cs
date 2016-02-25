@@ -819,7 +819,7 @@ public class AutoGCGameController : GameController
             IncreaseDeaths();
             SaveTime();
 
-            SavePerformance("lose");
+            //SavePerformance("lose");
         }
         DisattachNeurosky();
         Application.LoadLevel("GCGameOverAuto");

@@ -16,8 +16,8 @@ public class NotFlatGap : GeometryInterpretation
     /// </summary>
     public const int TYPE_NUMBER = 5;
 
-    public NotFlatGap()
-        :base(TYPE,TYPE_NUMBER)
+    public NotFlatGap(Action action)
+        :base(TYPE,TYPE_NUMBER,action)
     {
     }
 }
