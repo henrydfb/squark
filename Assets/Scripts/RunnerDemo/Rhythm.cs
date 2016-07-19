@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// 
@@ -40,6 +41,8 @@ public class Rhythm
     /// 
     /// </summary>
     private List<Geometry> geometries;
+
+    private GameObject minimap;
 
     public Rhythm()
     {
@@ -113,6 +116,14 @@ public class Rhythm
         const float W2 = 0.5f;
         int numberOfActions, ran;
         float perVar, lowAvg, medAvg, higAvg, lowDeath,medDeath,higDeath, low, med, hig, attSum, lengthFactor,auxLength, auxMaxTime;
+        Text diffText, perText, prevDiff, prevPer;
+
+        diffText = GameObject.Find("Difficulty").GetComponent<Text>();
+        perText = GameObject.Find("Performance").GetComponent<Text>();
+        prevDiff = GameObject.Find("PrevDifficulty").GetComponent<Text>();
+        prevPer = GameObject.Find("PrevPerformance").GetComponent<Text>();
+        
+        minimap = GameObject.Find("MinimapCamera");
 
         if (previousRhythm == null)
         {
@@ -128,6 +139,10 @@ public class Rhythm
         }
         else
         {
+            //Update Difficulty and Performance
+            prevDiff.text = "Prev. Diff: " + previousRhythm.difficultyPercentage.ToString("F");
+            prevPer.text = "Prev. Glob: " + (previousRhythm.globalPerformance / 100).ToString("F");
+
             //Percentage variation
             if ((currentGlobalPerformance / 100) > previousRhythm.GetGlobalPerformance() / 100)
             {
@@ -157,12 +172,12 @@ public class Rhythm
             auxLength = (RhythmFactory.MIN_NUMBER_OF_ACTIONS + (RhythmFactory.MAX_NUMBER_OF_ACTIONS - RhythmFactory.MIN_NUMBER_OF_ACTIONS)) * lengthFactor;
             numberOfActions = (int)(auxLength * difficultyPercentage);
 
-            lowDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Low]);
-            medDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Med]);
-            higDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Hig]);
-            lowAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Low);
-            medAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Med);
-            higAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Hig);
+            lowDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Low]);
+            medDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Med]);
+            higDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Hig]);
+            lowAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Low);
+            medAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Med);
+            higAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Hig);
 
             low = (lowAvg * W1 + lowDeath * W2)/3;
             med = (medAvg * W1 + medDeath * W2)/3;
@@ -178,6 +193,13 @@ public class Rhythm
             medActRate = previousRhythm.GetMedActionRate() + (med/100 - previousRhythm.GetMedActionRate());
             higActRate = previousRhythm.GetHigActionRate() + (hig/100 - previousRhythm.GetHigActionRate());
         }
+
+        //Minimap
+        minimap.GetComponent<Camera>().orthographicSize = RhythmFactory.INITIAL_MINIMAP_SIZE * difficultyPercentage / INITIAL_RATE;
+
+        //Update Difficulty and Performance
+        diffText.text = "Diff: " + difficultyPercentage.ToString("F");
+        perText.text = "Glob: " + (currentGlobalPerformance / 100).ToString("F");
 
         lowActNumber = (int)(numberOfActions * lowActRate);
         medActNumber = (int)(numberOfActions * medActRate);
@@ -201,7 +223,7 @@ public class Rhythm
         globalPerformance = currentGlobalPerformance;
     }
 
-    private float GetAttentionAvg(List<float>[] attentionMatrix,GameController.AttentionType type)
+    private float GetAttentionAvg(List<float>[] attentionMatrix, GameControllerRGT.AttentionType type)
     {
         float sum = 0.0f;
         float res;
@@ -463,7 +485,5 @@ public class Rhythm
 
         //We have to decide how to handle this
         geometry = geometries[0];
-
-
     }
 }

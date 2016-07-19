@@ -22,8 +22,22 @@ public class CameraController : MonoBehaviour
 
     public bool showGraph = false;
 
+    public Material mat;
+
+    //Camera movement
+    public float interpVelocity;
+    public float minDistance;
+    public float followDistance;
+    public float speed;
+    public GameObject target;
+    public Vector3 offset;
+
     //Player's reference
-    private PlayerController player;
+    protected PlayerController player;
+
+    //Game Controller's reference
+    protected GameController gameController;
+
     //Flag to determine if the camera is moving
     private bool movingCamera;
     //Player's position when is out the limits
@@ -31,34 +45,24 @@ public class CameraController : MonoBehaviour
     //Camera's position when the player is out the limits
     private Vector3 cameraStartPosition;
 
-    private GameController gameController;
-
     private Vector3[] attentionLevels;
 
     private bool hooked = false;
 
-    public Material mat;
-    private Vector3 startVertex;
+    
     private Vector3 mousePos;
 
     private float averageAttention;
 
-    //Camera movement
-    public float interpVelocity;
-    public float minDistance;
-    public float followDistance;
-    public GameObject target;
-    public Vector3 offset;
+    
     Vector3 targetPos;
 
 	// Use this for initialization
-	void Start () 
+	protected virtual void Start () 
     {
         player = GameObject.FindGameObjectWithTag(Names.Player).GetComponent<PlayerController>();
         gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
         movingCamera = false;
-
-        Example();
 
         attentionLevels = new Vector3[GameController.NUMBER_OF_ATTENTION_POINT];
         for (int i = 0; i < attentionLevels.Length; i++)
@@ -86,13 +90,15 @@ public class CameraController : MonoBehaviour
 
     public void OnUpdateAttention(int value)
     {
-        
-        for (int i = 0; i < attentionLevels.Length; i++)
+        if (attentionLevels != null)
         {
-            if (i == attentionLevels.Length - 1)
-                attentionLevels[i].y = (float)value/100;
-            else
-                attentionLevels[i].y = attentionLevels[i + 1].y;
+            for (int i = 0; i < attentionLevels.Length; i++)
+            {
+                if (i == attentionLevels.Length - 1)
+                    attentionLevels[i].y = (float)value / 100;
+                else
+                    attentionLevels[i].y = attentionLevels[i + 1].y;
+            }
         }
     }
 
@@ -101,11 +107,9 @@ public class CameraController : MonoBehaviour
     {
         Vector3 posNoZ = transform.position;
         Vector3 targetDirection;
-        PlayerController player;
+
         if (target)
         {
-            player = target.GetComponent<PlayerController>();
-
             if (!player.IsDead())
             {
                 posNoZ = transform.position;
@@ -113,90 +117,22 @@ public class CameraController : MonoBehaviour
 
                 targetDirection = (target.transform.position - posNoZ);
 
-                interpVelocity = targetDirection.magnitude * 5f;
+                interpVelocity = targetDirection.magnitude * speed;
 
                 targetPos = transform.position + (targetDirection.normalized * interpVelocity * Time.deltaTime);
 
                 
-                if(((RunnerPlayerController)player).IsFacingRight())
-                    transform.position = Vector3.Lerp(transform.position, targetPos + offset, 0.25f);
+                if(((PlayerController)player).IsFacingRight())
+                    transform.position = new Vector3(Vector3.Lerp(transform.position, targetPos + offset, 0.25f).x, transform.position.y, transform.position.z);
                 else
-                    transform.position = Vector3.Lerp(transform.position, targetPos - offset, 0.25f);
-                
-
-                 //   Debug.Log("CAMERA DIR: " + (targetPos.x - transform.position.x));
+                    transform.position = new Vector3(Vector3.Lerp(transform.position, targetPos - offset, 0.25f).x, transform.position.y, transform.position.z);
             }
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        Vector3 playerPos, cameraPos, leftMinLimit,rightMinLimit, cameraTransform;
-
-        /*playerPos = Camera.main.WorldToViewportPoint(player.transform.position);
-        leftMinLimit = Camera.main.WorldToScreenPoint(new Vector3(gameController.leftLimit, gameController.downLimit));
-        rightMinLimit = Camera.main.WorldToScreenPoint(new Vector3(gameController.rightLimit, gameController.downLimit));
-
-        //The player is outside the limits and is moving towards the right direction
-        if ((playerPos.x > cameraLimit && player.rigidbody2D.velocity.x > 0) || (playerPos.x < (MAX_CAMERA_LIMIT - cameraLimit) && player.rigidbody2D.velocity.x < 0))
-        {
-            if (!movingCamera)
-            {
-                cameraStartPosition = Camera.main.transform.position;
-                playerEnteredCamera = player.transform.position;
-                movingCamera = true;
-            }
-        }
-        else
-            movingCamera = false;*/
-
-        //Move the camera with the player
-        /*if (movingCamera)
-            cameraPos = new Vector3(cameraStartPosition.x + (player.transform.position.x - playerEnteredCamera.x), cameraStartPosition.y, cameraStartPosition.z);
-        else*/
-            /*cameraPos = Camera.main.transform.position;
-
-        //Check if the camera passes the limit (left and right) on the level
-        cameraTransform = Camera.main.WorldToScreenPoint(cameraPos);
-        if (cameraTransform.x - Camera.main.pixelWidth / 2 <= leftMinLimit.x)
-            cameraPos.x = Camera.main.ScreenToWorldPoint(new Vector2(leftMinLimit.x + Camera.main.pixelWidth / 2,0)).x;
-
-        if (cameraTransform.x + Camera.main.pixelWidth / 2 >= rightMinLimit.x)
-            cameraPos.x = Camera.main.ScreenToWorldPoint(new Vector2(rightMinLimit.x - Camera.main.pixelWidth / 2, 0)).x;
-
-        //Updates position
-        Camera.main.transform.position = cameraPos;
-
-
-        mousePos = Input.mousePosition;
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            startVertex = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height, 0);
-        }
-        
-        //Hook event
-       if (gameController.IsGameNeurosky)
-        {
-            if (gameController.GetTGCConnectionController() != null && !hooked)
-            {
-                gameController.GetTGCConnectionController().UpdateAttentionEvent += OnUpdateAttention;
-                hooked = true;
-                Debug.Log("hooked!");
-            }
-        }*/
-	}
 
     public float GetAverageAttention()
     {
         return averageAttention;
-    }
-
-    void Example()
-    {
-        startVertex = new Vector3(0, 0, 0);
     }
 
     void OnPostRender()
@@ -213,6 +149,7 @@ public class CameraController : MonoBehaviour
             mat.SetPass(0);
             GL.LoadOrtho();
             GL.Begin(GL.LINES);
+            
             //background grid
             /*GL.Color(Color.white * 0.1f);
             for (int i = 0; i < 10; i++)
@@ -220,7 +157,7 @@ public class CameraController : MonoBehaviour
                 GL.Vertex(new Vector3(i * (float)(1f / 10f), 0, 0));
                 GL.Vertex(new Vector3(i * (float)(1f / 10f), 1, 0));
             }*/
-
+            
             GL.Color(Color.white);
             //Horizontal
             GL.Vertex(graphPosition + new Vector3(0, 0, 0) * graphSize);
@@ -252,7 +189,7 @@ public class CameraController : MonoBehaviour
             GL.Color(Color.green);
             GL.Vertex(graphPosition + new Vector3(0, averageAttention / attentionLevels.Length, 0) * graphSize);
             GL.Vertex(graphPosition + new Vector3(1, averageAttention / attentionLevels.Length, 0) * graphSize);
-
+            
             GL.End();
             GL.PopMatrix();
         }

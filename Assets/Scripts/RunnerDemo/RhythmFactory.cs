@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 struct EnemyDescriptor
 {
@@ -45,6 +46,8 @@ public class RhythmFactory : MonoBehaviour
     /// Maximum number of seconds in a rhythm
     /// </summary>
     public const int MAX_SECOND = 30;
+
+    public const float INITIAL_MINIMAP_SIZE = 5.15f;
 
     /// <summary>
     /// Minimum number of blocks in a rhythm
@@ -99,7 +102,7 @@ public class RhythmFactory : MonoBehaviour
 
     private PlatformController platformCont;
 
-    private GameController gameController;
+    private GameControllerRGT gameController;
 
     private Geometry mainGeometry;
 
@@ -107,6 +110,8 @@ public class RhythmFactory : MonoBehaviour
 
     private RhythmPersistentController rhythmPersistent;
 
+    private GameObject minimap;
+        
     /// <summary>
     /// 
     /// </summary>
@@ -115,7 +120,7 @@ public class RhythmFactory : MonoBehaviour
         float firstPlatW,firstPlatH;
         GameObject rhythmObj;
 
-        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
+        gameController = GameObject.Find(Names.GameController).GetComponent<GameControllerRGT>();
         player = GameObject.Find(Names.Player).GetComponent<PlayerController>();
         currentPosition = new Vector3();//player.transform.position;
         initialPosition = currentPosition;
@@ -126,6 +131,9 @@ public class RhythmFactory : MonoBehaviour
         elements.Add(GameObject.Find(Names.Player));
 
         rhythmObj = GameObject.Find("PersistentRhythm");
+
+        minimap = GameObject.Find("MinimapCamera");
+
         if (rhythmObj != null)
         {
             rhythmPersistent = rhythmObj.GetComponent<RhythmPersistentController>();
@@ -185,10 +193,8 @@ public class RhythmFactory : MonoBehaviour
                 gameController.SavePerformance(rhythmPersistent.level - 1,rhythmPersistent.gameTime,rhythmPersistent.avgAttention, rhythm1, geometry1, rhythmPersistent.attentionMatrix, rhythmPersistent.deathMatrix);
 
                 gameController.SetLevel(rhythmPersistent.level);
-                if (rhythmPersistent.level >= 6)
-                {
-                    Application.LoadLevel("GameComplete");
-                }
+                //if (rhythmPersistent.level >= 6)
+                //    SceneManager.LoadScene("GameComplete");
             }
             else
             {
@@ -210,6 +216,10 @@ public class RhythmFactory : MonoBehaviour
         ConstructLevel(path1Pos, rhythm1.GetLength(), geometry1);
 
         SetFlag(new Vector3((rhythm1.GetLength() - 2) * PLAT_W, path1Pos.y + 2));
+
+
+        minimap.transform.position = new Vector3((rhythm1.GetLength() - 2) * PLAT_W/2, minimap.transform.position.y, minimap.transform.position.z);
+
         /*gaps[1] = 3;
         gaps[2] = 3;
         gaps[6] = 15;*/
@@ -920,7 +930,7 @@ public class RhythmFactory : MonoBehaviour
         }
     }
 
-    private float GetAttentionAvg(List<float>[] attentionMatrix, GameController.AttentionType type)
+    private float GetAttentionAvg(List<float>[] attentionMatrix, GameControllerRGT.AttentionType type)
     {
         float sum = 0.0f;
         float res;
@@ -970,12 +980,12 @@ public class RhythmFactory : MonoBehaviour
         }
         else
         {
-            gapDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Gap]);
-            eneDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Ene]);
-            spkDeath = 100 / (1 + deathMatrix[(int)GameController.DeathType.Spk]);
-            gapAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Gap);
-            eneAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Ene);
-            spkAvg = GetAttentionAvg(attentionMatrix, GameController.AttentionType.Spk);
+            gapDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Gap]);
+            eneDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Ene]);
+            spkDeath = 100 / (1 + deathMatrix[(int)GameControllerRGT.DeathType.Spk]);
+            gapAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Gap);
+            eneAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Ene);
+            spkAvg = GetAttentionAvg(attentionMatrix, GameControllerRGT.AttentionType.Spk);
 
             gap = (gapAvg * W1 + gapDeath * W2) / 3;
             ene = (eneAvg * W1 + eneDeath * W2) / 3;

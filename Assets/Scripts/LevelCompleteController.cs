@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelCompleteController : MonoBehaviour 
 {
@@ -42,10 +43,15 @@ public class LevelCompleteController : MonoBehaviour
     protected virtual void HandleInput()
     {
         if (Input.GetButtonUp(Names.JumpInput))
-            Application.LoadLevel("Squark");
+            SceneManager.LoadScene("Squark");
     }
 
-    protected virtual void OnGUI()
+    public void NextLevel()
+    {
+        SceneManager.LoadScene("Squark");
+    }
+
+    /*protected virtual void OnGUI()
     {
         //string scoreText, highscoreText;
 
@@ -56,5 +62,5 @@ public class LevelCompleteController : MonoBehaviour
         if (GUI.Button(new Rect((Screen.width - buttonWidth) / 2, (Screen.height - buttonHeight) / 2, buttonWidth, buttonHeight), "Next"))
             Application.LoadLevel("Squark");
             //Application.LoadLevel("GameContentsAuto");
-    }
+    }*/
 }

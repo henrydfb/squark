@@ -19,7 +19,7 @@ public class GoalController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == Names.Player && gameController.WonGame())
-            Application.LoadLevel(Names.BlinkWinGameScene);
+        //if (col.tag == Names.Player && gameController.WonGame())
+          //  Application.LoadLevel(Names.BlinkWinGameScene);
     }
 }

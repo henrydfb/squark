@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip killEnemySound;
     public AudioClip dieSound;
+    public bool autoRunning = false;
+    public AudioClip jumpSound;
 
     //Flag to know if the player is jumping, when he presses the button
     protected bool isJumping;
@@ -56,9 +58,12 @@ public class PlayerController : MonoBehaviour
     protected GameObject rightColObj;
     protected AudioSource audioSource;
     private float lastSpikePosX;
+    private bool isFacingRight;
     SimpleSpikeController closestSpike;
-
+    private bool stoppedMov;
+    private bool startMoving;
     protected bool isHit;
+    
     protected float hitTimer;
 
     protected int hits;
@@ -74,14 +79,34 @@ public class PlayerController : MonoBehaviour
         isHit = false;
         horAxis = 0;
         isDead = false;
+        isFacingRight = true;
+        stoppedMov = false;
+        startMoving = false;
         hits = 0;
-        gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
-
+        //gameController = GameObject.Find(Names.GameController).GetComponent<GameController>();
+        
         jumpTime = 0.0f;
         hitTimer = 0.0f;
 
         audioSource = GetComponent<AudioSource>();
 	}
+
+    public bool IsFacingRight()
+    {
+        return isFacingRight;
+    }
+
+    protected virtual void UpdateSpikeAttention(Jump.HeightType jumpType)
+    {
+    }
+
+    protected virtual void UpdateEnemyDeath(Jump.HeightType jumpType)
+    {
+    }
+
+    protected virtual void UpdateEnemySpike(Jump.HeightType jumpType)
+    {
+    }
 
 	// Update is called once per frame
     protected virtual void Update() 
@@ -91,72 +116,61 @@ public class PlayerController : MonoBehaviour
         GameObject[] spikes;
         GameObject downCol;
 
-        if (gameController.IsGameRunning())
+        if (gameController != null)
         {
-            if (gameController.IsGameOver())
-                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            else
+            if (gameController.IsGameRunning())
             {
-                HandleInput();
-                
-                //Spike Enemies
-                tempSpike = FindClosestSpike();
-
-                if (tempSpike != null)
+                if (gameController.IsGameOver())
+                    GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                else
                 {
-                    if (closestSpike == tempSpike)
+                    HandleInput();
+
+                    //Spike Enemies
+                    tempSpike = FindClosestSpike();
+
+                    if (tempSpike != null)
                     {
-                        if (transform.position.x - tempSpike.transform.position.x > 0 && lastSpikePosX < 0 || transform.position.x - tempSpike.transform.position.x < 0 && lastSpikePosX > 0)
+                        if (closestSpike == tempSpike)
                         {
-                            //Update attention
-                            switch (tempSpike.jumpType)
+                            if (transform.position.x - tempSpike.transform.position.x > 0 && lastSpikePosX < 0 || transform.position.x - tempSpike.transform.position.x < 0 && lastSpikePosX > 0)
                             {
-                                case global::Jump.HeightType.Long:
-                                    gameController.AddAttentionValue(GameController.AttentionType.Hig);
-                                    break;
-                                case global::Jump.HeightType.Medium:
-                                    gameController.AddAttentionValue(GameController.AttentionType.Med);
-                                    break;
-                                case global::Jump.HeightType.Short:
-                                    gameController.AddAttentionValue(GameController.AttentionType.Low);
-                                    break;
+                                UpdateSpikeAttention(tempSpike.jumpType);
+                            }
+                        }
+
+                        lastSpikePosX = transform.position.x - tempSpike.transform.position.x;
+                    }
+
+                    closestSpike = tempSpike;
+
+                    if (isHit)
+                    {
+                        if (hitTimer > 3)
+                        {
+                            enemies = GameObject.FindGameObjectsWithTag(Names.Enemy);
+                            spikes = GameObject.FindGameObjectsWithTag(Names.Spike);
+                            downCol = (GameObject)GameObject.Find("downCollider");
+
+                            foreach (GameObject e in enemies)
+                            {
+                                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>(), false);
+                                Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>(), false);
                             }
 
-                            gameController.AddAttentionValue(GameController.AttentionType.Spk);
+                            foreach (GameObject s in spikes)
+                            {
+                                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>(), false);
+                                Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>(), false);
+                            }
+
+                            isHit = false;
+                            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                            hitTimer = 0.0f;
                         }
+                        else
+                            hitTimer += Time.deltaTime;
                     }
-                    
-                    lastSpikePosX = transform.position.x - tempSpike.transform.position.x;
-                }
-
-                closestSpike = tempSpike;
-
-                if (isHit)
-                {
-                    if (hitTimer > 3)
-                    {
-                        enemies = GameObject.FindGameObjectsWithTag(Names.Enemy);
-                        spikes = GameObject.FindGameObjectsWithTag(Names.Spike);
-                        downCol = (GameObject)GameObject.Find("downCollider");
-
-                        foreach (GameObject e in enemies)
-                        {
-                            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>(),false);
-                            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>(),false);
-                        }
-
-                        foreach (GameObject s in spikes)
-                        {
-                            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>(),false);
-                            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>(),false);
-                        }
-
-                        isHit = false;
-                        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-                        hitTimer = 0.0f;
-                    }
-                    else
-                        hitTimer += Time.deltaTime;
                 }
             }
         }
@@ -194,13 +208,147 @@ public class PlayerController : MonoBehaviour
     /// Handles the input values and use them to move the player
     /// </summary>
     protected virtual void HandleInput()
-    {}
+    {
+        if (IsDead())
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+        }
+        else
+        {
+            //Moving Right
+            if (Input.GetAxis(Names.HorizontalInput) > 0)
+            {
+                if (Input.GetButtonUp(Names.RightInput))
+                {
+                    horAxis = 0;
+                    if (!isInAir)
+                        GetComponent<Animator>().Play("idle");
+
+                    stoppedMov = true;
+                }
+                else
+                {
+                    if (!stoppedMov)
+                    {
+                        if (isCollidingRight)
+                            horAxis = 0;
+                        else
+                        {
+                            horAxis = horAxis < 1 ? horAxis + HOR_AXIS_STEP : MAX_AXIS_STEP;
+                            if (Input.GetAxis(Names.HorizontalInput) < prevHorAxis)
+                                horAxis = horAxis / 2;
+                        }
+
+                        GetComponent<Renderer>().transform.localScale = new Vector3(1, 1, 1);
+                        if (!isInAir)
+                            GetComponent<Animator>().Play("walk");
+                    }
+                }
+
+                isFacingRight = true;
+
+                if (!gameController.GameHasStarted())
+                    gameController.MovePlayer();
+            }
+            else
+                //Moving Left
+                if (Input.GetAxis(Names.HorizontalInput) < 0)
+                {
+                    if (Input.GetButtonUp(Names.LeftInput))
+                    {
+                        horAxis = 0;
+                        if (!isInAir)
+                            GetComponent<Animator>().Play("idle");
+
+                        stoppedMov = true;
+                    }
+                    else
+                    {
+                        if (!stoppedMov)
+                        {
+                            if (isCollidingLeft)
+                                horAxis = 0;
+                            else
+                            {
+                                horAxis = horAxis > -1 ? horAxis - HOR_AXIS_STEP : MIN_AXIS_STEP;
+                                if (Input.GetAxis(Names.HorizontalInput) > prevHorAxis)
+                                    horAxis = horAxis / 2;
+                            }
+
+                            GetComponent<Renderer>().transform.localScale = new Vector3(-1, 1, 1);
+                            if (!isInAir)
+                                GetComponent<Animator>().Play("walk");
+                        }
+                    }
+
+                    isFacingRight = false;
+                }
+                //Test
+                else if (autoRunning)
+                {
+                    if (isCollidingRight)
+                        horAxis = 0;
+                    else
+                    {
+                        //The higher the more relaxed
+                        if (gameController.GetMeditation() > 50)
+                        {
+                            horAxis = MAX_AXIS_STEP;
+                            if (!isInAir)
+                                GetComponent<Animator>().Play("walk");
+                        }
+                        else
+                        {
+                            horAxis = 0;
+                            if (!isInAir)
+                                GetComponent<Animator>().Play("idle");
+                        }
+                    }
+                }
+                else
+                //Not moving
+                //if (Input.GetAxis(Names.HorizontalInput) == 0)
+                {
+                    horAxis = 0;
+                    if (!isInAir)
+                        GetComponent<Animator>().Play("idle");
+                    stoppedMov = false;
+                }
+
+            //Update horizontal movement
+            GetComponent<Rigidbody2D>().velocity = new Vector2(horAxis * speed, GetComponent<Rigidbody2D>().velocity.y);
+
+            //Check if the game is running witht the EEG device
+            //if (!gameController.IsGameNeurosky)
+            //{
+            //Jump button pressed
+            if (Input.GetButtonDown(Names.JumpInput) && !isJumping)
+            {
+                
+                GetComponent<Animator>().Play("jump-up");
+                Jump();
+            }
+
+            //Jump button button released
+            if (Input.GetButtonUp(Names.JumpInput) && isJumping)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, GetComponent<Rigidbody2D>().velocity.y / 2);
+                isJumping = false;
+            }
+            //}
+
+            //Previous horizontal axis value
+            prevHorAxis = Input.GetAxis(Names.HorizontalInput);
+        }
+    }
 
     public void Jump()
     {
         if (!isInAir)
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse));
+            audioSource.PlayOneShot(jumpSound);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpImpulse);
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse));
             isJumping = true;
             isInAir = true;
             prevVelY = GetComponent<Rigidbody2D>().velocity.y;
@@ -223,7 +371,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse/2));
         isDead = true;
         GetComponent<Collider2D>().enabled = false;
-        audioSource.PlayOneShot(dieSound);
+        //audioSource.PlayOneShot(dieSound);
     }
 
     public virtual void Hit()
@@ -232,32 +380,35 @@ public class PlayerController : MonoBehaviour
         GameObject[] spikes = GameObject.FindGameObjectsWithTag(Names.Spike);
         GameObject downCol = (GameObject)GameObject.Find("downCollider");
 
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        //GetComponent<Rigidbody2D>().AddForce(new Vector2(-jumpImpulse * 3, jumpImpulse/2));
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse / 2));
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.4f);
-        isHit = true;
-
-        foreach (GameObject e in enemies)
+        if (!isHit)
         {
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
-            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
-        }
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 10f);
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(-jumpImpulse * 3, jumpImpulse/2));
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse / 2));
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.4f);
+            isHit = true;
 
-        foreach (GameObject s in spikes)
-        {
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
-            Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
-        }
+            foreach (GameObject e in enemies)
+            {
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), e.GetComponent<Collider2D>());
+            }
 
-        hits++;
-        if (hits == 1)
-            GameObject.Find("life2").GetComponent<Image>().color = new Color(1,1,1,0);
+            foreach (GameObject s in spikes)
+            {
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(downCol.GetComponent<Collider2D>(), s.GetComponent<Collider2D>());
+            }
 
-        if (hits >= 2)
-        {
-            GameObject.Find("life1").GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            Die();
+            hits++;
+            if (hits == 1)
+                GameObject.Find("life2").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+            if (hits >= 2)
+            {
+                GameObject.Find("life1").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                Die();
+            }
         }
     }
 
@@ -265,7 +416,7 @@ public class PlayerController : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,0);
         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpImpulse/2));
-        audioSource.PlayOneShot(killEnemySound);
+        //audioSource.PlayOneShot(killEnemySound);
     }
 
     public void TouchPlatformDown()
@@ -313,18 +464,18 @@ public class PlayerController : MonoBehaviour
             }*/
 
             //Right collision
-            /*if (transform.position.x - collider2D.bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
+            if (transform.position.x - GetComponent<Collider2D>().bounds.size.x / 2 > col.transform.position.x + col.collider.bounds.size.x / 2)
             {
                 rightCollider = col.collider;
                 isCollidingRight = true;
             }
 
             //Left collision
-            if (transform.position.x + collider2D.bounds.size.x / 2 < col.transform.position.x - col.collider.bounds.size.x / 2)
+            if (transform.position.x + GetComponent<Collider2D>().bounds.size.x / 2 < col.transform.position.x - col.collider.bounds.size.x / 2)
             {
                 leftCollider = col.collider;
                 isCollidingLeft = true;
-            }*/
+            }
 
             //Create the new rhythm
             if (platform.GetLast())
@@ -342,20 +493,7 @@ public class PlayerController : MonoBehaviour
         {
             enemy = ((GameObject)col.gameObject).GetComponentInParent<SimpleEnemyController>();
             //Update attention
-            switch (enemy.jumpType)
-            {
-                case global::Jump.HeightType.Long:
-                    gameController.AddDeath(GameController.DeathType.Hig);
-                    break;
-                case global::Jump.HeightType.Medium:
-                    gameController.AddDeath(GameController.DeathType.Med);
-                    break;
-                case global::Jump.HeightType.Short:
-                    gameController.AddDeath(GameController.DeathType.Low);
-                    break;
-            }
-
-            gameController.AddDeath(GameController.DeathType.Ene);
+            UpdateEnemyDeath(enemy.jumpType);
             
             Debug.Log("Died!");
             //Die();
@@ -364,21 +502,7 @@ public class PlayerController : MonoBehaviour
         else if (col.collider.tag == Names.Spike)
         {
             spike = ((GameObject)col.gameObject).GetComponentInParent<SimpleSpikeController>();
-            //Update attention
-            switch (spike.jumpType)
-            {
-                case global::Jump.HeightType.Long:
-                    gameController.AddDeath(GameController.DeathType.Hig);
-                    break;
-                case global::Jump.HeightType.Medium:
-                    gameController.AddDeath(GameController.DeathType.Med);
-                    break;
-                case global::Jump.HeightType.Short:
-                    gameController.AddDeath(GameController.DeathType.Low);
-                    break;
-            }
-
-            gameController.AddDeath(GameController.DeathType.Spk);
+            UpdateEnemyDeath(spike.jumpType);
             
             Debug.Log("Died!");
             //Die();

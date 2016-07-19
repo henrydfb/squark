@@ -70,4 +70,28 @@ public class PlatformController : MonoBehaviour
 
         
     }
+
+    public void Contruct(int numberOfBlockX, int numberOfBlockY)
+    {
+        GameObject newSpt;
+
+        transform.localScale = new Vector3(numberOfBlockX, numberOfBlockY);
+        pieces = new List<GameObject>();
+        //Sprites
+        for (int i = 0; i < numberOfBlockX; i++)
+        {
+            for (int j = 0; j < numberOfBlockY; j++)
+            {
+                newSpt = (GameObject)Instantiate(sprite, transform.position + new Vector3(i * 0.3f, j * 0.3f, -i * 0.0001f - j * 0.0001f), Quaternion.identity);
+                newSpt.transform.position = newSpt.transform.position - new Vector3(GetComponent<BoxCollider2D>().bounds.size.x / 2, GetComponent<BoxCollider2D>().bounds.size.y / 2);
+
+                pieces.Add(newSpt);
+            }
+        }
+    }
+
+    public List<GameObject> GetPieces()
+    {
+        return pieces;
+    }
 }

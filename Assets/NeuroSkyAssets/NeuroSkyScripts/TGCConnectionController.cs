@@ -118,6 +118,7 @@ public class TGCConnectionController : MonoBehaviour {
 	            if(primary.Contains("eSense")){
 	              IDictionary eSense = (IDictionary)primary["eSense"];
 				  if(UpdateAttentionEvent != null){
+                      //Debug.Log(int.Parse(eSense["attention"].ToString()));
 					 UpdateAttentionEvent(int.Parse(eSense["attention"].ToString()));
 				   }		
 				  if(UpdateMeditationEvent != null){

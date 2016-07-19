@@ -6,4 +6,6 @@ public static class Globals
     public static string AUX_FILE_NAME = "perfaux.txt";
 
     public static string METHOD = "1";
+
+    public static int FIRST_FLOOR = 0;
 }
